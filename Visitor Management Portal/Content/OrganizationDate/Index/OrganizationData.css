@@ -1,0 +1,126 @@
+﻿
+
+.data-box {
+    border: 1px solid #E6E6E8;
+    opacity: 1;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+.data-title {
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+    .form-group label {
+        margin-bottom: 5px;
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+.form-input {
+    padding: 10px;
+    border: 1px solid #0000000d;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+
+.Dataverse-Connection {
+    background-color: #EEF1FB;
+}
+    .Dataverse-Connection input {
+        background-color: white;
+        color: #2F2F2F
+    }
+
+.microsoft_app_setup {
+    background-color: #32C056;
+    color:white;
+}
+
+/* Switch Toggle Btn */
+.switch {
+    font-size: 12px; 
+    position: relative;
+    display: inline-block;
+    width: 50px; 
+    height: 28px; 
+}
+
+    .switch input {
+        opacity: 1;
+        width: 0;
+        height: 0;
+    }
+
+/* The slider */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #fff;
+    transition: .4s;
+    border-radius: 30px;
+    border: 1px solid #ccc;
+}
+
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 1.8em; 
+        width: 1.8em; 
+        border-radius: 50%;
+        left: 2px; 
+        top: 2px; 
+        background-color: white;
+        box-shadow: 0 2px 5px #999999;
+        transition: .4s;
+    }
+
+input:checked + .slider {
+    background-color: #5fdd54;
+    border: 1px solid transparent;
+}
+
+    input:checked + .slider:before {
+        transform: translateX(22px); 
+    }
+
+    @media (max-width:991px){
+        .form-grid {
+            grid-template-columns: repeat(1, 1fr);
+        }
+        .top {
+            flex-direction:column-reverse;
+            gap:1rem;
+        }
+        .top-section {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+            margin: 5px 0px;
+        }
+        .btns {
+            flex-direction: column-reverse;
+            gap: 5px !important;
+        }
+    }

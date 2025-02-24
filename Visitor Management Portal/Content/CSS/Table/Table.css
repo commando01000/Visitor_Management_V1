@@ -1,0 +1,194 @@
+﻿/* Table container for responsiveness */
+.table-responsive {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+    height: calc(100vh - 100px);
+    overflow-y: auto;
+}
+
+/* Table styling */
+table {
+    width: max-content;
+    table-layout: fixed;
+    height: 100%;
+}
+
+thead, tbody, tfoot, tr, td, th{
+    border:none !important;
+}
+table th {
+    padding: 0;
+    font-size: 0.88rem;
+    font: normal normal normal 18px/33px Cairo;
+    letter-spacing: 0px;
+    color: #150E0B;
+    opacity: 0.7;
+    background-color: white !important;
+    font-weight: 500 !important;
+}
+
+    table td {
+        font-size: 0.7rem;
+        padding: 1rem 0px;
+    }
+
+    table th::before,
+    table th::after {
+        content: none;
+    }
+
+/* Styling for the table header */
+thead th {
+    border: none !important;
+    background-color: white !important;
+    padding: 0px !important;
+}
+
+/* Styling for table rows */
+tbody tr td {
+    padding: 15px 1rem;
+    border-bottom: none;
+    align-content: center;
+    background-color: white !important;
+}
+
+tbody tr {
+    height: 65px !important;
+    border-top: none !important;
+    border-bottom: none !important;
+    background-color: white !important;
+}
+table th,
+table td {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    text-align: left !important;
+    background-color: white !important;
+}
+    tbody tr:nth-child(even) {
+        background-color: transparent !important;
+    }
+
+    tbody tr:nth-child(odd) {
+        background-color: white !important;
+    }
+
+/* Border removal */
+.table-bordered > :not(caption) > * > * {
+    border: none !important;
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) > * {
+    --bs-table-accent-bg: white !important;
+}
+
+/* Footer and pagination */
+table.dataTable.no-footer {
+    border-bottom: 1px solid #00000038;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    padding: 0.3em 0.75em;
+    margin-left: 10px;
+    border-radius: 4px;
+    font-size: 14px;
+    box-shadow: none;
+}
+
+/* Search filter for all DataTables */
+.dataTables_filter {
+    position: relative;
+    margin: 20px;
+    display:none;
+}
+
+    .dataTables_filter input {
+        border-radius: 25px;
+        padding-left: 35px;
+        padding-right: 20px;
+        height: 40px;
+        border: 1px solid #ddd;
+        width: 250px;
+    }
+
+    .dataTables_filter i {
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #aaa;
+    }
+
+    .dataTables_filter label {
+        display: flex;
+        align-items: center;
+    }
+
+/* Sorting icons removal */
+table.dataTable thead > tr > th.sorting:before,
+table.dataTable thead > tr > th.sorting:after,
+table.dataTable thead > tr > th.sorting_asc:before,
+table.dataTable thead > tr > th.sorting_asc:after,
+table.dataTable thead > tr > th.sorting_desc:before,
+table.dataTable thead > tr > th.sorting_desc:after,
+table.dataTable thead > tr > th.sorting_asc_disabled:before,
+table.dataTable thead > tr > th.sorting_asc_disabled:after,
+table.dataTable thead > tr > th.sorting_desc_disabled:before,
+table.dataTable thead > tr > th.sorting_desc_disabled:after,
+table.dataTable thead > tr > td.sorting:before,
+table.dataTable thead > tr > td.sorting:after,
+table.dataTable thead > tr > td.sorting_asc:before,
+table.dataTable thead > tr > td.sorting_asc:after,
+table.dataTable thead > tr > td.sorting_desc:before,
+table.dataTable thead > tr > td.sorting_desc:after,
+table.dataTable thead > tr > td.sorting_asc_disabled:before,
+table.dataTable thead > tr > td.sorting_asc_disabled:after,
+table.dataTable thead > tr > td.sorting_desc_disabled:before,
+table.dataTable thead > tr > td.sorting_desc_disabled:after {
+    display: none;
+}
+
+/* Sorting icons opacity */
+table.dataTable thead > tr > th.sorting_asc:before,
+table.dataTable thead > tr > th.sorting_desc:after,
+table.dataTable thead > tr > td.sorting_asc:before,
+table.dataTable thead > tr > td.sorting_desc:after {
+    opacity: 1;
+}
+
+/* Scrollbar customization */
+.table-responsive::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+.table-responsive::-webkit-scrollbar-thumb {
+    background: #4CAF50;
+    border-radius: 10px;
+}
+
+.table-responsive::-webkit-scrollbar-track {
+    background: #F1F1F1;
+    border-radius: 10px;
+}
+
+/* Firefox */
+.table-responsive {
+    scrollbar-width: thin;
+    scrollbar-color: #4CAF50 #F1F1F1;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.current, .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+    background-color: #1e3a8ad9;
+    color: white !important;
+    border: none !important;
+}
+
+/*.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    color: white !important;
+    background: #1e3a8a !important;
+    border: none !important;
+}*/

@@ -1,0 +1,45 @@
+﻿.nav-tabs {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border:none;
+}
+
+    .nav-tabs li {
+        margin: 0 10px;
+    }
+
+    .nav-tabs a {
+        text-decoration: none;
+        color: #333;
+        padding: 10px 15px;
+        display: inline-block;
+        position: relative;
+        transition: color 0.3s;
+    }
+
+        .nav-tabs a:hover {
+            color: #1E3A8A;
+        }
+
+    .nav-tabs .active a {
+        color: #1E3A8A;
+    }
+
+        .nav-tabs .active a::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 85%;
+            height: 5px;
+            background-color: #1E3A8A;
+            border-radius: 0px 0px 20px 20px;
+        }
+
+
+.dataTables_empty{
+    text-align:center !important;
+}

@@ -1,0 +1,47 @@
+﻿
+table th,
+table td {
+    max-width: 150px;
+    width: 150px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    text-align: left !important;
+    background-color: white !important;
+}
+
+.VisitRequest_topSection .search-bar {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    border: 1px solid #E6E6E8;
+    border-radius: 5px;
+    padding: 5px 10px;
+    background: #FFFFFF;
+    border-radius: 10px;
+    width:20%;
+}
+.svg-btn {
+    WIDTH: 45px;
+    height: 45px;
+    background-color: #1E3A8A;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor:pointer;
+}
+    .VisitRequest_topSection .search-bar input {
+        flex-grow: 1;
+        border: none;
+        outline: none;
+        padding-left: 5px;
+        font-size: 14px;
+    }
+#visitorsTable_filter label {
+    display: none;
+}
+
+.visitorDetails {
+    cursor:pointer;
+}

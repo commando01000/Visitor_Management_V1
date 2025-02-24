@@ -1,0 +1,259 @@
+﻿@model Visitor_Management_Portal.ViewModels.OrganizationUsers.OrganizationUserDetailsVM
+@{
+    ViewBag.Title = "Settings";
+
+}
+
+
+<link rel="stylesheet" href="~/Content/OrganizationUsers/UserDetails/UserDetails.css">
+
+<div class="section-container d-flex flex-column gap-4">
+    <top>
+        <a class="  navigation-btn">Settings ></a>
+        <a class="  navigation-btn" onclick="stepBack('/OrganizationUsers/Index')">Organization Users ></a>
+        <a class="navigation-btn ">User Details</a>
+    </top>
+
+    <div class="box-container">
+
+        <div class="row">
+
+            @*Left Side*@
+            <div class="col-lg-3 col-12 lef-side">
+                <div class="left">
+
+                    <!-- Profile Section -->
+                    <div class="profile-detials d-flex align-items-center gap-3 border-0 opacity-75">
+                        <img src="~/Content/Images/DashboardLayout/DefualtProfilePic.svg" alt="Profile" width="40" height="40" class="profile-pic opacity-50" />
+                        <div class="profile-info">
+                            <div class="name fs-6 fw-semibold">@Model.Name</div>
+                            <div class="fs-6 title">@Model.JobTitle</div>
+                        </div>
+                    </div>
+
+                    <div class="label-boxes d-flex flex-column gap-3 p-2 mt-4">
+                        @*needs-approval*@
+                        <div class="d-flex align-items-center justify-content-between needs-approval gap-3">
+                            <div class="d-flex align-items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                                    <g id="info" transform="translate(-2 -2)">
+                                        <path id="Path_40198" data-name="Path 40198" d="M14,2A12,12,0,1,0,26,14,12,12,0,0,0,14,2Zm0,22A10,10,0,1,1,24,14,10,10,0,0,1,14,24Z" transform="translate(0)" fill="#1e3a8a" />
+                                        <path id="Path_40199" data-name="Path 40199" d="M8.51,8.9a1,1,0,0,0-1,1v6.8a1,1,0,0,0,2,0V9.9A1,1,0,0,0,8.51,8.9Zm0-4.1a1.06,1.06,0,0,0-1.02,1.04V6a.94.94,0,0,0,1.02.94,1.04,1.04,0,0,0,1-1V5.7a.9.9,0,0,0-1-.9Z" transform="translate(5.49 2.797)" fill="#1e3a8a" />
+                                    </g>
+                                </svg>
+                                <p class="p-0 my-0 mx-2">Needs Approval</p>
+                            </div>
+
+                            <label class="switch">
+                                <input type="checkbox" @(Model.CreateVisitsWithoutApproval ? "checked" : "")>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+
+
+
+                        <div class="left-side-box left-lable">
+                            <p class="p-0 m-0 fw-semibold">Personal data</p>
+                            <a href="@Url.Action("EditUser", "OrganizationUsers", new { userId = Model.id })" class="p-0 m-0 edit-data text-decoration-none fw-semibold">Edit</a>
+                        </div>
+
+
+                        <div class="left-side-box left-lable">
+                            <p class="p-0 m-0  d-flex align-items-center justify-content-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="11.401" viewBox="0 0 16 11.401">
+                                    <g id="email" transform="translate(-2.08 -10.68)">
+                                        <path id="Path_40751" data-name="Path 40751" d="M15.807,22.081H4.353A2.275,2.275,0,0,1,2.08,19.808V12.953A2.275,2.275,0,0,1,4.353,10.68H15.807a2.275,2.275,0,0,1,2.273,2.273v6.856A2.275,2.275,0,0,1,15.807,22.081ZM4.353,11.482a1.471,1.471,0,0,0-1.471,1.471v6.856a1.471,1.471,0,0,0,1.471,1.471H15.807a1.471,1.471,0,0,0,1.471-1.471V12.953a1.471,1.471,0,0,0-1.471-1.471Z" transform="translate(0 0)" fill="#2f2f2f" />
+                                        <path id="Path_40752" data-name="Path 40752" d="M10.667,21.891A2.275,2.275,0,0,1,9.3,21.433L3.052,16.712a.4.4,0,1,1,.484-.639L9.78,20.8a1.484,1.484,0,0,0,1.775,0L17.8,16.073a.4.4,0,1,1,.484.639l-6.243,4.722a2.275,2.275,0,0,1-1.372.457Z" transform="translate(-0.587 -3.884)" fill="#2f2f2f" />
+                                        <path id="Path_40753" data-name="Path 40753" d="M3.069,34.919a.4.4,0,0,1-.267-.7l4.92-4.388a.4.4,0,1,1,.535.6l-4.92,4.388a.39.39,0,0,1-.267.1Zm14.882,0a.39.39,0,0,1-.267-.1l-4.92-4.388a.4.4,0,1,1,.535-.6l4.917,4.388a.4.4,0,0,1-.267.7Z" transform="translate(-0.431 -13.955)" fill="#2f2f2f" />
+                                    </g>
+                                </svg>
+                                Email
+                            </p>
+                            <p class="p-0 m-0  ">@Model.Email</p>
+                        </div>
+
+                        <div class="left-side-box left-lable">
+                            <p class="p-0 m-0  d-flex align-items-center justify-content-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="10.685" height="15.53" viewBox="0 0 10.685 15.53">
+                                    <g id="lock" transform="translate(-5.679 -1)">
+                                        <path id="Path_40754" data-name="Path 40754" d="M11.022,1A4.091,4.091,0,0,0,6.936,5.086V7.408A1.555,1.555,0,0,0,5.679,8.931v6.046A1.555,1.555,0,0,0,7.232,16.53h7.579a1.555,1.555,0,0,0,1.553-1.553V8.931a1.555,1.555,0,0,0-1.257-1.523V5.086A4.09,4.09,0,0,0,11.022,1ZM7.971,5.086a3.051,3.051,0,1,1,6.1,0V7.378h-6.1Zm7.358,3.845v6.046a.518.518,0,0,1-.518.518H7.233a.518.518,0,0,1-.518-.518V8.931a.518.518,0,0,1,.518-.518h7.579a.518.518,0,0,1,.518.518Z" transform="translate(0 0)" fill="#2f2f2f" />
+                                        <path id="Path_40755" data-name="Path 40755" d="M14.268,17.772a1.853,1.853,0,0,0-.518,3.634V21.8a.518.518,0,1,0,1.035,0v-.392a1.853,1.853,0,0,0-.518-3.633Zm0,2.681a.823.823,0,1,1,.823-.823.823.823,0,0,1-.823.823Z" transform="translate(-3.247 -8.09)" fill="#2f2f2f" />
+                                    </g>
+                                </svg>
+                                Password
+                            </p>
+                            <p class="p-0 m-0  ">**********</p>
+                        </div>
+
+
+                        <div class="left-side-box left-lable">
+                            <p class="p-0 m-0  d-flex align-items-center justify-content-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+                                    <path id="phone_7_" data-name="phone (7)" d="M19.03,14.7,17.6,13.269a2.287,2.287,0,0,0-3.207-.014,1.4,1.4,0,0,1-1.772.173,9.758,9.758,0,0,1-2.689-2.684,1.416,1.416,0,0,1,.184-1.779,2.287,2.287,0,0,0-.02-3.2L8.669,4.341a2.282,2.282,0,0,0-3.222,0l-.411.412C2.893,6.9,3.054,11.4,7.513,15.857c2.688,2.689,5.395,3.815,7.589,3.815a4.87,4.87,0,0,0,3.518-1.338l.412-.412A2.281,2.281,0,0,0,19.03,14.7ZM18.112,17l-.412.412C16.012,19.1,12.285,18.8,8.43,14.939S4.265,7.354,5.953,5.665l.408-.411a.981.981,0,0,1,1.385,0L9.176,6.683a.981.981,0,0,1,.014,1.37,2.715,2.715,0,0,0-.345,3.4,11.046,11.046,0,0,0,3.061,3.056,2.714,2.714,0,0,0,3.4-.336.982.982,0,0,1,1.375.008l1.429,1.429A.981.981,0,0,1,18.112,17Z" transform="translate(-3.698 -3.675)" fill="#2f2f2f" />
+                                </svg>
+                                Phone
+                            </p>
+                            <p class="p-0 m-0  ">@Model.Phone</p>
+                        </div>
+
+
+
+
+                        <div class="left-side-box left-lable ">
+                            <p class="p-0 m-0 d-flex align-items-center justify-content-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="15.249" viewBox="0 0 16 15.249">
+                                    <path id="user_2_" data-name="user (2)" d="M24.377,26.563a4.282,4.282,0,1,0-4.27-4.293A4.27,4.27,0,0,0,24.377,26.563Zm0-7.437a3.144,3.144,0,1,1-3.144,3.167A3.144,3.144,0,0,1,24.377,19.126ZM16.963,33.249H31.837a.571.571,0,0,0,.563-.563,5.387,5.387,0,0,0-5.372-5.372H21.772A5.387,5.387,0,0,0,16.4,32.686.571.571,0,0,0,16.963,33.249Zm4.809-4.809h5.255a4.231,4.231,0,0,1,4.2,3.683H17.573A4.231,4.231,0,0,1,21.772,28.44Z" transform="translate(-16.4 -18)" fill="#2f2f2f" />
+                                </svg>
+                                Role
+                            </p>
+                            <p class="p-0 m-0 ">@Model.Role</p>
+                        </div>
+
+                        <div class="left-side-box left-lable ">
+                            <p class="p-0 m-0 d-flex align-items-center justify-content-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="15.249" viewBox="0 0 16 15.249">
+                                    <path id="user_2_" data-name="user (2)" d="M24.377,26.563a4.282,4.282,0,1,0-4.27-4.293A4.27,4.27,0,0,0,24.377,26.563Zm0-7.437a3.144,3.144,0,1,1-3.144,3.167A3.144,3.144,0,0,1,24.377,19.126ZM16.963,33.249H31.837a.571.571,0,0,0,.563-.563,5.387,5.387,0,0,0-5.372-5.372H21.772A5.387,5.387,0,0,0,16.4,32.686.571.571,0,0,0,16.963,33.249Zm4.809-4.809h5.255a4.231,4.231,0,0,1,4.2,3.683H17.573A4.231,4.231,0,0,1,21.772,28.44Z" transform="translate(-16.4 -18)" fill="#2f2f2f" />
+                                </svg>
+                                Reporting to
+                            </p>
+                            <p class="p-0 m-0 ">@Model.Reportingto</p>
+                        </div>
+
+
+
+                        <div class=" mt-2 ">
+                            <p class="m-0 p-0 fw-semibold">My office location</p>
+
+
+                            <div class="location-details flex-wrap gap-2 d-flex align-content-center justify-content-around mt-2">
+                                <div class="box">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="15.114" height="16.02" viewBox="0 0 15.114 16.02">
+                                        <path id="Path_40638" data-name="Path 40638" d="M52.884,30.041l-7.208-5.323a.348.348,0,0,0-.412,0l-7.212,5.323a.338.338,0,0,0,.2.613H39.26v7.208h-.925a.351.351,0,0,0-.353.343v2.128a.343.343,0,0,0,.353.336H52.6a.345.345,0,0,0,.353-.336V38.206a.348.348,0,0,0-.353-.343h-.932V30.658h1.005a.342.342,0,0,0,.208-.617Zm-7.416-4.62,6.155,4.543H39.312Zm1.663,12.445V30.658h1.56v7.208ZM43.8,30.658v7.208h-1.56V30.658Zm.693,0h1.941v7.208H44.5Zm-4.54,0h1.594v7.208H39.957Zm12.3,9.323H38.675V38.559H52.26Zm-1.282-2.114H49.383V30.658h1.594Z" transform="translate(-37.909 -24.65)" fill="#2f2f2f" />
+                                    </svg>
+                                    @Model.Building
+                                </div>
+
+
+                                <div class="box">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="9" height="23" viewBox="0 0 9 23">
+                                        <text id="Z" transform="translate(0 17)" fill="#2f2f2f" font-size="16" font-family="Poppins-Regular, Poppins" opacity="0.6"><tspan x="0" y="0">Z</tspan></text>
+                                    </svg>
+                                    @Model.Zone
+                                </div>
+
+
+                                <div class="box">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="11.579" height="16.3" viewBox="0 0 11.579 16.3">
+                                        <g id="location_1_" data-name="location (1)" transform="translate(-15.2 -8.4)" opacity="0.6">
+                                            <path id="Path_40639" data-name="Path 40639" d="M20.989,24.7l-.31-.379c-.207-.276-5.479-6.444-5.479-10.131a5.789,5.789,0,1,1,11.579,0c0,3.687-5.273,9.89-5.479,10.132Zm0-15.507a4.964,4.964,0,0,0-4.962,4.962c0,2.895,3.825,7.823,4.962,9.236,1.137-1.413,4.962-6.306,4.962-9.236A4.964,4.964,0,0,0,20.989,9.193Z" transform="translate(0)" fill="#666" />
+                                            <path id="Path_40640" data-name="Path 40640" d="M27.806,23.211a2.205,2.205,0,1,1,2.205-2.205A2.221,2.221,0,0,1,27.806,23.211Zm0-3.584a1.378,1.378,0,1,0,1.378,1.378A1.382,1.382,0,0,0,27.806,19.627Z" transform="translate(-6.816 -6.816)" fill="#666" />
+                                        </g>
+                                    </svg>
+                                    Floor @Model.Floor
+                                </div>
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+
+            @*Right Side*@
+            <div class="col-lg-9 col-12 right-side">
+
+                <div class="dashboard-section-container">
+
+                    @*TOP*@
+
+                    <div class="visitorsHistory d-flex align-items-baseline justify-content-center justify-content-lg-between  mb-4">
+                        <p class="p-0 m-0 fw-bold d-none d-lg-block">User visits requests</p>
+
+                        <div class="d-flex gap-2 search-bar-container">
+                            <!-- DataTable Search -->
+                            <div class="search-bar">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="19.999" viewBox="0 0 20 19.999">
+                                    <g id="search" opacity="0.5">
+                                        <path id="Path_9" data-name="Path 9" d="M9.166,18.332a9.166,9.166,0,1,1,9.166-9.166A9.177,9.177,0,0,1,9.166,18.332Zm0-16.666a7.5,7.5,0,1,0,7.5,7.5A7.508,7.508,0,0,0,9.166,1.667Z" fill="#2f2f2f" />
+                                        <path id="Path_10" data-name="Path 10" d="M22.034,22.867a.831.831,0,0,1-.589-.244l-4-4a.833.833,0,0,1,1.179-1.178l3.995,4a.832.832,0,0,1-.589,1.422Z" transform="translate(-2.868 -2.868)" fill="#2f2f2f" />
+                                    </g>
+                                </svg>
+                                <input type="text" placeholder="Search..." />
+                            </div>
+                        </div>
+
+                    </div>
+
+                    @if (Model != null && Model.visitRequests.Any())
+                    {
+                        @*Data table*@
+                        <table id="visitorsHistoryTable" class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Visit</th>
+                                    <th>Visitors</th>
+                                    <th>Purpose </th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Location</th>
+                                    <th>Status</th>
+                                    <th>Approved by</th>
+
+                                </tr>
+                            </thead>
+
+
+                            <tbody>
+                                @foreach (var visit in Model.visitRequests)
+                                {
+
+                                    <tr>
+                                        <td>@visit.Serial</td>
+                                        <td><i class="fa-solid fa-user mx-1"></i> @visit.Visitors</td>
+                                        <td>@visit.Purpose</td>
+                                        <td>@visit.Date</td>
+                                        <td>@visit.Time</td>
+                                        <td>@visit.Location</td>
+                                        <td>@visit.Status</td>
+                                        <td>@visit.ApprovedBy</td>
+                                    </tr>
+                                }
+
+
+                            </tbody>
+                        </table>
+
+                    }
+                    else
+                    {
+                        @*No Data Message with Icon*@
+                        <div class="no-data-message text-center">
+                            <i class="fa-solid fa-database" style="font-size: 48px; color: #A7AEC2;"></i>
+                            <p class="mt-3">No visit requests found.</p>
+                        </div>
+                    }
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+
+@*Scripts*@
+
+@section Scripts {
+    <script>
+        const list_Item = document.querySelector(".sidebar-menu .settings")
+        list_Item.classList.add('active-sidebar-menu');
+    </script>
+
+    <script src="~/Content/OrganizationUsers/UserDetails/UserDetails.js"></script>
+}

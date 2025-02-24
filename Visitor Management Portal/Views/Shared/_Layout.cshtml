@@ -1,0 +1,519 @@
+﻿@using Visitor_Management_Portal.Utilities
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+
+    <link rel="icon" type="image" href="~/Content/Images/Waypass-Logo.svg">
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <!-- BOOTSTRAP -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css" integrity="sha512-SbiR/eusphKoMVVXysTKG/7VseWii+Y3FdHrt0EpKgpToZeemhqHeZeLWLhJutz/2ut2Vw1uQEj2MbRF+TVBUA==" crossorigin="anonymous" referrerpolicy="no-referrer" />    @Scripts.Render("~/bundles/modernizr")
+    <!-- Font awesome Pro v5.10.0 CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="~/Content/CSS/Dashboard_Layout.css">
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+
+    <!-- Include jQuery Confirm CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+
+    <!-- Shared CSS -->
+    <link rel="stylesheet" href="~/Content/CSS/Shared/Loader.css">
+    <link rel="stylesheet" href="~/Content/CSS/Shared/snackbar.css">
+    <link rel="stylesheet" href="~/Content/CSS/Table/Table.css">
+    <link rel="stylesheet" href="~/Content/CSS/Shared/Common.css">
+    @RenderSection("styles", required: false)
+
+</head>
+<body>
+    <!-- loader -->
+    <div id="Pageloading">
+        <div class="loader"></div>
+    </div>
+
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-content">
+
+
+
+
+                <ul class="sidebar-menu">
+
+                    <div class="logo sidebar-logo d-flex align-items-center justify-content-evenly  w-100 flex-row gap-3">
+
+                        <div class="d-flex align-items-center w-100 gap-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="116.457" height="21.118" viewBox="0 0 116.457 21.118">
+                                <g id="Waypass_-08" data-name="Waypass -08" transform="translate(-19.53 -7.03)">
+                                    <g id="Group_42915" data-name="Group 42915" transform="translate(19.53 10.163)">
+                                        <path id="Path_41206" data-name="Path 41206" d="M183.5,38.27l-.411.414a1.035,1.035,0,0,0-.241.418c-1.625,5.181-2.942,10.59-4.457,15.853-.176.528-.731,1.3-1.144,1.3H171.64l.135-.165a2.739,2.739,0,0,0,.532-1.023l4.2-15.522c.142-.613.662-1.274,1.108-1.274H183.5Z" transform="translate(-156.382 -38.269)" fill="#12204b" />
+                                        <path id="Path_41207" data-name="Path 41207" d="M107.444,38.261l-.411.392a.966.966,0,0,0-.241.4c-1.625,4.912-2.942,10.041-4.457,15.031-.176.5-.731,1.231-1.144,1.231H95.58l.135-.156a2.549,2.549,0,0,0,.532-.97l4.2-14.718c.142-.581.662-1.208,1.108-1.208h5.888Z" transform="translate(-87.951 -38.26)" fill="#12204b" />
+                                        <path id="Path_41208" data-name="Path 41208" d="M31.393,38.27l-.411.359a.875.875,0,0,0-.241.364c-1.625,4.5-2.942,9.2-4.457,13.775-.176.458-.731,1.128-1.144,1.128H19.53l.135-.143a2.282,2.282,0,0,0,.532-.889l4.2-13.487c.142-.533.662-1.106,1.108-1.106h5.888Z" transform="translate(-19.53 -38.269)" fill="#12204b" />
+                                        <path id="Path_41209" data-name="Path 41209" d="M262.305,51.227l-.055-.155,3.166-11.479c.323-.89.733-1.161,1.4-1.225a18.039,18.039,0,0,1,3.628.012c.617.105,1,.687.908,1.629-.929,3.492-1.836,7.047-2.952,10.413a1.527,1.527,0,0,1-1.114.806h-4.98Z" transform="translate(-237.902 -38.28)" fill="#d0b786" />
+                                    </g>
+                                    <g id="Group_42916" data-name="Group 42916" transform="translate(56.313 14.186)">
+                                        <path id="Path_41210" data-name="Path 41210" d="M388.866,90.131,386.22,80.66h2.268l1.749,6.923.178.734h.155l.186-.734,1.756-6.648h2.876l1.756,6.648.186.734h.155l.178-.726,1.763-6.93h2.261l-2.646,9.471h-3.113l-1.437-5.581-.466-1.846h-.14l-.474,1.846-1.43,5.581h-3.113Z" transform="translate(-386.22 -80.43)" fill="#12204b" />
+                                        <path id="Path_41211" data-name="Path 41211" d="M536.87,90.131,541.1,80.66h3.209l4.2,9.471H546.26l-3.439-8.123h-.23l-3.476,8.123Zm2.824-2.393v-1.7h5.981v1.7Z" transform="translate(-521.758 -80.43)" fill="#12204b" />
+                                        <path id="Path_41212" data-name="Path 41212" d="M642.99,87.545l-4.61-6.885h2.393l2.127,3.268.934,1.43h.118l.927-1.415,2.142-3.283h2.393l-4.6,6.885h-1.823Zm-.178,2.586V85.707h2.172v4.425Z" transform="translate(-613.085 -80.43)" fill="#12204b" />
+                                        <path id="Path_41213" data-name="Path 41213" d="M762.36,90.131V80.66h2.135v9.471Zm1.579-2.876v-1.7h3.839a2.2,2.2,0,0,0,1.453-.4,1.422,1.422,0,0,0,.459-1.138V83.9a1.434,1.434,0,0,0-.459-1.146,2.2,2.2,0,0,0-1.453-.4h-3.869v-1.7h3.92a4.631,4.631,0,0,1,3.08.856,2.994,2.994,0,0,1,.989,2.39v.118a2.982,2.982,0,0,1-.989,2.368,4.6,4.6,0,0,1-3.08.864h-3.891Z" transform="translate(-724.629 -80.43)" fill="#d0b786" />
+                                        <path id="Path_41214" data-name="Path 41214" d="M853.76,90.131l4.232-9.471H861.2l4.2,9.471H863.15l-3.439-8.123h-.23l-3.476,8.123Zm2.824-2.393v-1.7h5.982v1.7Z" transform="translate(-806.86 -80.43)" fill="#d0b786" />
+                                        <path id="Path_41215" data-name="Path 41215" d="M983.29,88.309a10.8,10.8,0,0,1-1.771-.137,11.373,11.373,0,0,1-1.486-.341q-.664-.2-1.146-.4l-.23-2.008a13.026,13.026,0,0,0,2.053.737,9.53,9.53,0,0,0,2.572.337,4.881,4.881,0,0,0,1.942-.278.92.92,0,0,0,.593-.879v-.022a.854.854,0,0,0-.252-.652,1.875,1.875,0,0,0-.871-.374,14.064,14.064,0,0,0-1.716-.234,12.15,12.15,0,0,1-2.513-.448,2.733,2.733,0,0,1-1.4-.893,2.5,2.5,0,0,1-.441-1.542v-.037a2.3,2.3,0,0,1,1.093-2.071,6.223,6.223,0,0,1,3.309-.7,11.192,11.192,0,0,1,2.516.245,10.306,10.306,0,0,1,1.76.556L987.544,81a10.231,10.231,0,0,0-1.96-.645,10.585,10.585,0,0,0-2.36-.252,6.224,6.224,0,0,0-1.437.129,1.444,1.444,0,0,0-.726.359.811.811,0,0,0-.208.564v.007a.82.82,0,0,0,.208.571,1.649,1.649,0,0,0,.808.382,12.644,12.644,0,0,0,1.771.263,14.26,14.26,0,0,1,2.5.418,2.8,2.8,0,0,1,1.449.853,2.464,2.464,0,0,1,.47,1.6v.052a2.481,2.481,0,0,1-1.179,2.271A6.954,6.954,0,0,1,983.29,88.309Z" transform="translate(-919.195 -78.37)" fill="#d0b786" />
+                                        <path id="Path_41216" data-name="Path 41216" d="M1091.089,88.309a10.8,10.8,0,0,1-1.771-.137,11.371,11.371,0,0,1-1.486-.341q-.664-.2-1.146-.4l-.23-2.008a13.03,13.03,0,0,0,2.053.737,9.529,9.529,0,0,0,2.572.337,4.88,4.88,0,0,0,1.942-.278.92.92,0,0,0,.593-.879v-.022a.853.853,0,0,0-.252-.652,1.874,1.874,0,0,0-.871-.374,14.068,14.068,0,0,0-1.716-.234,12.153,12.153,0,0,1-2.513-.448,2.734,2.734,0,0,1-1.4-.893,2.5,2.5,0,0,1-.441-1.542v-.037a2.3,2.3,0,0,1,1.093-2.071,6.223,6.223,0,0,1,3.309-.7,11.19,11.19,0,0,1,2.516.245,10.306,10.306,0,0,1,1.761.556l.245,1.831a10.23,10.23,0,0,0-1.96-.645,10.584,10.584,0,0,0-2.36-.252,6.223,6.223,0,0,0-1.437.129,1.445,1.445,0,0,0-.726.359.811.811,0,0,0-.208.564v.007a.82.82,0,0,0,.208.571,1.65,1.65,0,0,0,.807.382,12.649,12.649,0,0,0,1.772.263,14.262,14.262,0,0,1,2.5.418,2.8,2.8,0,0,1,1.448.853,2.463,2.463,0,0,1,.471,1.6v.052a2.481,2.481,0,0,1-1.179,2.271A6.954,6.954,0,0,1,1091.089,88.309Z" transform="translate(-1016.181 -78.37)" fill="#d0b786" />
+                                    </g>
+                                    <path id="Path_41217" data-name="Path 41217" d="M775.78,7.1l-.015.044-.032-.044-.053-.069h.013Z" transform="translate(-680.299 0)" fill="#12204b" />
+                                    <path id="Path_41218" data-name="Path 41218" d="M748.906,81.254l.063-.044-.016.044-.184.1Z" transform="translate(-656.089 -66.739)" fill="#12204b" />
+                                </g>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div class="profile-section-sidebar">
+                        <img src="~/Content/Images/DashboardLayout/DefualtProfilePic.svg" alt="Profile" class="profile-pic" />
+                        <div class="profile-info">
+                            <div class="name">test</div>
+                            <div class="title">test</div>
+                        </div>
+                    </div>
+
+                    <li class="dashboard">
+                        <a href="@Url.Action("Dashboard", "Dashboard")" class="menu-item  ">
+                            <img src="~/Content/Images/DashboardLayout/Dashboard_icon.svg" alt="Dashboard Icon" />
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+
+                    <li class="VisitRequest">
+                        <a href="@Url.Action("Index", "VisitRequest")" class="menu-item">
+                            <img src="~/Content/Images/DashboardLayout/Dashboard_icon.svg" alt="Visit Request Icon" />
+                            <span>Visit Request</span>
+                        </a>
+                    </li>
+
+                    <li class="VisitorsHub">
+                        <a href="@Url.Action("Index", "VisitorsHub")" class="menu-item">
+                            <img src="~/Content/Images/DashboardLayout/Visitors Hub_icon.svg" alt="Visitors Hub Icon" />
+                            <span>Visitors Hub</span>
+                        </a>
+                    </li>
+
+                    @*<a href="@Url.Action("Index", "Settings")" class="menu-item">*@
+                    <li class="dropdown settings">
+                        <a class="menu-item dropdown-toggle" style="cursor:pointer">
+                            <img src="~/Content/Images/DashboardLayout/Settings_icon.svg" alt="Settings Icon" />
+                            <span>Settings</span>
+                            <svg class="arrow-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M1.5 5.5L8 12l6.5-6.5L13.5 4l-5.5 5.5L2.5 4 1.5 5.5z" />
+                            </svg>
+                        </a>
+                        <div class="settings-items">
+                            <ul>
+                                <li data-path="/OrganizationDate/Index" data-short-text="O D" data-full-text="Organization Data">Organization Data</li>
+                                <li data-path="/OrganizationUsers/Index" data-short-text="O U" data-full-text="Organization Users">Organization Users</li>
+                                <li data-path="/OrganizationSetup/Index" data-short-text="O S" data-full-text="Organization Setup">Organization Setup</li>
+                            </ul>
+                        </div>
+
+
+                    </li>
+
+
+
+                </ul>
+            </div>
+            <a href="@Url.Action("Logout", "Account")" class="p-2 logout-btn">
+                <img src="~/Content/Images/DashboardLayout/Logout_icon.svg" alt="Dashboard Icon" />
+                <span class="mx-2">Logout</span>
+            </a>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Navbar -->
+            <nav class="navbar-section position-relative" id="navbar">
+
+                <div class="sidebar-header">
+                    <div class="collapse-btn-border">
+                        <button class="collapse-btn" id="collapseBtn"><i class="fa-solid fa-angle-left"></i></button>
+                    </div>
+                </div>
+                <div class="page-title">@ViewData["Title"]</div>
+                <div class="search-bar">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="19.999" viewBox="0 0 20 19.999">
+                        <g id="search" opacity="0.5">
+                            <path id="Path_9" data-name="Path 9" d="M9.166,18.332a9.166,9.166,0,1,1,9.166-9.166A9.177,9.177,0,0,1,9.166,18.332Zm0-16.666a7.5,7.5,0,1,0,7.5,7.5A7.508,7.508,0,0,0,9.166,1.667Z" fill="#2f2f2f" />
+                            <path id="Path_10" data-name="Path 10" d="M22.034,22.867a.831.831,0,0,1-.589-.244l-4-4a.833.833,0,0,1,1.179-1.178l3.995,4a.832.832,0,0,1-.589,1.422Z" transform="translate(-2.868 -2.868)" fill="#2f2f2f" />
+                        </g>
+                    </svg>
+                    <input type="text" placeholder="Search..." />
+                </div>
+
+                <div class="profile-section">
+                    <!-- Bell Icon with Click Event -->
+                    <img src="~/Content/Images/DashboardLayout/Group_10458.svg"
+                         alt="Notifications"
+                         class="notification-ico"
+                         id="notificationBell" /> &nbsp;
+
+                    <img src="~/Content/Images/DashboardLayout/DefualtProfilePic.svg"
+                         alt="Profile"
+                         class="profile-pic" />
+
+                    <div class="profile-info">
+                        <div class="name">@ClaimsManager.GetUserName()</div>
+                        <div class="title">@ClaimsManager.GetUserRole()</div>
+                    </div>
+
+                    <!-- Notification Section -->
+                    <div class="notification-container position-absolute" id="notificationBox">
+                        <div class="notifications">
+                            <h5>Notifications</h5>
+                            <div class="notification-item">
+                                <p>
+                                    <strong>Ahmed Mohamed</strong> has requested a visit for John Doe on 26 Jan 2025 at 2:00 PM
+                                    <br> Reason: Project Discussion <br />
+                                    <small class="text-muted">2h ago</small>
+                                </p>
+                                <button class="confirm-btn dashboard-button">Confirm</button>
+                                <button class="reject-btn">Reject</button>
+                            </div>
+                            <div class="notification-item">
+                                <p><strong>Ahmed Mohamed</strong> has updated the visit request for John Doe, new date 28 Jan 2025 at 4:00 PM</p>
+                                <small class="text-muted">2h ago</small>
+                            </div>
+                            <div class="notification-item">
+                                <p><strong>Ahmed Mohamed</strong> has updated the visit request for John Doe, new date 28 Jan 2025 at 4:00 PM</p>
+                                <small class="text-muted">2h ago</small>
+                            </div>
+                            <div class="notification-item">
+                                <p><strong>Ahmed Mohamed</strong> has updated the visit request for John Doe, new date 28 Jan 2025 at 4:00 PM</p>
+                                <small class="text-muted">2h ago</small>
+                            </div>
+                            <div class="notification-item">
+                                <p><strong>Ahmed Mohamed</strong> has updated the visit request for John Doe, new date 28 Jan 2025 at 4:00 PM</p>
+                                <small class="text-muted">2h ago</small>
+                            </div>
+                            <div class="notification-item">
+                                <p><strong>Ahmed Mohamed</strong> has updated the visit request for John Doe, new date 28 Jan 2025 at 4:00 PM</p>
+                                <small class="text-muted">2h ago</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </nav>
+
+            <!-- Rendered View -->
+            <div class="content" id="content">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+
+    <!-- Jquery JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>    <!-- BOOTSTRAP JS -->
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js" integrity="sha512-1/RvZTcCDEUjY/CypiMz+iqqtaoQfAITmNSJY17Myp4Ms5mdxPS5UV7iOfdZoxcGhzFbOm6sntTKJppjvuhg4g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- Include jQuery and jQuery Confirm JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+
+
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+    <!-- Include SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+    <script src="~/Content/JS/App.js"></script>
+    <script src="~/Content/JS/Dashboard_Layout.js"></script>
+    <script>
+
+        //loader
+        $(window).on('beforeunload', function () {
+            console.log("TEST")
+            $('#Pageloading').css('visibility', 'visible');
+        });
+
+        window.addEventListener('pageshow', function (event) {
+            if (event.persisted) {
+                $('#Pageloading').css('visibility', 'hidden');
+            }
+        });
+
+        //show loader in ajax req
+        $(document)
+            .ajaxStart(function () {
+                $('#Pageloading').css('visibility', 'visible');
+            })
+            .ajaxStop(function () {
+                $('#Pageloading').css('visibility', 'hidden');
+            });
+
+         //snackbar
+        var messageString = null;
+        var notifyStatusVal = null;
+
+        @*if ('@ViewBag.AlertMessage' || '@TempData["AlertMessage"]') {
+            messageString = '@(ViewBag.AlertMessage ?? TempData["AlertMessage"])';
+            notifyStatusVal = '@(Enum.GetName(typeof(XDesk.Utilities.Enums.NotifyStatus), XDesk.Utilities.Enums.NotifyStatus.Info))';
+        }
+        if ('@ViewBag.SuccessMessage' || '@TempData["SuccessMessage"]') {
+            messageString = '@(ViewBag.SuccessMessage ?? TempData["SuccessMessage"])';
+            notifyStatusVal = '@(Enum.GetName(typeof(XDesk.Utilities.Enums.NotifyStatus), XDesk.Utilities.Enums.NotifyStatus.Success))';
+        }
+        if ('@ViewBag.ErrorMessage' || '@TempData["ErrorMessage"]') {
+            messageString = '@(ViewBag.ErrorMessage ?? TempData["ErrorMessage"])';
+            notifyStatusVal = '@(Enum.GetName(typeof(XDesk.Utilities.Enums.NotifyStatus), XDesk.Utilities.Enums.NotifyStatus.Error))';
+        }*@
+
+        if (messageString) {
+            Notify(messageString, notifyStatusVal)
+        }
+
+        //document.addEventListener('DOMContentLoaded', function () {
+        //    const toggleButton = document.getElementById('sidebarToggle');
+        //    if (toggleButton) {
+        //        toggleButton.addEventListener('click', function () {
+        //            const sidebar = document.getElementById('sidebar');
+        //            sidebar.classList.toggle('collapsed');
+        //        });
+        //    }
+        //});
+
+    </script>
+
+    <script>
+        function stepBack(newUrl) {
+            if (!newUrl.startsWith('http') && !newUrl.startsWith('https')) {
+                const baseUrl = window.location.origin;
+                newUrl = baseUrl + newUrl;
+            }
+
+            console.log(`Navigating to: ${newUrl}`);
+
+            window.location.href = newUrl;
+        }
+
+
+    </script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+
+
+@*An Template to the model*@
+
+@*
+
+        // Style for the model
+        <style>
+        input#FORM-old-password,
+        input#FORM-new_password,
+        input#FORM-confirm_password {
+            background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="16.502" height="23.985" viewBox="0 0 16.502 23.985"%3E%3Cg id="lock" opacity="0.5"%3E%3Cpath id="Path_40754" data-name="Path 40754" d="M13.931,1A6.318,6.318,0,0,0,7.62,7.31V10.9a2.4,2.4,0,0,0-1.941,2.352v9.337a2.4,2.4,0,0,0,2.4,2.4H19.783a2.4,2.4,0,0,0,2.4-2.4V13.249A2.4,2.4,0,0,0,20.24,10.9V7.31A6.317,6.317,0,0,0,13.931,1ZM9.219,7.31a4.711,4.711,0,1,1,9.423,0v3.54H9.219Zm11.364,5.939v9.337a.8.8,0,0,1-.8.8H8.078a.8.8,0,0,1-.8-.8V13.249a.8.8,0,0,1,.8-.8h11.7a.8.8,0,0,1,.8.8Z" transform="translate(-5.679 -1)" fill="%232f2f2f"/%3E%3Cpath id="Path_40755" data-name="Path 40755" d="M15.28,17.772a2.862,2.862,0,0,0-.8,5.612v.605a.8.8,0,1,0,1.6,0v-.606a2.862,2.862,0,0,0-.8-5.612Zm0,4.141a1.271,1.271,0,1,1,1.271-1.27,1.271,1.271,0,0,1-1.271,1.27Z" transform="translate(-7.029 -4.363)" fill="%232f2f2f"/%3E%3C/g%3E%3C/svg%3E');
+            background-repeat: no-repeat;
+            background-position: 10px center;
+            background-size: 27px 24px;
+            padding-left: 40px;
+            opacity: 0.7;
+            padding: 15px 15px 15px 40px;
+        }
+
+        input.form-control {
+            background-image: none;
+            background-repeat: no-repeat;
+            background-size: 20px;
+            background-position: 10px center;
+            padding-left: 40px;
+            opacity: 0.7;
+        }
+
+        input::placeholder {
+            opacity: 0.7;
+        }
+
+        .modal-content label {
+            font-weight: 500
+        }
+    </style>
+
+        <!-- Modal trigger button -->
+        <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#newClientModal">
+            Launch
+        </button>
+
+        <!-- Modal Body -->
+
+        <!-- Add New Client Modal -->
+        <div class="modal fade" id="newClientModal" tabindex="-1" aria-labelledby="modalTitleId" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document"
+                style="max-width: 45%;    zoom: 85%;">
+                <div class="modal-content d-flex align-items-center border-0 rounded-4" style="padding: 60px;">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="    position: absolute;
+                    top: 2rem;
+                    right: 2rem;"></button>
+
+                    <div class="modal-header text-start w-100 border-0">
+                        <div
+                            class="header-text-content d-flex flex-column align-items-center justify-content-center gap-3 w-100">
+                            <h3 class="modal-title" id="modalTitleId">Enter your new password</h3>
+                            <p class="modal-title fs-4 " id="modalTitleId">Your new password must be different to
+                                previous
+                                passwords</p>
+                        </div>
+                    </div>
+                    <div class="modal-body w-100">
+                        <form id="clientForm">
+
+
+                            <!-- First Input -->
+                            <div class="row g-3">
+                                <div class="col-12 ">
+                                    <div class="mb-3">
+                                        <label for="FORM-old-password" class="form-label">Old Password</label>
+                                        <input type="text" class="form-control" id="FORM-old-password"
+                                            placeholder="Enter Old Password" style=" border-radius: 8px" />
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!-- Second Input -->
+                            <div class="row g-3">
+                                <div class="col-12 ">
+                                    <div class="mb-3">
+                                        <label for="FORM-new_password" class="form-label">New Password</label>
+                                        <input type="text" class="form-control" id="FORM-new_password"
+                                            placeholder="Enter New Password" style=" border-radius: 8px" />
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!-- Third Input -->
+                            <div class="row g-3">
+                                <div class="col-12 ">
+                                    <div class="mb-3">
+                                        <label for="FORM-confirm_password" class="form-label">Confirm Password</label>
+                                        <input type="text" class="form-control" id="FORM-confirm_password"
+                                            placeholder="Confirm New Password" style=" border-radius: 8px" />
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!-- Error Message Container -->
+                            <div id="error-message-container" style="display: none; color: red; font-size: 14px"></div>
+                        </form>
+                    </div>
+
+                    <div class="modal-footer border-0 d-flex justify-content-between w-100">
+                        <button type="button" class="btn" style="
+                    width: 100%;
+                    background: #1E3A8A;
+                    box-shadow: 0px 4px 12px #00000029;
+                    border-radius: 4px;
+                    font-size: 15px;
+                    color: white;
+                    padding: 15px;
+                  " id="saveDataBtn">
+                            Change Password
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+*@
+@* =============================================================================================================================================== *@
+@*DataTable Example*@
+@*
+
+
+    <!-- DataTable Search -->
+
+      <table id="visitorsTable" class="table table-striped table-bordered">
+          <thead>
+              <tr>
+                  <th>Visit</th>
+                  <th>Requested by</th>
+                  <th>Visitors</th>
+                  <th>Purpose</th>
+                  <th>Date</th>
+                  <th>Time</th>
+                  <th>Duration</th>
+                  <th>Location</th>
+                  <th>Status</th>
+                  <th>Approved by </th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr>
+                  <td>Visit 1</td>
+                  <td><i class="fa-solid fa-user-gear mx-1"></i>John Doe</td>
+                  <td><i class="fa-solid fa-user mx-1"></i> 3</td>
+                  <td>Meeting</td>
+                  <td>2024-12-12</td>
+                  <td>10:00 AM</td>
+                  <td>1H</td>
+                  <td>Conference Room</td>
+                  <td>Approved</td>
+                  <td>Jane Smith</td>
+              </tr>
+
+              <tr>
+                  <td>Visit 2</td>
+                  <td><i class="fa-solid fa-user-gear mx-1"></i>Sarah Connor</td>
+                  <td><i class="fa-solid fa-user mx-1"></i> 5</td>
+                  <td>Training</td>
+                  <td>2024-12-11</td>
+                  <td>2:00 PM</td>
+                  <td>2H</td>
+                  <td>Hall A</td>
+                  <td>Pending</td>
+                  <td>Michael Johnson</td>
+              </tr>
+
+              <tr>
+                  <td>Visit 3</td>
+                  <td><i class="fa-solid fa-user-gear mx-1"></i>Mark Twain</td>
+                  <td><i class="fa-solid fa-user mx-1"></i> 2</td>
+                  <td>Interview</td>
+                  <td>2024-12-10</td>
+                  <td>9:00 AM</td>
+                  <td>45M</td>
+                  <td>Office</td>
+                  <td>Rejected</td>
+                  <td>Samuel Clemens</td>
+              </tr>
+          </tbody>
+      </table>
+
+
+    <script>
+        $(document).ready(function () {
+            $('#visitorsTable').DataTable({
+                "pageLength": 5,
+                "lengthChange": false,
+                "searching": true,
+                "info": true,
+                "autoWidth": false,
+                "columnDefs": [
+                    { "orderable": false, "targets": [9] }
+                ],
+                "buttons": ['print']
+            });
+            $('div.toolbar').html('<b>This should work!</b>');
+        });
+    </script>
+
+*@

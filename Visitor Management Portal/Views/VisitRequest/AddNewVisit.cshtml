@@ -1,0 +1,237 @@
+﻿@{
+    ViewBag.Title = "Visits Request";
+}
+
+@section styles{
+    <link rel="stylesheet" href="~/Content/VisitRequest/AddNewVisit/AddNewVisit.css">
+
+}
+
+<div class="section-container d-flex flex-column gap-4">
+    <top>
+        <a class="navigation-btn"  onclick="stepBack('/VisitRequest')">Visits Request ></a>
+        <a class="navigation-btn">Add new visit</a>
+    </top>
+
+    <div class="box-container">
+        <div class="row">
+            <!-- Left Side -->
+            <div class="col-lg-3 col-12 left-side">
+                <div class="left p-0">
+                    <p class="p-0 m-0 mb-4">
+                        Easily track visit requests for your organization using the system. As an admin, you can add visits by entering visitor details, allowing for organized management and monitoring.
+                    </p>
+
+                    <div class="w-100">
+                        <div class="step-tab">
+                            <div class=" fw-500 nav-link active" data-step="1">Visit Details</div>
+                            <div class="fw-500 nav-link" data-step="2">Add Visitors</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Right Side -->
+            <div class="col-lg-9 col-12 right-side">
+                <!-- Step One -->
+                <div id="tab1" class="tab-content active" style="padding: 0px 20px;">
+                    <div class="data-box">
+                        <div class="data-title">Details</div>
+                        <div class="form-grid">
+
+                            <div class="form-group">
+                                <label for="subject">Subject  <span class="text-muted">(Optional)</span></label>
+                                <input type="text" id="subject" name="subject" class="form-input" placeholder="Enter visit subject">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="status">Status Reason <span class="text-danger">*</span></label>
+                                <select id="status" class="form-input">
+                                    <option value="" disabled selected>Select status</option>
+                                    <option value="1">Pending Approval</option>
+                                    <option value="127430002">Confirmed</option>
+                                </select>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="date">Visit Time <span class="text-danger">*</span></label>
+                                <input type="datetime-local" id="date" name="visitDate" class="form-input">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="time">Visit Until <span class="text-danger">*</span></label>
+                                <input type="datetime-local" id="time" name="visitTime" class="form-input">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="visitPurpose">Choose Visit Purpose <span class="text-danger">*</span></label>
+                                <select id="visitPurpose" class="form-input">
+                                    <option value="" disabled selected>Select Visit Purpose</option>
+                                    <option value="127430000">Meeting</option>
+                                    <option value="127430001">Interview</option>
+                                    <option value="127430002">Emergency</option>
+                                    <option value="127430003">Other</option>
+                                </select>
+                            </div>
+
+                            <div id="requestedByDropdown" class="form-group">
+                                <label for="requestedBySearch">Requested By <span class="text-danger">*</span></label>
+                                <input type="text"
+                                       id="requestedBySearch"
+                                       class="form-input"
+                                       placeholder="Search and select a person"
+                                       autocomplete="off" />
+                                <div id="requestedByOptions" class="dropdown-options hidden"></div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Main Box for Visit Location -->
+                    <div class="data-box">
+                        <div class="data-title">Choose Visit Location <span class="text-danger">*</span></div>
+
+                        <!-- Options -->
+                        <div class="visit-location-container d-flex align-item-center gap-3 w-100">
+                            <div class="visit-location-option " data-value="1">Meeting Area</div>
+                            <div class="visit-location-option selected" data-value="0">My Office</div>
+                        </div>
+
+                    </div>
+
+
+                    <!-- Location Of Office -->
+                    <div class="office-lcation">
+                        <div class="top d-flex align-item-center gap-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                <g id="info" transform="translate(-2 -2)">
+                                    <path id="Path_40198" data-name="Path 40198" d="M14,2A12,12,0,1,0,26,14,12,12,0,0,0,14,2Zm0,22A10,10,0,1,1,24,14,10,10,0,0,1,14,24Z" transform="translate(0)" fill="#1e3a8a" />
+                                    <path id="Path_40199" data-name="Path 40199" d="M8.51,8.9a1,1,0,0,0-1,1v6.8a1,1,0,0,0,2,0V9.9A1,1,0,0,0,8.51,8.9Zm0-4.1a1.06,1.06,0,0,0-1.02,1.04V6a.94.94,0,0,0,1.02.94,1.04,1.04,0,0,0,1-1V5.7a.9.9,0,0,0-1-.9Z" transform="translate(5.49 2.797)" fill="#1e3a8a" />
+                                </g>
+                            </svg>
+                            <p class="m-0 p-0">My office location</p>
+                        </div>
+
+                        <div class="location-details d-flex align-content-center gap-2 mt-2">
+                            <div class="box">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="15.114" height="16.02" viewBox="0 0 15.114 16.02">
+                                    <path id="Path_40638" data-name="Path 40638" d="M52.884,30.041l-7.208-5.323a.348.348,0,0,0-.412,0l-7.212,5.323a.338.338,0,0,0,.2.613H39.26v7.208h-.925a.351.351,0,0,0-.353.343v2.128a.343.343,0,0,0,.353.336H52.6a.345.345,0,0,0,.353-.336V38.206a.348.348,0,0,0-.353-.343h-.932V30.658h1.005a.342.342,0,0,0,.208-.617Zm-7.416-4.62,6.155,4.543H39.312Zm1.663,12.445V30.658h1.56v7.208ZM43.8,30.658v7.208h-1.56V30.658Zm.693,0h1.941v7.208H44.5Zm-4.54,0h1.594v7.208H39.957Zm12.3,9.323H38.675V38.559H52.26Zm-1.282-2.114H49.383V30.658h1.594Z" transform="translate(-37.909 -24.65)" fill="#2f2f2f"></path>
+                                </svg>
+                                @ViewBag.Location.Building
+                            </div>
+
+
+                            <div class="box">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="9" height="23" viewBox="0 0 9 23">
+                                    <text id="Z" transform="translate(0 17)" fill="#2f2f2f" font-size="16" font-family="Poppins-Regular, Poppins" opacity="0.6"><tspan x="0" y="0">Z</tspan></text>
+                                </svg>
+                                @ViewBag.Location.Zone
+                            </div>
+
+
+                            <div class="box">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="11.579" height="16.3" viewBox="0 0 11.579 16.3">
+                                    <g id="location_1_" data-name="location (1)" transform="translate(-15.2 -8.4)" opacity="0.6">
+                                        <path id="Path_40639" data-name="Path 40639" d="M20.989,24.7l-.31-.379c-.207-.276-5.479-6.444-5.479-10.131a5.789,5.789,0,1,1,11.579,0c0,3.687-5.273,9.89-5.479,10.132Zm0-15.507a4.964,4.964,0,0,0-4.962,4.962c0,2.895,3.825,7.823,4.962,9.236,1.137-1.413,4.962-6.306,4.962-9.236A4.964,4.964,0,0,0,20.989,9.193Z" transform="translate(0)" fill="#666"></path>
+                                        <path id="Path_40640" data-name="Path 40640" d="M27.806,23.211a2.205,2.205,0,1,1,2.205-2.205A2.221,2.221,0,0,1,27.806,23.211Zm0-3.584a1.378,1.378,0,1,0,1.378,1.378A1.382,1.382,0,0,0,27.806,19.627Z" transform="translate(-6.816 -6.816)" fill="#666"></path>
+                                    </g>
+                                </svg>
+                                Floor  @ViewBag.Location.Floor
+                            </div>
+                        </div>
+
+                        <!-- Hidden input for BuildingId && ZoneId -->
+                        <input type="hidden" name="BuildingId" value="@ViewBag.Location.BuildingId" />
+                        <input type="hidden" name="ZoneId" value="@ViewBag.Location.ZoneId" />
+
+                    </div>
+                    <!-- Location Of Meeting Area -->
+                    <div class="meetingArea-lcation d-none">
+                        <div class="top d-flex align-item-center gap-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                <g id="info" transform="translate(-2 -2)">
+                                    <path id="Path_40198" data-name="Path 40198" d="M14,2A12,12,0,1,0,26,14,12,12,0,0,0,14,2Zm0,22A10,10,0,1,1,24,14,10,10,0,0,1,14,24Z" transform="translate(0)" fill="#1e3a8a" />
+                                    <path id="Path_40199" data-name="Path 40199" d="M8.51,8.9a1,1,0,0,0-1,1v6.8a1,1,0,0,0,2,0V9.9A1,1,0,0,0,8.51,8.9Zm0-4.1a1.06,1.06,0,0,0-1.02,1.04V6a.94.94,0,0,0,1.02.94,1.04,1.04,0,0,0,1-1V5.7a.9.9,0,0,0-1-.9Z" transform="translate(5.49 2.797)" fill="#1e3a8a" />
+                                </g>
+                            </svg>
+                            <p class="m-0 p-0">Meeting area location</p>
+                        </div>
+
+                        <div class="form-grid w-100">
+                            <div class="form-group">
+                                <label for="building">Building</label>
+                                <select id="building" class="form-input">
+                                    <option value="">Select building</option>
+                                    <!-- Options will be populated dynamically -->
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="zone">Zone</label>
+                                <select id="zone" class="form-input">
+                                    <option value="">Select zone</option>
+                                    <!-- Options will be populated dynamically -->
+                                </select>
+                            </div>
+                            <div id="meetingAreasDropdown" class="form-group">
+                                <label for="meetingAreaSearch">Meeting Area</label>
+                                <input type="text"
+                                       id="meetingAreaSearch"
+                                       class="form-input"
+                                       placeholder="Search and select a meeting area"
+                                       autocomplete="off" />
+                                <div id="meetingAreaOptions" class="dropdown-options hidden"></div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+
+                <!-- Step Two -->
+                <div id="tab2" class="tab-content d-flex flex-column gap-4 d-none" style="padding: 0px 20px;">
+                    <h5>Add Visitors</h5>
+                    <div class="search-seciton position-relative">
+                        <div class="search-bar">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="19.999" viewBox="0 0 20 19.999">
+                                <g id="search" opacity="0.5">
+                                    <path id="Path_9" data-name="Path 9" d="M9.166,18.332a9.166,9.166,0,1,1,9.166-9.166A9.177,9.177,0,0,1,9.166,18.332Zm0-16.666a7.5,7.5,0,1,0,7.5,7.5A7.508,7.508,0,0,0,9.166,1.667Z" fill="#2f2f2f"></path>
+                                    <path id="Path_10" data-name="Path 10" d="M22.034,22.867a.831.831,0,0,1-.589-.244l-4-4a.833.833,0,0,1,1.179-1.178l3.995,4a.832.832,0,0,1-.589,1.422Z" transform="translate(-2.868 -2.868)" fill="#2f2f2f"></path>
+                                </g>
+                            </svg>
+                            <input type="text" placeholder="Name or email address">
+                        </div>
+
+                        <p class="p-0 m-0">Don't have visitors? <a class="add-quick-visitor-link">Add Quick visitor</a></p>
+                    </div>
+
+                    <div class="visitors-list-contianer">
+                        <!-- Visitors are Added Dynamically -->
+                    </div>
+                </div>
+
+                <div class="btns d-flex align-items-center justify-content-end gap-5 mt-4">
+                    <button class="custome-btn-cancle back d-none">Back</button>
+                    <button class="custome-btn-cancle cancel">Cancel</button>
+                    <button class="custome-btn-action continue">Continue</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@*Scripts*@
+
+@section Scripts {
+    <script>
+        const list_Item = document.querySelector(".sidebar-menu .VisitRequest")
+        list_Item.classList.add('active-sidebar-menu');
+    </script>
+
+    <script src="~/Content/VisitRequest/AddNewVisit/AddNewVisit.js"></script>
+}

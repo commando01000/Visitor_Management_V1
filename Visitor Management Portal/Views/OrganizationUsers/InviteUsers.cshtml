@@ -1,0 +1,109 @@
+﻿
+@{
+    ViewBag.Title = "Settings";
+    
+}
+
+
+@section styles{
+    <link rel="stylesheet" href="~/Content/OrganizationUsers/InviteUsers/InviteUsers.css">
+
+}
+
+<div class="section-container d-flex flex-column gap-4">
+    <top>
+        <a class="navigation-btn">Settings ></a>
+        <a class="navigation-btn" onclick="stepBack('/OrganizationUsers/Index') ">Organization Users ></a>
+        <a class="navigation-btn ">Invite Users</a>
+    </top>
+
+
+
+    <!-- Personal Data Section -->
+    <div class="data-box">
+        <div class="data-title">Personal Data</div>
+        <div class="form-grid">
+           
+            <div class="form-group">
+                <label for="full-name">Full Name</label>
+                <input type="text" id="full-name" class="form-input" placeholder="Enter your full name">
+            </div>
+            <div class="form-group">
+                <label for="job-title">Job Title</label>
+                <input type="text" id="job-title" class="form-input" placeholder="Enter your job title">
+            </div>
+
+            <div class="form-group">
+                <label for="Reporting-To">Reporting To</label>
+                <input type="text" id="Reporting-To" class="form-input" placeholder="Enter name">
+            </div>
+            <div class="form-group">
+                <label for="role">Role</label>
+                <select id="role" class="form-input">
+                    <option   value="">Choose role</option>
+                    <!-- Options here -->
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="email-address">Email Address</label>
+                <input type="email" id="email-address" class="form-input" placeholder="Enter your email address">
+            </div>
+            <div class="form-group">
+                    <label for="password">Password</label>
+                <input type="password" id="password" class="form-input" placeholder="Enter your password">
+            </div>
+
+            <div class="form-group">
+                <label for="phone-number">Phone Number</label>
+                <input type="text" id="phone-number" class="form-input" placeholder="Enter your phone number">
+            </div>
+        </div>
+    </div>
+
+    <!-- Office Location Section -->
+    <div class="data-box">
+        <div class="data-title">Office Location</div>
+        <div class="form-grid">
+            <div class="form-group">
+                <label for="building">Building</label>
+                <select id="building" class="form-input">
+                    <option value="">Select building</option>
+                    <!-- Options here -->
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="zone">Zone</label>
+                <select id="zone" class="form-input">
+                    <option value="">Select zone</option>
+                    <!-- Options here -->
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="floor-number">Floor Number</label>
+                <select id="floor-number" class="form-input">
+                    <option value="">Select floor number</option>
+                    <!-- Options here -->
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="btns d-flex align-items-center justify-content-end gap-5">
+        <button class="custome-btn-cancle cancle">Cancle</button>
+        <button class="custome-btn-action ">Invite</button>
+    </div>
+</div>
+
+
+@section Scripts
+{
+    <script>
+        const list_Item = document.querySelector(".sidebar-menu .settings")
+        list_Item.classList.add('active-sidebar-menu');
+
+    </script>
+    <script src="~/Content/OrganizationUsers/InviteUsers/InviteUsers.js"></script>
+}
+
+

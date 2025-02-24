@@ -1,0 +1,338 @@
+﻿
+@{
+    ViewBag.Title = "Settings";
+
+}
+
+@section styles{
+    <link rel="stylesheet" href="~/Content/OrganizationSetup/AddNewBuilding/AddNewBuilding.css">
+}
+<div class="section-container d-flex flex-column gap-4">
+
+    <top>
+        <a class="navigation-btn">Settings ></a>
+        <a class="navigation-btn" onclick="stepBack('/OrganizationSetup/Index')">Organization Setup ></a>
+        <a class="navigation-btn">Add New</a>
+    </top>
+
+    <!-- Step Bar -->
+    <div class="Steps-container">
+        <div class="w-50 d-flex align-items-center justify-content-center gap-5">
+
+            <div class="box d-flex align-items-baseline flex-column gap-2" data-step="1">
+                <div class="bar bar-1 step-bar" id="step-bar-1"></div>
+                <p class="m-0 p-0 fw-500">Building</p>
+            </div>
+
+            <div class="box d-flex align-items-baseline flex-column gap-2" data-step="2">
+                <div class="bar bar-2 step-bar" id="step-bar-2"></div>
+                <p class="m-0 p-0 fw-500">Zone</p>
+            </div>
+
+            <div class="box d-flex align-items-baseline flex-column gap-2" data-step="3">
+                <div class="bar bar-3 step-bar" id="step-bar-3"></div>
+                <p class="m-0 p-0 fw-500">Meeting Area</p>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Step--1 Add Building -->
+    <div class="data-box add-building step step-1">
+        <div class="form-grid" id="buildingForm">
+            <div class="form-group">
+                <label for="building-name" class="required">Building Name</label>
+                <input type="text" id="building-name" name="Name" class="form-input required-input" placeholder="Enter Building Name">
+            </div>
+
+            <div class="form-group">
+                <label for="building-code">Building Code</label>
+                <input type="text" id="building-code" name="Code" class="form-input" placeholder="Enter Building Code">
+            </div>
+
+            <div class="form-group">
+                <label for="building-address">Address</label>
+                <input type="text" id="building-address" name="Address" class="form-input" placeholder="Enter Address">
+            </div>
+
+            <div class="form-group">
+                <label for="location-link">Location Link</label>
+                <input type="url" id="location-link" name="LocationLink" class="form-input" placeholder="https://www..........">
+            </div>
+
+            <div class="form-group">
+                <label for="contact-person">Contact Person</label>
+                <div class="input-container">
+                    <select id="contact-person" name="ContactPersonId" class="form-input">
+                        <option value="">Select Contact Person</option>
+                        @if (ViewBag.OrganizationUsers != null)
+                        {
+                            foreach (var user in ViewBag.OrganizationUsers)
+                            {
+                                <option value="@user.Id">@($"{user.Name} ({user.Role})")</option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="exclude-from-office">Exclude From Office Selection?</label>
+                <div class="input-container" style="height:100%">
+                    <label class="switch">
+                        <input type="checkbox" name="IsExcludeFromOfficeSelection" id="exclude-from-office">
+                        <span class="slider-form"></span>
+                    </label>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Step--2 Add Zone -->
+    <div class="add-zone step step-2 d-none">
+        @*Add Zone*@
+        <div class="data-box">
+            <div class="d-flex align-items-center justify-content-between">
+                <h5 class="mb-0">Add Zones</h5>
+                <div class="add-zone svg-btn" data-bs-toggle="modal" data-bs-target="#addZoneModel">
+                    <svg xmlns="http://www.w3.org/2000/svg" id="add" width="24" height="24" viewBox="0 0 24 24">
+                        <rect id="Rectangle_11" data-name="Rectangle 11" width="3" height="24" rx="1.5" transform="translate(11)" fill="#fff" />
+                        <rect id="Rectangle_12" data-name="Rectangle 12" width="24" height="3" rx="1.5" transform="translate(0 11)" fill="#fff" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Table for all zonse -->
+        <div style="border-bottom: 1px solid #E6E6E8;">
+            <table id="newZonesTable" class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Code</th>
+                        <th>Exclude From Office Selection?</th>
+                        <th>Action</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="empty-row">
+                        <td colspan="4" class="text-center text-muted">No zones added yet.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
+
+    <!-- Step--3 Add Meeting Area -->
+    <div class=" add-meeting-area step step-3 d-none">
+        @*Add Meeting Area*@
+        <div class="data-box ">
+            <div class="d-flex align-items-center justify-content-between">
+                <h5 class="mb-0">Add Meeting Area</h5>
+                <div class="add-meetingArea svg-btn" data-bs-toggle="modal" data-bs-target="#addMeetingAreaModal">
+                    <svg xmlns="http://www.w3.org/2000/svg" id="add" width="24" height="24" viewBox="0 0 24 24">
+                        <rect id="Rectangle_11" data-name="Rectangle 11" width="3" height="24" rx="1.5" transform="translate(11)" fill="#fff" />
+                        <rect id="Rectangle_12" data-name="Rectangle 12" width="24" height="3" rx="1.5" transform="translate(0 11)" fill="#fff" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Table for New AdDed MEeting areas -->
+        <div style="border-bottom: 1px solid #E6E6E8;">
+
+            <table id="newMeetingsAreasTable" class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Code</th>
+                        <th>Related Zone</th>
+                        <th>Available for Visit Requests?</th>
+                        <th>Action</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="empty-meeting-row">
+                        <td colspan="4" class="text-center text-muted">No Meeting Areas added yet.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+
+
+    <div class="btns d-flex align-items-center justify-content-end gap-5">
+        <button class="custome-btn-cancle back d-none">Back</button>
+        <button class="custome-btn-cancle cancel">Cancel</button>
+        <button class="custome-btn-action continue">Continue</button>
+    </div>
+
+
+
+
+</div>
+
+
+@*Models*@
+
+<!-- Add New Zone Modal -->
+<div class="modal fade" id="addZoneModel" tabindex="-1" aria-labelledby="modalTitleId" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document"
+         style=" zoom: 90%;">
+        <div class="modal-content d-flex align-items-center border-0 rounded-4" style="padding: 20px;">
+            <div class="d-flex align-items-center justify-content-between w-100">
+                <h6 class="m-0 p-0 w-100 text-center fw-500">Add zone</h6>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body w-100" id="zoneForm">
+                    <div class="row gap-3">
+                        <div class="col-12 ">
+                            <div class="my-2">
+                                <label for="model-zone-name" class="form-label required">Zone name</label>
+                                <input type="text" class="form-control" id="model-zone-name"
+                                       placeholder="Enter name" style=" padding: 10px; border-radius: 8px" />
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row gap-3">
+                        <div class="col-12 ">
+                            <div class="my-2">
+                                <label for="model-zone-code" class="form-label">Zone Code</label>
+                                <input type="text" class="form-control" id="model-zone-code"
+                                       placeholder="Enter Code" style=" padding:10px; border-radius: 8px" />
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row gap-3">
+                        <div class="col-12 ">
+                            <div class="my-2" style=" display: flex; flex-direction: column;">
+                                <label for="exclude-from-office-selection" class="form-label">Exclude From Office Selection?</label>
+                                <label class="switch">
+                                    <input type="checkbox" name="IsExcludeFromOfficeSelection" id="exclude-from-office-selection">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                    </div>
+            </div>
+
+            <div class="modal-footer border-0 d-flex justify-content-between w-100">
+                <button type="button" class="btn" style="
+                 width: 100%;
+                 background: #1E3A8A;
+                 box-shadow: 0px 4px 12px #00000029;
+                 border-radius: 4px;
+                 font-size: 15px;
+                 color: white;
+                 padding: 15px;"
+
+                 id="saveZoneBtn">
+                    Add
+                </button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Add New Meeting Area Modal -->
+<div class="modal fade" id="addMeetingAreaModal" tabindex="-1" aria-labelledby="modalTitleId" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document" style="zoom: 90%;">
+        <div class="modal-content d-flex align-items-center border-0 rounded-4" style="padding: 20px;">
+            <div class="d-flex align-items-center justify-content-between w-100">
+                <h6 class="m-0 p-0 w-100 text-center fw-500">Add Meeting Area</h6>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body w-100">
+
+                <!-- Meeting Area Name -->
+                <div class="row gap-3">
+                    <div class="col-12">
+                        <div class="my-2">
+                            <label for="model-meeting-area-name" class="form-label required">Meeting Area Name</label>
+                            <input type="text" class="form-control" id="model-meeting-area-name"
+                                   placeholder="Enter Name" style="padding: 10px; border-radius: 8px" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Meeting Area Code -->
+                <div class="row gap-3">
+                    <div class="col-12">
+                        <div class="my-2">
+                            <label for="model-meeting-area-code" class="form-label">Meeting Area Code</label>
+                            <input type="text" class="form-control" id="model-meeting-area-code"
+                                   placeholder="Enter Code" style="padding: 10px; border-radius: 8px" />
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <!-- Related Zone -->
+                <div class="row gap-3">
+                    <div class="col-12">
+                        <div class="my-2">
+                            <label class="fw-500 mb-1 form-label required" for="model-related-zone">Related Zone</label>
+                            <select id="model-related-zone" name="model-related-zone" class="form-input"
+                                    style="padding: 10px; font-size: 1rem; border-radius: 8px;">
+                                <option value="">Select Zone</option>
+                                <!-- Options for Related Zones -->
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Available for Visit Requests? -->
+                <div class="row gap-3">
+                    <div class="col-12">
+                        <div class="my-2" style=" display: flex; flex-direction: column;">
+                            <label for="available-for-visit-requests" class="form-label">Available for Visit Requests?</label>
+                            <label class="switch">
+                                <input type="checkbox" name="" id="available-for-visit-requests">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="modal-footer border-0 d-flex justify-content-between w-100">
+                <button type="button" class="btn"
+                        style="width: 100%; background: #1E3A8A; box-shadow: 0px 4px 12px #00000029; border-radius: 4px;
+                               font-size: 15px; color: white; padding: 15px;" id="saveMeetingAreaBtn">
+                    Add
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script>
+        const list_Item = document.querySelector(".sidebar-menu .settings")
+        list_Item.classList.add('active-sidebar-menu');
+    </script>
+
+    <script src="~/Content/OrganizationSetup/AddNewBuilding/AddNewBuilding.js"></script>
+}

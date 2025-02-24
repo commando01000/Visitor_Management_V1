@@ -1,0 +1,414 @@
+﻿/* Left paragraph */
+.left > p {
+    text-align: justify;
+}
+
+
+.left {
+    padding: 15px;
+    border-radius: 5px;
+}
+
+.right-side {
+    background-color: #FAFBFC;
+    border-radius: 20px;
+    padding: 10px;
+}
+
+.step-tab {
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+    position: relative;
+    border: none;
+}
+
+    .step-tab::after {
+        content: "";
+        position: absolute;
+        width: 3px;
+        height: 100%;
+        top: 0;
+        background-color: #c8c9c9;
+        border-radius: 2px;
+    }
+
+.nav-item {
+    position: relative;
+    padding: 10px;
+}
+
+.nav-link {
+    display: block;
+    color: #333;
+    text-decoration: none;
+    background-color: transparent;
+    transition: color 0.3s, background-color 0.3s;
+    padding-left:20px;
+    position:relative;
+    cursor:pointer;
+}
+
+
+    .nav-link.active {
+        border-left: 2px solid transparent;
+        color: #1E3A8A;
+        font-weight:600;
+    }
+
+.nav-link.active::before {
+    content: "";
+    position: absolute;
+    left: -2px;
+    top: 0;
+    width: 3px;
+    height: 100%;
+    background-color: #1E3A8A;
+    border-radius: 2px;
+    z-index: 55;
+}
+
+    .nav-item.active .nav-link {
+        color: #1E3A8A;
+        font-weight: bold;
+    }
+
+.tab-content {
+    display: none; /* Initially hide all tabs */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s;
+}
+
+    .tab-content.active {
+        display: block; /* Show active tab */
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+
+.data-box {
+    opacity: 1;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+.data-title {
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+    .form-group label {
+        margin-bottom: 5px;
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+.form-input {
+    padding: 10px;
+    border: 1px solid #CCC;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.change-password-btn {
+    color: #1E3A8A;
+    cursor: pointer;
+    font-weight: 500;
+}
+/*
+input[type="date"]::-webkit-calendar-picker-indicator {
+    position: absolute;
+    left: 5px
+}
+
+input[type="time"]::-webkit-calendar-picker-indicator {
+    position: absolute;
+    left: 0px
+}*/
+
+input[type="date"] {
+    position: relative;
+    padding-left: 30px;
+}
+
+input[type="time"] {
+    position: relative;
+    padding-left: 35px;
+}
+
+
+.visit-purpose-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 10px; 
+}
+
+.visit-option, .visit-location-option {
+    background: #FFFFFF;
+    border: 1px solid #E6E6E8;
+    border-radius: 6px;
+    padding: 15px;
+    text-align: center;
+    cursor: pointer;
+    opacity: 1;
+    transition: background 0.3s ease, border-color 0.3s ease;
+    flex: 1;
+}
+
+    .visit-option.selected, .visit-location-option.selected {
+        background: #EEF1FB;
+        border-color: #A8B9E6;
+    }
+
+    .visit-option:hover, .visit-location-option:hover {
+        background: #F3F4F7;
+        border-color: #C1C1C1;
+    }
+
+.data-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.top {
+    padding: 15px;
+}
+.search-seciton{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:25px;
+}
+.location-details .box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    background-color: #F3F5FD;
+    width: fit-content;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 15px;
+}
+.search-seciton .search-bar {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    border: 1px solid #E6E6E8;
+    border-radius: 5px;
+    padding: 5px 10px;
+    background: #FFFFFF;
+    border-radius: 5px;
+}
+    .search-seciton .search-bar input {
+        flex-grow: 1;
+        border: none;
+        outline: none;
+        padding-left: 5px;
+        font-size: 14px;
+        padding:5px
+    }
+        .search-seciton .search-bar input::placeholder{
+            opacity:.7
+        }
+        .add-quick-visitor-link {
+            color: #1E3A8A;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+        }
+.added-visitor {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    background-color: #EEF1FB;
+    border-radius:10px;
+    padding:20px;
+}
+.remove-visitor{
+    cursor:pointer;
+}
+.visitors-list-contianer {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-height: 400px;
+    overflow-y: scroll;
+    padding-right:5px
+}
+
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+    .form-group label {
+        margin-bottom: 5px;
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+.form-input {
+    padding: 10px;
+    border: 1px solid #CCC;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+#requestedByDropdown {
+    position: relative;
+}
+
+    #requestedByDropdown label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+   
+
+    #requestedByDropdown .dropdown-options {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: #fff;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        max-height: 200px;
+        overflow-y: auto;
+        z-index: 1000;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    #requestedByDropdown .dropdown-item {
+        padding: 8px 12px;
+        cursor: pointer;
+    }
+
+        #requestedByDropdown .dropdown-item:hover {
+            background-color: #f1f1f1;
+        }
+
+    #requestedByDropdown .hidden {
+        display: none;
+    }
+
+#meetingAreasDropdown {
+    position: relative;
+}
+
+    #meetingAreasDropdown label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    #meetingAreasDropdown .dropdown-options {
+        position: absolute;
+        top: 100%; /* Position below the input */
+        left: 0;
+        right: 0;
+        background: #fff;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        max-height: 200px;
+        overflow-y: auto;
+        z-index: 1000;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: auto; /* Adjust width to fit content */
+        min-width: 100%; /* Ensure it matches the input width */
+    }
+
+    #meetingAreasDropdown .dropdown-item {
+        padding: 8px 12px;
+        cursor: pointer;
+    }
+
+        #meetingAreasDropdown .dropdown-item:hover {
+            background-color: #f1f1f1;
+        }
+
+    #meetingAreasDropdown .hidden {
+        display: none;
+    }
+
+.dropdown-options {
+    position: absolute;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    max-height: 200px;
+    overflow-y: auto;
+    width: auto; 
+    min-width: 100%;
+    z-index: 1000;
+}
+
+.dropdown-item {
+    padding: 8px;
+    cursor: pointer;
+}
+
+    .dropdown-item:hover {
+        background-color: #f1f1f1;
+    }
+
+.loading-spinner {
+    text-align: center;
+    color: #888;
+    font-style: italic;
+}
+
+.hidden {
+    display: none;
+}
+.custom-class {
+    opacity: .5;
+    cursor: no-drop;
+}
+
+
+@media (max-width:991px) {
+    .form-grid, .visit-purpose-container {
+            grid-template-columns: 1fr;
+        }
+
+        .location-details {
+            flex-direction: column
+        }
+
+        .search-seciton {
+            flex-direction: column-reverse
+        }
+
+        .btns {
+            flex-direction: column-reverse
+        }
+
+            .btns button {
+                width: 100%;
+                gap: 15px !important;
+            }
+    }

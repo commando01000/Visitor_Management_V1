@@ -1,0 +1,106 @@
+﻿@model List<Visitor_Management_Portal.ViewModels.OrganizationUsers.OrganizationUserVM>
+
+@{
+    ViewBag.Title = "Settings";
+}
+
+@section styles {
+    <link rel="stylesheet" href="~/Content/OrganizationUsers/Index/OrganizationUsers.css" />
+}
+
+<div class="section-container d-flex flex-column gap-4">
+    <top>
+        <a class="navigation-btn">Settings ></a>
+        <a class="navigation-btn">Organization Users</a>
+    </top>
+</div>
+
+<div class="organization-dashboard-container">
+    <!-- TOP Section -->
+    <div class="organization-users-header d-flex align-items-lg-end align-items-center gap-3 gap-lg-0 justify-content-center justify-content-lg-between flex-lg-row flex-column my-4">
+        <div class="d-flex align-items-lg-baseline flex-column">
+            <h5>Organization Users</h5>
+            <p class="p-0 m-0 d-none d-lg-block">Collaborate and expand your team, invite users to join your organization.</p>
+        </div>
+        <div class="d-flex gap-2">
+            <!-- DataTable Search -->
+            <div class="organization-users-search-bar">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="19.999" viewBox="0 0 20 19.999">
+                    <g id="search" opacity="0.5">
+                        <path id="Path_9" d="M9.166,18.332a9.166,9.166,0,1,1,9.166-9.166A9.177,9.177,0,0,1,9.166,18.332Zm0-16.666a7.5,7.5,0,1,0,7.5,7.5A7.508,7.508,0,0,0,9.166,1.667Z" fill="#2f2f2f" />
+                        <path id="Path_10" d="M22.034,22.867a.831.831,0,0,1-.589-.244l-4-4a.833.833,0,0,1,1.179-1.178l3.995,4a.832.832,0,0,1-.589,1.422Z" transform="translate(-2.868 -2.868)" fill="#2f2f2f" />
+                    </g>
+                </svg>
+                <input type="text" placeholder="Search..." />
+            </div>
+
+            <div class="organization-users-add-btn svg-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" id="add" width="24" height="24" viewBox="0 0 24 24">
+                    <rect id="Rectangle_11" width="3" height="24" rx="1.5" transform="translate(11)" fill="#fff" />
+                    <rect id="Rectangle_12" width="24" height="3" rx="1.5" transform="translate(0 11)" fill="#fff" />
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <!-- Display error message if any -->
+    @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+    {
+        <div class="alert alert-danger" role="alert">
+            @ViewBag.ErrorMessage
+        </div>
+    }
+
+    <!-- DataTable -->
+    <table id="organizationUsersTable" class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>User Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                foreach (var user in Model)
+                {
+                    <tr>
+                        <td class="userDetails" data-userId=" @user.Id">
+                            <div class="d-flex align-content-end gap-1">
+                                <i class="fa-solid fa-user-gear mx-1" style="color: #A7AEC2; font-size: 20px"></i>
+                                <p class="p-0 m-0 fw-semibold fs-6">@user.FullName</p>
+                            </div>
+                        </td>
+                        <td>@user.Email</td>
+                        <td>@user.RoleName</td>
+                        <td>
+                            <div class="organization-user-actions d-flex align-items-center gap-3">
+                                <i data-userId=" @user.Id" class="fa-solid fa-pencil fs-5 editUser"></i>
+                                @if (user.RoleName != "Administrator")
+                                {
+                                    <i data-userId="@user.Id" class="fa-regular fa-trash-can fs-5 deleteUser"></i>
+                                }
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="4" class="text-center">No organization users found.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+    <script src="~/Content/OrganizationUsers/Index/OrganizationUsers.js"></script>
+    <script>
+        const list_Item = document.querySelector(".sidebar-menu .settings");
+        list_Item.classList.add('active-sidebar-menu');
+    </script>
+}

@@ -1,0 +1,97 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title </title>
+    <link rel="icon" type="image" href="~/Content/Images/Waypass-Logo.svg">
+
+
+    <!-- BOOTSTRAP -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css" integrity="sha512-SbiR/eusphKoMVVXysTKG/7VseWii+Y3FdHrt0EpKgpToZeemhqHeZeLWLhJutz/2ut2Vw1uQEj2MbRF+TVBUA==" crossorigin="anonymous" referrerpolicy="no-referrer" />    @Scripts.Render("~/bundles/modernizr")
+    <!-- FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <!-- Shared CSS -->
+    <link rel="stylesheet" href="~/Content/CSS/Shared/Loader.css">
+    <link rel="stylesheet" href="~/Content/CSS/Shared/snackbar.css">
+    <link rel="stylesheet" href="~/Content/Account/Index/LoginPage.css">
+</head>
+<body>
+    <!-- loader -->
+    <div id="Pageloading">
+        <div class="loader"></div>
+    </div>
+
+    <div class="">
+        @RenderBody()
+
+    </div>
+
+
+
+    @Scripts.Render("~/bundles/jquery")
+
+    <!-- Jquery JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>    <!-- BOOTSTRAP JS -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js" integrity="sha512-1/RvZTcCDEUjY/CypiMz+iqqtaoQfAITmNSJY17Myp4Ms5mdxPS5UV7iOfdZoxcGhzFbOm6sntTKJppjvuhg4g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="~/Content/JS/App.js"></script>
+    <script>
+        //loader
+        $(window).on('beforeunload', function () {
+            console.log("TEST")
+            $('#Pageloading').css('visibility', 'visible');
+        });
+
+        window.addEventListener('pageshow', function (event) {
+            if (event.persisted) {
+                $('#Pageloading').css('visibility', 'hidden');
+            }
+        });
+
+        //show loader in ajax req
+        $(document)
+            .ajaxStart(function () {
+                $('#Pageloading').css('visibility', 'visible');
+            })
+            .ajaxStop(function () {
+                $('#Pageloading').css('visibility', 'hidden');
+            });
+
+         //snackbar
+        var messageString = null;
+        var notifyStatusVal = null;
+
+        @*if ('@ViewBag.AlertMessage' || '@TempData["AlertMessage"]') {
+            messageString = '@(ViewBag.AlertMessage ?? TempData["AlertMessage"])';
+            notifyStatusVal = '@(Enum.GetName(typeof(XDesk.Utilities.Enums.NotifyStatus), XDesk.Utilities.Enums.NotifyStatus.Info))';
+        }
+        if ('@ViewBag.SuccessMessage' || '@TempData["SuccessMessage"]') {
+            messageString = '@(ViewBag.SuccessMessage ?? TempData["SuccessMessage"])';
+            notifyStatusVal = '@(Enum.GetName(typeof(XDesk.Utilities.Enums.NotifyStatus), XDesk.Utilities.Enums.NotifyStatus.Success))';
+        }
+        if ('@ViewBag.ErrorMessage' || '@TempData["ErrorMessage"]') {
+            messageString = '@(ViewBag.ErrorMessage ?? TempData["ErrorMessage"])';
+            notifyStatusVal = '@(Enum.GetName(typeof(XDesk.Utilities.Enums.NotifyStatus), XDesk.Utilities.Enums.NotifyStatus.Error))';
+        }*@
+
+        if (messageString) {
+            Notify(messageString, notifyStatusVal)
+        }
+
+        //document.addEventListener('DOMContentLoaded', function () {
+        //    const toggleButton = document.getElementById('sidebarToggle');
+        //    if (toggleButton) {
+        //        toggleButton.addEventListener('click', function () {
+        //            const sidebar = document.getElementById('sidebar');
+        //            sidebar.classList.toggle('collapsed');
+        //        });
+        //    }
+        //});
+
+    </script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

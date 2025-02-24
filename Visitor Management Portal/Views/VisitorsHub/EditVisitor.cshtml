@@ -1,0 +1,79 @@
+﻿@model Visitor_Management_Portal.ViewModels.VisitorsHub.VisitorVM
+@{
+    ViewBag.Title = "Visitors Hub";
+
+}
+
+<link href="~/Content/VisitorsHub/VisitorEdit/VisitorEdit.css" rel="stylesheet" />
+
+<div class="section-container d-flex flex-column gap-4">
+    <top>
+        <a class="  navigation-btn">Settings ></a>
+        <a class="  navigation-btn" onclick="stepBack('/VisitorsHub')">Visitors Hub ></a>
+        <a class="navigation-btn" onclick="stepBack('/VisitorsHub/VisitorDetails')">User Details ></a>
+        <a class="navigation-btn fw-semibold">Edit User</a>
+    </top>
+
+    <!-- Profile Section -->
+    <div class="profile-detials d-flex align-items-center gap-3 border-0 opacity-75">
+        <img src="~/Content/Images/DashboardLayout/DefualtProfilePic.svg" alt="Profile" width="55" height="55" class="profile-pic opacity-50" />
+        <div class="profile-info">
+            <div class="name fw-semibold">@Model.FullName</div>
+        </div>
+    </div>
+
+
+    <!-- Personal Data Section -->
+    <div class="data-box mt-4">
+        <div class="data-title">Personal Data</div>
+        <div class="form-grid">
+            <input type="hidden" id="visitor-id" value="@Model.Id" /> <!-- Hidden visitor ID -->
+            <div class="form-group">
+                <label for="full-name">First Name</label>
+                <input type="text" id="first-name" class="form-input" value="@Model.FirstName" placeholder="Enter your first name">
+            </div>
+            <div class="form-group">
+                <label for="full-name">Middle Name</label>
+                <input type="text" id="middle-name" class="form-input" value="@Model.MiddleName" placeholder="Enter your middle name">
+            </div>
+            <div class="form-group">
+                <label for="full-name">Last Name</label>
+                <input type="text" id="last-name" class="form-input" value="@Model.LastName" placeholder="Enter your last name">
+            </div>
+
+            <div class="form-group">
+                <label for="id-number">Id Number</label>
+                <input type="text" id="id-number" class="form-input" value="@Model.IdNumber" placeholder="Enter your id number">
+            </div>
+            <div class="form-group">
+                <label for="job-title">Job Title</label>
+                <input type="text" id="job-title" class="form-input" value="@Model.JobTitle" placeholder="Enter your job title">
+            </div>
+            <div class="form-group">
+                <label for="OrganizationName">Organization Name</label>
+                <input type="text" id="OrganizationName" class="form-input" value="@Model.OrganizationName" placeholder="Enter your Organization Name">
+            </div>
+
+            <div class="form-group">
+                <label for="email-address">Email Address</label>
+                <input type="email" id="email-address" class="form-input" value="@Model.EmailAddress" placeholder="Enter your email address">
+            </div>
+            <div class="form-group">
+                <label for="phone-number">Phone Number</label>
+                <input type="text" id="phone-number" class="form-input" value="@Model.PhoneNumber" placeholder="Enter your phone number">
+            </div>
+        </div>
+    </div>
+
+    <div class="btns d-flex align-items-center justify-content-end gap-5">
+        <button class="custome-btn-cancle cancle">Cancel</button>
+        <button class="custome-btn-action">Save Changes</button>
+    </div>
+
+</div>
+
+@*Scripts*@
+
+@section Scripts {
+    <script src="~/Content/VisitorsHub/VisitorEdit/VisitorEdit.js"></script>
+}

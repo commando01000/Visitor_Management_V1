@@ -1,0 +1,245 @@
+﻿
+.left-lable {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+/*.right-side {
+    background-color: #FAFBFC;
+    border-radius:20px;
+    padding:10px;
+}*/
+a {
+    cursor: pointer;
+}
+
+table {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+    overflow-y: auto;
+}
+.edit-data {
+    color: #1E3A8A;
+}
+
+.left-side-box {
+    font-size: 14px;
+}
+
+#visitorsHistoryTable td, #visitorsHistoryTable th {
+    max-width: 100px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.dataTables_wrapper {
+    overflow-x: auto;
+}
+
+.dataTables_filter {
+    display: none;
+}
+
+.visitorsHistory .search-bar {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    border: 1px solid #E6E6E8;
+    border-radius: 5px;
+    padding: 5px 10px;
+    background: #FFFFFF;
+    border-radius: 10px;
+    width: 20%;
+}
+
+.svg-btn {
+    WIDTH: 45px;
+    height: 45px;
+    background-color: #1E3A8A;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.visitorsHistory .search-bar input {
+    flex-grow: 1;
+    border: none;
+    outline: none;
+    padding-left: 5px;
+    font-size: 14px;
+}
+
+#dataTables_filter label {
+    display: none;
+}
+
+.search-bar-container {
+    width: 30%;
+}
+
+
+/* Switch Toggle Btn */
+.switch {
+    font-size: 10px; 
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 21px; 
+}
+
+    .switch input {
+        opacity: 1;
+        width: 0;
+        height: 0;
+    }
+
+/* The slider */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #fff;
+    transition: .4s;
+    border-radius: 20px; 
+    border: 1px solid #ccc;
+}
+
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 1.4em; 
+        width: 1.4em;
+        border-radius: 50%;
+        left: 2px;
+        top: 2px;
+        background-color: white;
+        box-shadow: 0 2px 5px #999999;
+        transition: .4s;
+    }
+
+input:checked + .slider {
+    background-color: #5fdd54;
+    border: 1px solid transparent;
+}
+
+    input:checked + .slider:before {
+        transform: translateX(16px); 
+    }
+
+
+.building-status p.status-text {
+    color: #32C056; 
+}
+
+    /* Inactive state color */
+    .building-status p.status-text.inactive {
+        color: #ccc; 
+    }
+
+.location-details .box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    background-color: #F3F5FD;
+    width: fit-content;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+}
+
+.nav-tabs {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border: none;
+
+}
+
+    .nav-tabs li {
+        margin: 0 10px;
+    }
+
+    .nav-tabs a {
+        text-decoration: none;
+        color: #333;
+        padding: 10px 15px;
+        display: inline-block;
+        position: relative;
+        transition: color 0.3s;
+    }
+
+        .nav-tabs a:hover {
+            color: #1E3A8A;
+        }
+
+    .nav-tabs .active a {
+        color: #1E3A8A;
+    }
+
+        .nav-tabs .active a::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 85%;
+            height: 5px;
+            background-color: #1E3A8A;
+            border-radius: 0px 0px 20px 20px;
+        }
+
+
+@media (max-width: 991px) {
+    .label-boxes {
+        width: 100%;
+    }
+
+    .zone-box {
+        padding: 1rem;
+    }
+
+    .zone-top {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+.vm_long_text {
+    white-space: nowrap;
+    max-width: 50%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align:right;
+}
+@media (max-width: 768px) {
+    .svg-btn {
+        width: 35px;
+        height: 35px;
+    }
+
+    .building-name {
+        font-size: 1rem;
+    }
+
+    .status-text {
+        font-size: 0.9rem;
+    }
+    .nav-tabs {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+}
+
+.no-link {
+    text-decoration: none !important;
+    color:black !important;
+}

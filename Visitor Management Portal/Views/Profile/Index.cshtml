@@ -1,0 +1,164 @@
+﻿@model Visitor_Management_Portal.ViewModels.Profile.ProfileInfoVM
+@{
+    ViewBag.Title = "Profile";
+    double completenessPercentage = ViewBag.CompletenessPercentage ?? 0;
+}
+
+@section styles{
+    <link rel="stylesheet" href="~/Content/Profile/Index/ProfilePage.css" />
+}
+
+<div class="profile-page">
+    <!-- Profile Section -->
+    <div class="profile-detials d-flex align-items-center gap-3 mb-5 border-0 opacity-75">
+        <img src="~/Content/Images/DashboardLayout/DefualtProfilePic.svg" alt="Profile" width="55" height="55" class="profile-pic" />
+        <div class="profile-info">
+            <div class="name fw-semibold" id="profile-name">@Model.Name</div>
+            <div class="title" id="profile-jobTitle">@Model.JobTitle</div>
+        </div>
+    </div>
+
+    <!-- Progress Section -->
+    <div class="progress-section">
+        <div class="progress-bar">
+            <div class="progress" style="width: @(completenessPercentage)%; background-color: @(completenessPercentage == 100 ? "green" : "#1E3A8A");"></div>
+        </div>
+        <div class="progress-text fw-semibold my-1" style="color: @(completenessPercentage == 100 ? "green" : "");">
+            @if (completenessPercentage == 100)
+            {
+                @:You have completed 100%
+            }
+            else
+            {
+                @:You only need @(100 - (int)completenessPercentage)% more
+            }
+        </div>
+        <div class="complete-data">Complete your data</div>
+    </div>
+
+
+
+
+    <!-- Personal Data Section -->
+    <div class="data-box">
+        <div class="data-title">Personal Data</div>
+        <div class="form-grid">
+            <div class="form-group">
+                <label for="full-name">Full Name</label>
+                <input type="text" id="full-name" class="form-input" placeholder="Enter your full name" value="@Model.Name">
+            </div>
+            <div class="form-group">
+                <label for="phone-number">Phone Number</label>
+                <input type="text" id="phone-number" class="form-input" placeholder="Enter your phone number" value="@Model.PhoneNumber">
+            </div>
+            <div class="form-group">
+                <label for="email-address">Email Address</label>
+                <input type="email" id="email-address" class="form-input" placeholder="Enter your email address" value="@Model.EmailAddress">
+            </div>
+            <div class="form-group">
+                <div class="d-flex align-items-center justify-content-between ">
+                    <label for="password">Password</label>
+                    <div class="change-password-btn" data-bs-toggle="modal" data-bs-target="#changePasswordModal">Change Password</div>
+                </div>
+                <input type="password" readonly disabled id="password" class="form-input" placeholder="Enter your password" value="@Model.Password">
+            </div>
+            <div class="form-group">
+                <label for="job-title">Job Title</label>
+                <input type="text" id="job-title" class="form-input" placeholder="Enter your job title" value="@Model.JobTitle">
+            </div>
+        </div>
+    </div>
+
+    <!-- Office Location Section -->
+    <div class="data-box">
+        <div class="data-title">Office Location</div>
+        <div class="form-grid">
+            <div class="form-group">
+                <label for="building">Building</label>
+                <select id="building" class="form-input">
+                    @if (Model.Building != null)
+                    {
+                        <option value="@Model.Building.Id" selected>@Model.Building.Name</option>
+                    }
+                    else
+                    {
+                        <option value="0" selected>Select building</option>
+                    }
+                </select>
+                <div id="building-error" style="display:none; color:red;"></div>
+            </div>
+
+
+            <div class="form-group">
+                <label for="zone">Zone</label>
+                <select id="zone" class="form-input">
+                    @if (Model.Zone != null)
+                    {
+                        <!-- Already selected option -->
+                        <option value="@Model.Zone.Id" selected>@Model.Zone.Name</option>
+                    }
+                    else
+                    {
+                        <!-- Default option if no zone is selected -->
+                        <option value="0" selected>Select zone</option>
+                    }
+                </select>
+                <div id="zone-error" style="display:none; color:red;"></div>
+            </div>
+            <div class="form-group">
+                <label for="floor-number">Floor Number</label>
+                <input type="text" id="floor-number" class="form-input" placeholder="Enter your floor number" value="@Model.FloorNumber">
+            </div>
+        </div>
+    </div>
+
+    <div class="btns d-flex align-items-center justify-content-end gap-5">
+        <button class="custome-btn-cancle">Cancel</button>
+        <button class="custome-btn-action save-changes-btn">Save Changes</button>
+    </div>
+</div>
+
+@if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+{
+    <div class="alert alert-danger">
+        @ViewBag.ErrorMessage
+    </div>
+}
+@*Change Password Model*@
+
+<!-- Change Password Modal -->
+<div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="modalTitleId" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document" style="min-width: 25%; zoom: 85%;">
+        <div class="modal-content d-flex align-items-center border-0 rounded-4" style="padding: 50px;">
+            <!-- Close Button -->
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="position: absolute; top: 1rem; right: 1rem;"></button>
+
+
+            <!-- Last Step: Enter New Password -->
+            <h3 class="text-center fw-semiBold fs-3 mb-3">Enter your new password</h3>
+            <p class="text-center mb-4">Your new password must be different from previous passwords.</p>
+
+
+            <div class="w-100 mb-3">
+                <label for="old-password" class="form-label">old Password</label>
+                <input required type="password" class="form-control" id="old-password" placeholder="Enter old password" />
+            </div>
+            <div class="w-100 mb-3">
+                <label for="new-password" class="form-label">New Password</label>
+                <input required type="password" class="form-control" id="new-password" placeholder="Enter new password" />
+            </div>
+            <div class="w-100 mb-3">
+                <label for="confirm-password" class="form-label">Confirm Password</label>
+                <input required type="password" class="form-control" id="confirm-password" placeholder="Confirm new password" />
+            </div>
+
+            <button type="button" class="custome-btn-action w-100 Complete-Reset-Password-btn">Reset Password</button>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    <script src="~/Content/Profile/Index/ProfilePage.js"></script>
+}

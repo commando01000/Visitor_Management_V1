@@ -1,0 +1,156 @@
+﻿
+
+.profile-page {
+    color: #333;
+    margin: 20px;
+}
+
+
+
+.progress-section {
+    margin-bottom: 20px;
+}
+
+.progress-bar {
+    background: #E6E6E8;
+    border-radius: 10px;
+    overflow: hidden;
+    height: .4rem;
+    width:40%;
+    margin-bottom: 10px;
+}
+
+    .progress-bar .progress {
+        height: 100%;
+        border-radius: 10px;
+        transition: background-color 0.3s ease;
+    }
+
+
+
+
+
+.data-box {
+    border: 1px solid #E6E6E8;
+    opacity: 1;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+.data-title {
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+    .form-group label {
+        margin-bottom: 5px;
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+.form-input {
+    padding: 10px;
+    border: 1px solid #CCC;
+    border-radius: 5px;
+    font-size: 14px;
+}
+.change-password-btn {
+    color: #1E3A8A;
+    cursor:pointer;
+    font-weight:500;
+}
+/* General Modal Styles */
+.modal-content {
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+}
+
+/* Recovery Code Inputs */
+.recovery-code-container .code-input {
+    width: 90px;
+    height: 100px;
+    font-size: 1.5rem;
+    text-align: center;
+    border: 2px solid #ccc;
+    border-radius: 6px;
+    transition: border-color 0.3s ease;
+    font-size: 3rem;
+    color: #1E3A8A;
+}
+
+    .recovery-code-container .code-input:focus {
+        border-color: #1E3A8A;
+        outline: none;
+    }
+.resend-email-btn {
+    color: #1E3A8A;
+    font-weight:500;
+}
+input#confirm-password, input#new-password, input#old-password {
+    background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="16.502" height="23.985" viewBox="0 0 16.502 23.985"%3E%3Cg id="lock" opacity="0.5"%3E%3Cpath id="Path_40754" data-name="Path 40754" d="M13.931,1A6.318,6.318,0,0,0,7.62,7.31V10.9a2.4,2.4,0,0,0-1.941,2.352v9.337a2.4,2.4,0,0,0,2.4,2.4H19.783a2.4,2.4,0,0,0,2.4-2.4V13.249A2.4,2.4,0,0,0,20.24,10.9V7.31A6.317,6.317,0,0,0,13.931,1ZM9.219,7.31a4.711,4.711,0,1,1,9.423,0v3.54H9.219Zm11.364,5.939v9.337a.8.8,0,0,1-.8.8H8.078a.8.8,0,0,1-.8-.8V13.249a.8.8,0,0,1,.8-.8h11.7a.8.8,0,0,1,.8.8Z" transform="translate(-5.679 -1)" fill="%232f2f2f"/%3E%3Cpath id="Path_40755" data-name="Path 40755" d="M15.28,17.772a2.862,2.862,0,0,0-.8,5.612v.605a.8.8,0,1,0,1.6,0v-.606a2.862,2.862,0,0,0-.8-5.612Zm0,4.141a1.271,1.271,0,1,1,1.271-1.27,1.271,1.271,0,0,1-1.271,1.27Z" transform="translate(-7.029 -4.363)" fill="%232f2f2f"/%3E%3C/g%3E%3C/svg%3E');
+    background-repeat: no-repeat;
+    background-position: 10px center;
+    background-size: 24px 24px;
+    opacity: 0.7;
+    padding: 15px;
+    padding-left: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Buttons */
+.custome-btn {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+    .custome-btn.Continue-btn-resetPassword {
+        background-color: #ccc;
+        color: #666;
+        cursor: not-allowed;
+    }
+
+        .custome-btn.Continue-btn-resetPassword:not(.btn-non-active) {
+            background-color: #1E3A8A;
+            color: white;
+            cursor: pointer;
+        }
+
+    .custome-btn.Complete-Reset-Password-btn {
+        background-color: #1E3A8A;
+        color: white;
+        cursor: pointer;
+    }
+
+option[selected] {
+    background-color: #d3e0e9; 
+    font-weight: bold;
+}
+
+/* Responsive Styles */
+@media (max-width: 991px) {
+    .form-grid{
+        grid-template-columns:repeat(1,1fr)
+    }
+}
+
+

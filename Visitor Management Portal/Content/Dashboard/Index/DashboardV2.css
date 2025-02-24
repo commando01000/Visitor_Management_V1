@@ -1,0 +1,93 @@
+﻿.dashboard-box {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 16px;
+}
+
+.dashboard-box-content {
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    color: #000;
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    justify-content: center;
+    gap: 10px;
+    flex: 1;
+}
+
+.box-1 {
+    background: transparent linear-gradient(90deg, #F6F5FF38 0%, #E3DEFF38 33%, #BBAFFFA6 100%) 0% 0% no-repeat padding-box;
+}
+
+.box-2 {
+    background: transparent linear-gradient(90deg, #FFF5FE38 0%, #FFEBFD38 29%, #FFD2FCD1 100%) 0% 0% no-repeat padding-box;
+}
+
+.box-3 {
+    background: transparent linear-gradient(90deg, #F5FFFD38 0%, #E9FFFA38 31%, #DDFFF7D1 100%) 0% 0% no-repeat padding-box;
+}
+
+@media (max-width: 991px) {
+    .dashboard-box {
+        flex-direction: column;
+    }
+
+    .dashboard-box-content {
+        width: 100%;
+        margin-bottom: 16px;
+    }
+}
+
+table th,
+table td {
+    max-width: 150px;
+    width: 150px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    text-align: left !important;
+    background-color: white !important;
+}
+
+.VisitRequest_topSection .search-bar {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    border: 1px solid #E6E6E8;
+    border-radius: 5px;
+    padding: 5px 10px;
+    background: #FFFFFF;
+    border-radius: 10px;
+    width: 20%;
+}
+
+.svg-btn {
+    WIDTH: 45px;
+    height: 45px;
+    background-color: #D0B786;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.VisitRequest_topSection .search-bar input {
+    flex-grow: 1;
+    border: none;
+    outline: none;
+    padding-left: 5px;
+    font-size: 14px;
+}
+
+#visitorsTable_filter label {
+    display: none;
+}
+
+.visitorDetails {
+    cursor: pointer;
+}

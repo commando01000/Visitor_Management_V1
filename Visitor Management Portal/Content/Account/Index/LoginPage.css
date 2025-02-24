@@ -1,0 +1,302 @@
+﻿
+body,
+html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    font-family: 'Poppins', sans-serif;
+    background: #FFFFFF;
+}
+
+:root {
+    --mainColor: #12204B;
+}
+
+h1,
+h2 {
+    font-weight: 600;
+}
+
+
+.form-label {
+    color: #2F2F2F;
+    font-size: 16px;
+}
+
+.singIn-with-microsoft-btn, .signIn-with-google-btn {
+    border: 1px solid #12204B;
+    color: #12204B;
+    border-radius: 6px;
+    font-weight: 500;
+    padding: 10px;
+    font-size: 15px;
+    transition: .3s all ease-in-out;
+    background-color: transparent;
+}
+
+    .singIn-with-microsoft-btn:hover, .signIn-with-google-btn:hover {
+        background-color: #12204B;
+        color: #FFFFFF;
+        cursor: pointer;
+    }
+
+.custome-btn {
+    background-color: #12204B;
+    border: none;
+    border-radius: 6px;
+    font-weight: 400;
+    color: white;
+    transition: .2s all ease-in-out font-size: 15px;
+    padding: 10px;
+}
+
+
+    .custome-btn:hover, .custome-btn:active {
+        border: none;
+        background-color: #12204B;
+        color: white;
+    }
+
+.btn-non-active {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+
+
+
+
+.text-content {
+    color: var(--mainColor) !important;
+    font-weight: 500;
+}
+
+    .text-content:hover {
+        text-decoration: underline;
+    }
+
+hr {
+    border: 1px solid #979797;
+    margin: 0;
+}
+
+.login-container {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+}
+
+.left-section,
+.right-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.Auth-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 90%;
+    margin-top: 3rem;
+}
+
+button {
+    width: 100%;
+}
+
+.form-wrapper {
+    max-width: 70%;
+    width: 100%;
+    /*        min-height:600px !important;*/
+}
+
+.singUp-NavTabs, .resetPassword-NavTabs {
+    min-height: 640px !important;
+}
+
+input#sign-up-email, input#Login-email, input#reset-email {
+    background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="19.579" height="13.951" viewBox="0 0 19.579 13.951"%3E%3Cg id="email" opacity="0.5"%3E%3Cpath id="Path_40751" data-name="Path 40751" d="M18.878,24.631H4.861A2.784,2.784,0,0,1,2.08,21.85V13.461A2.784,2.784,0,0,1,4.861,10.68H18.878a2.784,2.784,0,0,1,2.781,2.781V21.85A2.784,2.784,0,0,1,18.878,24.631ZM4.861,11.662a1.8,1.8,0,0,0-1.8,1.8V21.85a1.8,1.8,0,0,0,1.8,1.8H18.878a1.8,1.8,0,0,0,1.8-1.8V13.461a1.8,1.8,0,0,0-1.8-1.8Z" transform="translate(-2.08 -10.68)" fill="%232f2f2f"/%3E%3Cpath id="Path_40752" data-name="Path 40752" d="M12.409,23.212a2.784,2.784,0,0,1-1.678-.559l-7.64-5.778a.491.491,0,1,1,.592-.782l7.64,5.785a1.816,1.816,0,0,0,2.173,0l7.64-5.785a.491.491,0,1,1,.592.782l-7.64,5.778a2.784,2.784,0,0,1-1.678.56Z" transform="translate(-2.619 -14.247)" fill="%232f2f2f"/%3E%3Cpath id="Path_40753" data-name="Path 40753" d="M3.159,36.08a.491.491,0,0,1-.327-.857l6.02-5.369a.491.491,0,1,1,.654.733l-6.02,5.369A.478.478,0,0,1,3.159,36.08Zm18.212,0a.478.478,0,0,1-.327-.124l-6.02-5.369a.491.491,0,1,1,.654-.733l6.017,5.369a.491.491,0,0,1-.327.857Z" transform="translate(-2.475 -23.496)" fill="%232f2f2f"/%3E%3C/g%3E%3C/svg%3E');
+    background-repeat: no-repeat;
+    background-position: 10px center;
+    background-size: 24px 24px;
+    padding-left: 40px;
+    opacity: 0.7;
+}
+
+input#sign-up-password, input#password, input#confirm-password, input#new-password {
+    background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="16.502" height="23.985" viewBox="0 0 16.502 23.985"%3E%3Cg id="lock" opacity="0.5"%3E%3Cpath id="Path_40754" data-name="Path 40754" d="M13.931,1A6.318,6.318,0,0,0,7.62,7.31V10.9a2.4,2.4,0,0,0-1.941,2.352v9.337a2.4,2.4,0,0,0,2.4,2.4H19.783a2.4,2.4,0,0,0,2.4-2.4V13.249A2.4,2.4,0,0,0,20.24,10.9V7.31A6.317,6.317,0,0,0,13.931,1ZM9.219,7.31a4.711,4.711,0,1,1,9.423,0v3.54H9.219Zm11.364,5.939v9.337a.8.8,0,0,1-.8.8H8.078a.8.8,0,0,1-.8-.8V13.249a.8.8,0,0,1,.8-.8h11.7a.8.8,0,0,1,.8.8Z" transform="translate(-5.679 -1)" fill="%232f2f2f"/%3E%3Cpath id="Path_40755" data-name="Path 40755" d="M15.28,17.772a2.862,2.862,0,0,0-.8,5.612v.605a.8.8,0,1,0,1.6,0v-.606a2.862,2.862,0,0,0-.8-5.612Zm0,4.141a1.271,1.271,0,1,1,1.271-1.27,1.271,1.271,0,0,1-1.271,1.27Z" transform="translate(-7.029 -4.363)" fill="%232f2f2f"/%3E%3C/g%3E%3C/svg%3E');
+    background-repeat: no-repeat;
+    background-position: 10px center;
+    background-size: 24px 24px;
+    padding-left: 40px;
+    opacity: 0.7;
+}
+
+input#sign-up-fullName {
+    background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="15.82" height="15.078" viewBox="0 0 15.82 15.078"%3E%3Cpath id="user_2_" data-name="user (2)" d="M24.287,26.467a4.233,4.233,0,1,0-4.222-4.245A4.222,4.222,0,0,0,24.287,26.467Zm0-7.353a3.108,3.108,0,1,1-3.108,3.132A3.109,3.109,0,0,1,24.287,19.113Zm-7.33,13.964H31.663a.564.564,0,0,0,.557-.557,5.326,5.326,0,0,0-5.312-5.312h-5.2A5.326,5.326,0,0,0,16.4,32.521.564.564,0,0,0,16.957,33.078Zm4.755-4.755h5.2a4.184,4.184,0,0,1,4.152,3.642H17.56A4.184,4.184,0,0,1,21.712,28.323Z" transform="translate(-16.4 -18)" fill="%232f2f2f" opacity="0.5"/%3E%3C/svg%3E');
+    background-repeat: no-repeat;
+    background-position: 10px center;
+    background-size: 24px 24px;
+    padding-left: 40px;
+    opacity: 0.7;
+}
+
+
+/* Input Styling */
+input.form-control {
+    width: 100%;
+    height: 40px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+
+.left-section .logo {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    margin: 20px;
+}
+
+.right-section {
+    background-color: #12204B;
+    color: white;
+    border-radius: 10px;
+    margin: 5px;
+}
+
+    .right-section p {
+        font-size: 40px;
+    }
+
+    .right-section img {
+        width: 350px;
+        height: 415px;
+    }
+
+input.form-control {
+    background-image: none;
+    background-repeat: no-repeat;
+    background-size: 20px;
+    background-position: 10px center;
+    padding-left: 40px;
+    opacity: 0.7;
+}
+
+input::placeholder {
+    opacity: 0.7;
+}
+
+.footer-text {
+    font-size: 12px;
+    color: #B0B0B0;
+}
+
+.back-btn {
+    cursor: pointer
+}
+
+.Register-Step-bar {
+    width: 100%;
+    height: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 36px;
+    margin: 50px 0px 25px;
+}
+
+.bar {
+    height: 60%;
+    border-radius: 15px;
+    width: 45%;
+}
+
+.active-bar {
+    background-color: #D0B786;
+}
+
+.inactive-bar {
+    background-color: #b5b5b5;
+}
+
+.rememberMe {
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.Back-to-login-btn {
+    background-color: transparent;
+    color: black;
+    border: 1px solid var(--mainColor);
+}
+
+    .Back-to-login-btn:hover {
+        background-color: transparent;
+        color: black;
+        border: 1px solid var(--mainColor);
+    }
+
+.Register-Step-bar {
+    margin: 60px 0px;
+}
+/*Code inputs*/
+.recovery-code-container .code-input {
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
+    text-align: center;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    transition: border-color 0.3s ease;
+}
+
+    .recovery-code-container .code-input:focus {
+        border-color: #12204B;
+        outline: none;
+    }
+
+.recovery-code-container {
+    gap: 10px; /* Spacing between inputs */
+}
+
+.step-bar {
+    background-color: #ccc; /* Default inactive color */
+    height: 5px;
+    width: 100%;
+    margin: 0 5px;
+    border-radius: 2px;
+    transition: background-color 0.3s;
+}
+
+.step-bar-active {
+    background-color: #12204B; /* Active color */
+}
+
+
+/*----------------------------------------------------*/
+/* Responsive Design */
+@media (max-width: 991px) {
+    .login-container {
+        flex-direction: column;
+    }
+
+    .right-section {
+        display: none;
+    }
+
+    .left-section {
+        width: 100%;
+        height: 100%;
+    }
+
+    .form-wrapper {
+        font-size: 10px;
+    }
+}

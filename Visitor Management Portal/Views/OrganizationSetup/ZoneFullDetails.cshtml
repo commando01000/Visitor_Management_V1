@@ -1,0 +1,306 @@
+﻿@model Visitor_Management_Portal.ViewModels.OrganizationSetup.ZoneWithRelatedAreasVM
+
+@using BuildingVM = Visitor_Management_Portal.ViewModels.OrganizationSetup.BuildingVM;
+
+@{
+    ViewBag.Title = "Zone Full Details";
+}
+
+<link rel="stylesheet" href="~/Content/OrganizationSetup/BuildingDetails/BuildingDetails.css">
+
+<div class="section-container d-flex flex-column gap-4">
+    <top>
+        <a class="  navigation-btn">Settings></a>
+        <a class="  navigation-btn" onclick="stepBack('/OrganizationSetup/Index')">Organization Setup ></a>
+        <a class="navigation-btn ">Zone Details</a>
+    </top>
+
+    <div class="box-container mt-2">
+
+        <div class="row">
+
+            @*Left Side*@
+            <div class="col-lg-3 col-12 lef-side pr-0">
+                <div class="left">
+
+                    <!-- Zone Section -->
+                    <h5 class="building-name">Zone Details</h5>
+                    @*building-status*@
+                    <div class="d-flex align-items-center justify-content-between building-status gap-3">
+                        <div class="d-flex align-items-center">
+                            <p class="p-0 my-0 status-text @((bool)Model.Zone.ExcludeFromOfficeSelection ? "active" : "inactive")" style="max-width:75%;">Exclude From Office Selection?</p>
+                        </div>
+
+                        <label class="switch">
+                            <input id="zoneToggle" type="checkbox"
+                                   @((bool)Model.Zone.ExcludeFromOfficeSelection ? "checked" : "")
+                                   data-id="@Model.Zone.Id"
+                                   data-ExcludeFromOfficeSelection="@Model.Zone.ExcludeFromOfficeSelection">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="label-boxes d-flex flex-column gap-3 p-2 mt-4">
+
+                        <div class="left-side-box left-lable">
+                            <p class="p-0 m-0 fw-semibold">Details</p>
+                            <div class="col-auto align-content-center" title="Edit">
+                                <i id="editZoneBtn"
+                                   data-id="@Model.Zone.Id"
+                                   data-name="@Model.Zone.Name"
+                                   data-code="@Model.Zone.Code"
+                                   data-building="@Model.Zone.BuildingId"
+                                   data-buildingName="@Model.Zone.BuildingName"
+                                   data-ExcludeFromOfficeSelection="@Model.Zone.ExcludeFromOfficeSelection"
+                                   class="editZone p-0 m-0 edit-data text-decoration-none fw-semibold"
+                                   data-bs-toggle="modal"
+                                   data-bs-target="#editZoneModal">Edit</i>
+                            </div>
+                        </div>
+
+                        <div class="left-side-box left-lable ">
+                            <p class="p-0 m-0 d-flex align-items-center justify-content-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="15.45" height="21.75" viewBox="0 0 15.45 21.75">
+                                    <g id="location_1_" data-name="location (1)" transform="translate(-15.2 -8.4)">
+                                        <path id="Path_40639" data-name="Path 40639" d="M22.925,30.15l-.414-.506c-.276-.368-7.311-8.6-7.311-13.519a7.725,7.725,0,1,1,15.45,0c0,4.92-7.035,13.2-7.311,13.519Zm0-20.692A6.623,6.623,0,0,0,16.3,16.079c0,3.863,5.1,10.438,6.621,12.323,1.517-1.885,6.621-8.415,6.621-12.323A6.623,6.623,0,0,0,22.925,9.458Z" transform="translate(0 0)" fill="#2f2f2f" />
+                                        <path id="Path_40640" data-name="Path 40640" d="M28.543,24.686a2.943,2.943,0,1,1,2.943-2.943A2.963,2.963,0,0,1,28.543,24.686Zm0-4.782a1.839,1.839,0,1,0,1.839,1.839A1.845,1.845,0,0,0,28.543,19.9Z" transform="translate(-5.618 -5.618)" fill="#2f2f2f" />
+                                    </g>
+                                </svg>
+                                Zone Code
+                            </p>
+                            <p class="p-0 m-0 vm_long_text" id="code_text" title="@Model.Zone.Code">@(!string.IsNullOrEmpty(Model.Zone.Code) ? Model.Zone.Code : "--")</p>
+                        </div>
+
+                        <div class="left-side-box left-lable ">
+                            <p class="p-0 m-0 d-flex align-items-center justify-content-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="15.45" height="21.75" viewBox="0 0 15.45 21.75">
+                                    <g id="location_1_" data-name="location (1)" transform="translate(-15.2 -8.4)">
+                                        <path id="Path_40639" data-name="Path 40639" d="M22.925,30.15l-.414-.506c-.276-.368-7.311-8.6-7.311-13.519a7.725,7.725,0,1,1,15.45,0c0,4.92-7.035,13.2-7.311,13.519Zm0-20.692A6.623,6.623,0,0,0,16.3,16.079c0,3.863,5.1,10.438,6.621,12.323,1.517-1.885,6.621-8.415,6.621-12.323A6.623,6.623,0,0,0,22.925,9.458Z" transform="translate(0 0)" fill="#2f2f2f" />
+                                        <path id="Path_40640" data-name="Path 40640" d="M28.543,24.686a2.943,2.943,0,1,1,2.943-2.943A2.963,2.963,0,0,1,28.543,24.686Zm0-4.782a1.839,1.839,0,1,0,1.839,1.839A1.845,1.845,0,0,0,28.543,19.9Z" transform="translate(-5.618 -5.618)" fill="#2f2f2f" />
+                                    </g>
+                                </svg>
+                                Zone Name
+                            </p>
+                            <p class="p-0 m-0 vm_long_text" id="name_text" title="@Model.Zone.Name">@(!string.IsNullOrEmpty(Model.Zone.Name) ? Model.Zone.Name : "--")</p>
+                        </div>
+
+                        <div class="left-side-box left-lable">
+                            <p class="p-0 m-0  d-flex align-items-center justify-content-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="15.45" height="21.75" viewBox="0 0 15.45 21.75">
+                                    <g id="location_1_" data-name="location (1)" transform="translate(-15.2 -8.4)">
+                                        <path id="Path_40639" data-name="Path 40639" d="M22.925,30.15l-.414-.506c-.276-.368-7.311-8.6-7.311-13.519a7.725,7.725,0,1,1,15.45,0c0,4.92-7.035,13.2-7.311,13.519Zm0-20.692A6.623,6.623,0,0,0,16.3,16.079c0,3.863,5.1,10.438,6.621,12.323,1.517-1.885,6.621-8.415,6.621-12.323A6.623,6.623,0,0,0,22.925,9.458Z" transform="translate(0 0)" fill="#2f2f2f" />
+                                        <path id="Path_40640" data-name="Path 40640" d="M28.543,24.686a2.943,2.943,0,1,1,2.943-2.943A2.963,2.963,0,0,1,28.543,24.686Zm0-4.782a1.839,1.839,0,1,0,1.839,1.839A1.845,1.845,0,0,0,28.543,19.9Z" transform="translate(-5.618 -5.618)" fill="#2f2f2f" />
+                                    </g>
+                                </svg>
+                                Building Name
+                            </p>
+                            <p class="p-0 m-0 vm_long_text" id="address_text" title="@Model.Zone.BuildingName">@(!string.IsNullOrEmpty(Model.Zone.BuildingName) ? Model.Zone.BuildingName : "--")</p>
+                        </div>
+
+                        <div class="left-side-box left-lable ">
+                            <p class="p-0 m-0 d-flex align-items-center justify-content-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="15.45" height="21.75" viewBox="0 0 15.45 21.75">
+                                    <g id="location_1_" data-name="location (1)" transform="translate(-15.2 -8.4)">
+                                        <path id="Path_40639" data-name="Path 40639" d="M22.925,30.15l-.414-.506c-.276-.368-7.311-8.6-7.311-13.519a7.725,7.725,0,1,1,15.45,0c0,4.92-7.035,13.2-7.311,13.519Zm0-20.692A6.623,6.623,0,0,0,16.3,16.079c0,3.863,5.1,10.438,6.621,12.323,1.517-1.885,6.621-8.415,6.621-12.323A6.623,6.623,0,0,0,22.925,9.458Z" transform="translate(0 0)" fill="#2f2f2f" />
+                                        <path id="Path_40640" data-name="Path 40640" d="M28.543,24.686a2.943,2.943,0,1,1,2.943-2.943A2.963,2.963,0,0,1,28.543,24.686Zm0-4.782a1.839,1.839,0,1,0,1.839,1.839A1.845,1.845,0,0,0,28.543,19.9Z" transform="translate(-5.618 -5.618)" fill="#2f2f2f" />
+                                    </g>
+                                </svg>
+                                Meeting areas
+                            </p>
+                            <p class="p-0 m-0">@(Model.Zone.RelatedAreasCount > 0 ? Model.Zone.RelatedAreasCount.ToString() : "--" )</p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-9 col-12 right-side">
+
+                <div class="dashboard-section-container">
+
+                    <ul class="nav-tabs my-0 my-md-2">
+                        <li>
+                            <a href="#" data-target="#tab1" data-url="MeetingAreasDetails">Related Meeting Areas</a>
+                        </li>
+                    </ul>
+
+                    <div id="tab1" style="padding: 0px 20px;">
+                        @Html.Partial("_MeetingAreasPartial", Model.RelatedAreas)
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Models -->
+<!-- Add New Meeting Area Modal -->
+<div class="modal fade" id="addMeetingAreaModal" tabindex="-1" aria-labelledby="modalTitleId" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document" style="zoom: 90%;">
+        <div class="modal-content d-flex align-items-center border-0 rounded-4" style="padding: 20px;">
+            <div class="d-flex align-items-center justify-content-between w-100">
+                <h6 class="m-0 p-0 w-100 text-center fw-500">Add Meeting Area</h6>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body w-100">
+                <form id="meetingAreaForm">
+
+                    <!-- Meeting Area Code -->
+                    <div class="row gap-3">
+                        <div class="col-12">
+                            <div class="my-2">
+                                <label for="model-meeting-area-code" class="form-label">Meeting Area Code</label>
+                                <input type="text" class="form-control" id="model-meeting-area-code"
+                                       placeholder="Enter Code" style="padding: 10px; border-radius: 8px" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Meeting Area Name -->
+                    <div class="row gap-3">
+                        <div class="col-12">
+                            <div class="my-2">
+                                <label for="model-meeting-area-name" class="form-label">Meeting Area Name</label>
+                                <input type="text" class="form-control" id="model-meeting-area-name"
+                                       placeholder="Enter Name" style="padding: 10px; border-radius: 8px" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Location -->
+                    <div class="row gap-3">
+                        <div class="col-12">
+                            <div class="my-2">
+                                <label for="model-meeting-area-location" class="form-label">Location</label>
+                                <input type="text" class="form-control" id="model-meeting-area-location"
+                                       placeholder="Enter Location" style="padding: 10px; border-radius: 8px" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Error Message Container -->
+                    <div id="error-message-container" style="display: none; color: red; font-size: 14px;"></div>
+
+                </form>
+            </div>
+
+            <div class="modal-footer border-0 d-flex justify-content-between w-100">
+                <button type="button" class="btn"
+                        style="width: 100%; background: #1E3A8A; box-shadow: 0px 4px 12px #00000029; border-radius: 4px;
+                               font-size: 15px; color: white; padding: 15px;" id="saveMeetingAreaBtn">
+                    Add
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Edit Zone Modal -->
+<div class="modal fade" id="editZoneModal" tabindex="-1" aria-labelledby="modalTitleId" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document" style="zoom: 90%;">
+        <div class="modal-content d-flex align-items-center border-0 rounded-4" style="padding: 20px;">
+            <div class="d-flex align-items-center justify-content-between w-100">
+                <h6 class="m-0 p-0 w-100 text-center fw-500">Edit Meeting Area</h6>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body w-100">
+                <form id="meetingAreaForm">
+
+                    <input id="selectedZoneId" class="d-none" value="" />
+
+                    <!-- Zone Name -->
+                    <div class="row gap-3">
+                        <div class="col-12">
+                            <div class="my-2">
+                                <label for="editModel-zone-name" class="fw-500 form-label requiredLabel">Zone Name</label>
+                                <input type="text" class="form-control" id="editModel-zone-name"
+                                       placeholder="Enter Name" style="padding: 10px; border-radius: 8px" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Zone Code -->
+                    <div class="row gap-3">
+                        <div class="col-12">
+                            <div class="my-2">
+                                <label for="editModel-zone-code" class="fw-500 form-label">Zone Code</label>
+                                <input type="text" class="form-control" id="editModel-zone-code"
+                                       placeholder="Enter Code" style="padding: 10px; border-radius: 8px" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Toggle Button for Exclude From Office Selection -->
+                    <div class="row gap-3">
+                        <div class="col-12">
+                            <div class="form-group my-2 d-flex align-items-start justify-content-between">
+                                <label class="fw-500 mb-1 form-label">Exclude From Office Selection</label>
+                                <label class="switch">
+                                    <input type="checkbox" id="excludeFromOffice-toggle">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Related Building -->
+                    <div class="row gap-3">
+                        <div class="col-12">
+                            <div class="form-group my-2">
+                                <label class="fw-500 mb-1 form-label requiredLabel" for="editZone-related-building">Related Building</label>
+                                <select id="editZone-related-building" name="editZone-related-building" class="form-input"
+                                        style="padding: 10px; font-size: 1rem; border-radius: 8px;">
+                                    @if (ViewBag.RelatedBuildings != null && ViewBag.RelatedBuildings.Count > 0)
+                                    {
+                                        <option value="" selected disabled>Select Building</option>
+                                        foreach (BuildingVM building in ViewBag.RelatedBuildings)
+                                        {
+                                            <option value="@building.Id">@building.Name</option>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <option value="" selected disabled>No Buildings Available</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Error Message Container -->
+                    <div id="error-message-container" style="display: none; color: red; font-size: 14px;"></div>
+
+                </form>
+            </div>
+
+            <div class="modal-footer border-0 d-flex justify-content-between w-100">
+                <button type="button" class="btn"
+                        style="width: 100%; background: #1E3A8A; box-shadow: 0px 4px 12px #00000029; border-radius: 4px;
+                               font-size: 15px; color: white; padding: 15px;" id="editZoneSubmitBtn">
+                    Edit
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*Scripts*@
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const list_Item = document.querySelector(".sidebar-menu .settings");
+            if (list_Item) {
+                list_Item.classList.add('active-sidebar-menu');
+            } else {
+                console.error("Element not found: .sidebar-menu .settings");
+            }
+        });
+    </script>
+
+    <script src="~/Content/OrganizationSetup/ZoneDetails/ZoneDetails.js"></script>
+}

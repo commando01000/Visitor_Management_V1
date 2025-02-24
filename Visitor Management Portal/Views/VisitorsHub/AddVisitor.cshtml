@@ -1,0 +1,186 @@
+﻿
+@{
+    ViewBag.Title = "Visitors Hub";
+
+}
+
+<style>
+    .navigation-btn {
+        cursor: pointer;
+        text-decoration: none;
+        color: black;
+        opacity: .5
+    }
+
+        .navigation-btn:last-child {
+            opacity: 1;
+        }
+
+        .navigation-btn:hover {
+            color: black;
+        }
+
+
+
+    .data-box {
+        border: 1px solid #E6E6E8;
+        opacity: 1;
+        padding: 15px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+    }
+
+    .data-title {
+        font-weight: bold;
+        font-size: 18px;
+        margin-bottom: 15px;
+    }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+        .form-group label {
+            margin-bottom: 5px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+    .form-input {
+        padding: 10px;
+        border: 1px solid #0000000d;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+
+    .change-password-btn {
+        color: #1E3A8A;
+        cursor: pointer;
+        font-weight: 500;
+    }
+</style>
+<div class="section-container">
+    <top>
+
+        <a class="  navigation-btn">Visitors Hub ></a>
+        <a class="navigation-btn" onclick="stepBack('/VisitorsHub')">Visitor Details ></a>
+        <a class="navigation-btn fw-semibold">Add Visitor</a>
+    </top>
+
+    <!-- Personal Data Section -->
+    <div class="data-box mt-4">
+        <div class="data-title">Personal Data</div>
+        <div class="form-grid">
+            <div class="form-group">
+                <label for="full-name" class="required">Full Name</label>
+                <input type="text" id="full-name" name="FullName" class="form-input required-input" placeholder="Enter visitor full name">
+            </div>
+
+            <div class="form-group">
+                <label for="id-number" class="required">ID Number</label>
+                <input type="text" id="id-number" name="IDNumber" class="form-input required-input" placeholder="Enter visitor ID number">
+            </div>
+            <div class="form-group">
+                <label for="job-title">Job Title</label>
+                <input type="text" id="job-title" name="JobTitle" class="form-input" placeholder="Enter visitor job title">
+            </div>
+            <div class="form-group">
+                <label for="OrganizationName">Organization Name</label>
+                <input type="text" id="OrganizationName" name="OrganizationName" class="form-input" placeholder="Enter visitor organization name">
+            </div>
+
+            <div class="form-group">
+                <label for="email-address" class="required">Email Address</label>
+                <input type="email" id="email-address" name="EmailAddress" class="form-input required-input" placeholder="Enter visitor email address">
+            </div>
+            <div class="form-group">
+                <label for="phone-number">Phone Number</label>
+                <input type="text" id="phone-number" name="PhoneNumber" class="form-input" placeholder="Enter visitor phone number">
+            </div>
+        </div>
+    </div>
+
+    <div class="btns d-flex align-items-center justify-content-end gap-5">
+        <button class="custome-btn-cancle cancle">Cancle</button>
+        <button class="custome-btn-action">Save Changes</button>
+    </div>
+
+</div>
+
+@*Scripts*@
+
+@section Scripts {
+    <script>
+
+        const list_Item = document.querySelector(".sidebar-menu .VisitorsHub")
+        list_Item.classList.add('active-sidebar-menu');
+
+        const backBtn = document.querySelector(".cancle");
+
+
+        backBtn.addEventListener('click', () => {
+            window.history.back();
+        });
+
+
+        $('.custome-btn-action').click(function () {
+            let isValid = true;
+            let formData = new FormData();
+            const timeOut = 1200;
+
+            $('.form-input').each(function () {
+                let $input = $(this);
+                let inputName = $input.attr('name');
+                let inputType = $input.attr('type');
+                let inputValue = $input.val();
+                let isRequired = $input.hasClass('required-input');
+
+
+                if (isRequired && inputValue === "") {
+                    HighlightInput($(this), timeOut);
+                    isValid = false;
+                } else if (inputType === 'email' && inputValue !== "" && !isValidEmail(inputValue)) {
+                    HighlightInput($(this));
+                    isValid = false;
+                } else if (inputValue !== "") { 
+                    formData.append(inputName, inputValue);
+                }
+            });
+
+            if (!isValid) {
+                return false;
+            }
+
+            $.ajax({
+                url: '/VisitorsHub/AddVisitor/',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    if (response.Status) {
+                        $('.form-input').val('');
+                        Notify(response.Message, NotifyStatus.Success);
+                    } else {
+                        Notify(response.Message, NotifyStatus.Error);
+                    }
+                },
+                error: function (error) {
+                    console.error("Error:", error);
+                    Notify("An error occurred while creating the visitor, Please try again", NotifyStatus.Error);
+                }
+            });
+
+        });
+
+
+
+    </script>
+}

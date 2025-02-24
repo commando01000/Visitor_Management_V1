@@ -1,0 +1,52 @@
+﻿@model List<Visitor_Management_Portal.ViewModels.OrganizationSetup.BuildingVM>
+@{
+    ViewBag.Title = "Settings";
+
+}
+
+@section styles{
+    <link rel="stylesheet" href="~/Content/OrganizationSetup/Index/OrganizationSetup.css">
+}
+
+<div class="section-container d-flex flex-column ">
+
+    <top class="mb-4">
+        <a class="  navigation-btn">Settings ></a>
+        <a class="navigation-btn ">Organization Setup</a>
+    </top>
+
+    <div class="top-section opacity-75 mb-4">
+        <div class="dashboard-title fw-semibold mb-2 op">Build your organization</div>
+        <div class="dashboard-subtitle">To manage your organization, include all buildings, zones, and meeting areas.</div>
+
+    </div>
+    @*Nav Tabs*@
+    <ul class="nav-tabs">
+        <li class="active">
+            <a href="#" data-target="#tab1" data-url="@Url.Action("Building", "OrganizationSetup")">Building</a>
+        </li>
+        <li>
+            <a href="#" data-target="#tab2" data-url="@Url.Action("ZonesDetails", "OrganizationSetup")">Zones</a>
+        </li>
+        <li>
+            <a href="#" data-target="#tab3" data-url="@Url.Action("MeetingAreasDetails", "OrganizationSetup")">Meeting Areas</a>
+        </li>
+    </ul>
+
+    <div id="tab1" style="padding: 0px 20px;">
+        @Html.Partial("_BuildingPartial", Model)
+    </div>
+    <div id="tab2" style="padding: 0px 20px; display: none;"></div>
+    <div id="tab3" style="padding: 0px 20px; display: none;"></div>
+</div>
+
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+        const list_Item = document.querySelector(".sidebar-menu .settings ")
+        list_Item.classList.add('active-sidebar-menu');
+    </script>
+
+    <script src="~/Content/OrganizationSetup/Index/OrganizationSetup.js"></script>
+}

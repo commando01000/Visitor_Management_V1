@@ -1,0 +1,389 @@
+﻿@model Visitor_Management_Portal.ViewModels.VisitRequest.VisitRequestDetailsVM
+@{
+    ViewBag.Title = "Visits Request";
+
+}
+
+<link rel="stylesheet" href="~/Content/VisitRequest/VistRequestDetails/VistRequestDetails.css">
+
+<div class="section-container d-flex flex-column gap-4">
+    <top>
+        <a class="  navigation-btn" onclick="stepBack('/VisitRequest')">Visits Request ></a>
+        <a class="  navigation-btn">12-B Visit</a>
+    </top>
+
+    <div class="box-container">
+
+        <div class="row">
+
+            @*Left Side*@
+            <div class="col-lg-3 col-12 lef-side">
+                <div class="left">
+
+                    <!-- Profile Section -->
+                    <div class="profile-detials d-flex flex-column gap-1">
+                        <h5>@Model.visitRequestInfo.Serial</h5>
+                        <p class="m-0 p-0 status">Schaduled</p>
+                    </div>
+
+                    <div class="label-boxes d-flex flex-column gap-3 p-2 mt-4">
+
+                        <div class="left-side-box left-lable">
+                            <p class="p-0 m-0 fw-semibold">Visit Details</p>
+                            @*<a href="@Url.Action("EditUser", "OrganizationUsers")" class="p-0 m-0 edit-data text-decoration-none fw-semibold">Edit</a>*@
+                            <a class="p-0 m-0 edit-data fw-semibold" data-bs-toggle="modal" data-visit-id="@Model.VisiteRequestID" data-bs-target="#editVisitRequestModel">Edit</a>
+                        </div>
+
+
+                        <div class="left-side-box left-lable ">
+                            <p class="p-0 m-0 d-flex align-items-center justify-content-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="15.249" viewBox="0 0 16 15.249">
+                                    <path id="user_2_" data-name="user (2)" d="M24.377,26.563a4.282,4.282,0,1,0-4.27-4.293A4.27,4.27,0,0,0,24.377,26.563Zm0-7.437a3.144,3.144,0,1,1-3.144,3.167A3.144,3.144,0,0,1,24.377,19.126ZM16.963,33.249H31.837a.571.571,0,0,0,.563-.563,5.387,5.387,0,0,0-5.372-5.372H21.772A5.387,5.387,0,0,0,16.4,32.686.571.571,0,0,0,16.963,33.249Zm4.809-4.809h5.255a4.231,4.231,0,0,1,4.2,3.683H17.573A4.231,4.231,0,0,1,21.772,28.44Z" transform="translate(-16.4 -18)" fill="#2f2f2f" />
+                                </svg>
+                                Requested by
+                            </p>
+                            <p class="p-0 m-0 ">@Model.visitRequestInfo.RequestdBy</p>
+                        </div>
+
+
+
+                        <div class="left-side-box left-lable">
+                            <p class="p-0 m-0  d-flex align-items-center justify-content-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="11.401" viewBox="0 0 16 11.401">
+                                    <g id="email" transform="translate(-2.08 -10.68)">
+                                        <path id="Path_40751" data-name="Path 40751" d="M15.807,22.081H4.353A2.275,2.275,0,0,1,2.08,19.808V12.953A2.275,2.275,0,0,1,4.353,10.68H15.807a2.275,2.275,0,0,1,2.273,2.273v6.856A2.275,2.275,0,0,1,15.807,22.081ZM4.353,11.482a1.471,1.471,0,0,0-1.471,1.471v6.856a1.471,1.471,0,0,0,1.471,1.471H15.807a1.471,1.471,0,0,0,1.471-1.471V12.953a1.471,1.471,0,0,0-1.471-1.471Z" transform="translate(0 0)" fill="#2f2f2f" />
+                                        <path id="Path_40752" data-name="Path 40752" d="M10.667,21.891A2.275,2.275,0,0,1,9.3,21.433L3.052,16.712a.4.4,0,1,1,.484-.639L9.78,20.8a1.484,1.484,0,0,0,1.775,0L17.8,16.073a.4.4,0,1,1,.484.639l-6.243,4.722a2.275,2.275,0,0,1-1.372.457Z" transform="translate(-0.587 -3.884)" fill="#2f2f2f" />
+                                        <path id="Path_40753" data-name="Path 40753" d="M3.069,34.919a.4.4,0,0,1-.267-.7l4.92-4.388a.4.4,0,1,1,.535.6l-4.92,4.388a.39.39,0,0,1-.267.1Zm14.882,0a.39.39,0,0,1-.267-.1l-4.92-4.388a.4.4,0,1,1,.535-.6l4.917,4.388a.4.4,0,0,1-.267.7Z" transform="translate(-0.431 -13.955)" fill="#2f2f2f" />
+                                    </g>
+                                </svg>
+                                Purpose
+                            </p>
+                            <p class="p-0 m-0  ">@Model.visitRequestInfo.Purpose</p>
+                        </div>
+
+                        <div class="left-side-box left-lable">
+                            <p class="p-0 m-0  d-flex align-items-center justify-content-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+                                    <g id="Group_41501" data-name="Group 41501" transform="translate(-38 -307)">
+                                        <g id="vuesax_linear_calendar" data-name="vuesax/linear/calendar" transform="translate(-454 119)">
+                                            <g id="calendar" transform="translate(492 188)">
+                                                <path id="Vector" d="M0,0V2" transform="translate(5.333 1.333)" fill="none" stroke="#2f2f2f" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" />
+                                                <path id="Vector-2" data-name="Vector" d="M0,0V2" transform="translate(10.667 1.333)" fill="none" stroke="#2f2f2f" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" />
+                                                <path id="Vector-3" data-name="Vector" d="M0,0H11.333" transform="translate(2.333 6.06)" fill="none" stroke="#2f2f2f" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" />
+                                                <path id="Vector-4" data-name="Vector" d="M12,3.333V9a2.99,2.99,0,0,1-3.333,3.333H3.333A2.99,2.99,0,0,1,0,9V3.333A2.99,2.99,0,0,1,3.333,0H8.667A2.99,2.99,0,0,1,12,3.333Z" transform="translate(2 2.333)" fill="none" stroke="#2f2f2f" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" />
+                                                <path id="Vector-5" data-name="Vector" d="M0,0H16V16H0Z" fill="none" opacity="0" />
+                                                <path id="Vector-6" data-name="Vector" d="M.495.5H.5" transform="translate(9.969 8.633)" fill="none" stroke="#2f2f2f" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" />
+                                                <path id="Vector-7" data-name="Vector" d="M.495.5H.5" transform="translate(9.969 10.633)" fill="none" stroke="#2f2f2f" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" />
+                                                <path id="Vector-8" data-name="Vector" d="M.495.5H.5" transform="translate(7.502 8.633)" fill="none" stroke="#2f2f2f" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" />
+                                                <path id="Vector-9" data-name="Vector" d="M.495.5H.5" transform="translate(7.502 10.633)" fill="none" stroke="#2f2f2f" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" />
+                                                <path id="Vector-10" data-name="Vector" d="M.495.5H.5" transform="translate(5.035 8.633)" fill="none" stroke="#2f2f2f" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" />
+                                                <path id="Vector-11" data-name="Vector" d="M.495.5H.5" transform="translate(5.035 10.633)" fill="none" stroke="#2f2f2f" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" />
+                                            </g>
+                                        </g>
+                                    </g>
+                                </svg>
+                                Date
+                            </p>
+                            <p class="p-0 m-0  ">@Model.visitRequestInfo.Date</p>
+                        </div>
+
+                        <div class="left-side-box left-lable">
+                            <p class="p-0 m-0  d-flex align-items-center justify-content-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+                                    <g id="time_1_" data-name="time (1)" transform="translate(-3 -3)">
+                                        <path id="Path_40196" data-name="Path 40196" d="M11,19a8,8,0,1,1,8-8,8,8,0,0,1-8,8ZM11,4.333A6.667,6.667,0,1,0,17.667,11,6.667,6.667,0,0,0,11,4.333Z" fill="#2f2f2f" />
+                                        <path id="Path_40197" data-name="Path 40197" d="M18,16.667a.667.667,0,0,1-.447-.173l-3.333-3A.667.667,0,0,1,14,13V9.667a.667.667,0,1,1,1.333,0V12.7l3.113,2.8A.667.667,0,0,1,18,16.667Z" transform="translate(-3.667 -2)" fill="#2f2f2f" />
+                                    </g>
+                                </svg>
+                                Time
+                            </p>
+                            <p class="p-0 m-0  ">@Model.visitRequestInfo.Time - @Model.visitRequestInfo.Duration</p>
+                        </div>
+
+
+
+                        <div class=" mt-2 ">
+                            <p class="m-0 p-0 fw-semibold">Visit location</p>
+
+                            <div class="location-details d-flex align-content-center justify-content-around mt-2">
+                                <div class="box">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="15.114" height="16.02" viewBox="0 0 15.114 16.02">
+                                        <path id="Path_40638" data-name="Path 40638" d="M52.884,30.041l-7.208-5.323a.348.348,0,0,0-.412,0l-7.212,5.323a.338.338,0,0,0,.2.613H39.26v7.208h-.925a.351.351,0,0,0-.353.343v2.128a.343.343,0,0,0,.353.336H52.6a.345.345,0,0,0,.353-.336V38.206a.348.348,0,0,0-.353-.343h-.932V30.658h1.005a.342.342,0,0,0,.208-.617Zm-7.416-4.62,6.155,4.543H39.312Zm1.663,12.445V30.658h1.56v7.208ZM43.8,30.658v7.208h-1.56V30.658Zm.693,0h1.941v7.208H44.5Zm-4.54,0h1.594v7.208H39.957Zm12.3,9.323H38.675V38.559H52.26Zm-1.282-2.114H49.383V30.658h1.594Z" transform="translate(-37.909 -24.65)" fill="#2f2f2f" />
+                                    </svg>
+                                    @Model.visitRequestInfo.Building
+                                </div>
+
+
+                                <div class="box">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="9" height="23" viewBox="0 0 9 23">
+                                        <text id="Z" transform="translate(0 17)" fill="#2f2f2f" font-size="16" font-family="Poppins-Regular, Poppins" opacity="0.6"><tspan x="0" y="0">Z</tspan></text>
+                                    </svg>
+                                    @Model.visitRequestInfo.Zone
+                                </div>
+
+
+                                <div class="box">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="11.579" height="16.3" viewBox="0 0 11.579 16.3">
+                                        <g id="location_1_" data-name="location (1)" transform="translate(-15.2 -8.4)" opacity="0.6">
+                                            <path id="Path_40639" data-name="Path 40639" d="M20.989,24.7l-.31-.379c-.207-.276-5.479-6.444-5.479-10.131a5.789,5.789,0,1,1,11.579,0c0,3.687-5.273,9.89-5.479,10.132Zm0-15.507a4.964,4.964,0,0,0-4.962,4.962c0,2.895,3.825,7.823,4.962,9.236,1.137-1.413,4.962-6.306,4.962-9.236A4.964,4.964,0,0,0,20.989,9.193Z" transform="translate(0)" fill="#666" />
+                                            <path id="Path_40640" data-name="Path 40640" d="M27.806,23.211a2.205,2.205,0,1,1,2.205-2.205A2.221,2.221,0,0,1,27.806,23.211Zm0-3.584a1.378,1.378,0,1,0,1.378,1.378A1.382,1.382,0,0,0,27.806,19.627Z" transform="translate(-6.816 -6.816)" fill="#666" />
+                                        </g>
+                                    </svg>
+                                    @Model.visitRequestInfo.Floor
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+            @*Right Side*@
+            <div class="col-lg-9 col-12 right-side">
+
+                <div class="dashboard-section-container">
+
+                    @*TOP*@
+
+
+
+                    @if (Model != null && Model.visitorVMs.Any())
+                    {
+                        <div class="Visitors-details d-flex align-items-baseline justify-content-center justify-content-lg-between  mb-4">
+                            <p class="p-0 m-0 fw-bold d-none d-lg-block">Visitors details</p>
+
+                            <div class="d-flex gap-2 search-bar-container">
+                                <!-- DataTable Search -->
+                                <div class="search-bar">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="19.999" viewBox="0 0 20 19.999">
+                                        <g id="search" opacity="0.5">
+                                            <path id="Path_9" data-name="Path 9" d="M9.166,18.332a9.166,9.166,0,1,1,9.166-9.166A9.177,9.177,0,0,1,9.166,18.332Zm0-16.666a7.5,7.5,0,1,0,7.5,7.5A7.508,7.508,0,0,0,9.166,1.667Z" fill="#2f2f2f" />
+                                            <path id="Path_10" data-name="Path 10" d="M22.034,22.867a.831.831,0,0,1-.589-.244l-4-4a.833.833,0,0,1,1.179-1.178l3.995,4a.832.832,0,0,1-.589,1.422Z" transform="translate(-2.868 -2.868)" fill="#2f2f2f" />
+                                        </g>
+                                    </svg>
+                                    <input type="text" placeholder="Search..." />
+                                </div>
+                            </div>
+
+                        </div>
+                        @*Data table*@
+                        <table id="VisitorsDetailsTable" class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Visitor Name</th>
+                                    <th>Email</th>
+                                    <th>Id Number </th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var visitor in Model.visitorVMs)
+                                {
+
+                                    <tr>
+                                        <td class="d-flex align-items-center justify-content-start gap-1 visitorDetails">
+                                            <i class="fa-solid fa-user-gear mx-1" style="color: #A7AEC2; font-size: 15px"></i>
+                                            <div class="text-content-container">
+                                                <p class="p-0 m-0 fw-500">@visitor.VisitorName</p>
+                                                <p class="p-0 m-0">@visitor.Organization</p>
+                                            </div>
+                                        </td>
+                                        <td>@visitor.Email</td>
+                                        <td>@visitor.IdNumber</td>
+                                        <td>@visitor.Status</td>
+                                        <td>
+                                            <div class="btns d-flex align-items-center gap-3">
+                                                <i class="fa-solid fa-pencil fs-5" id="editVisitor"></i>
+                                                <i class="fa-regular fa-trash-can fs-5"></i>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+
+
+                            </tbody>
+                        </table>
+                    }
+                    else
+                    {
+                        @*No Data Message with Icon*@
+                        <div class="no-data-message text-center">
+                            <i class="fa-solid fa-database" style="font-size: 48px; color: #A7AEC2;"></i>
+                            <p class="mt-3">No visit requests found.</p>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- Edit Visit Modal -->
+<div class="modal fade" id="editVisitRequestModel" data-visit-id="@Model.VisiteRequestID" tabindex="-1" aria-labelledby="modalTitleId" aria-hidden="true">
+    <div  style="width:600px !important;" class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document" style="zoom: 90%;">
+        <div class="modal-content d-flex align-items-center border-0 rounded-4" style="padding: 20px;">
+            <div class="d-flex align-items-center justify-content-between w-100">
+                <h6 class="m-0 p-0 w-100 text-center fw-500">Edit Visit</h6>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body w-100 mt-2">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="subject">Subject  <span class="text-muted">(Optional)</span></label>
+                        <input type="text" id="subject" name="subject" class="form-input" placeholder="Enter visit subject">
+                    </div>
+                    <div class="form-group">
+                        <label for="status">Choose Visit Purpose</label>
+                        <select id="status" class="form-input">
+                            <option value="" disabled selected>Select purpose</option>
+                            @foreach (var purpose in ViewBag.Purposes)
+                            {
+                                <option value="@purpose.Id">@purpose.Name</option>
+                            }
+                        </select>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="date">Date</label>
+                        <input type="date" id="date" name="visitDate" class="form-input" placeholder="21/12/2024">
+                    </div>
+                    <div class="form-group">
+                        <label for="time">Time</label>
+                        <input type="time" id="time" name="visitTime" class="form-input" placeholder="21/12/2024">
+                    </div>
+                    <div id="requestedByDropdown" class="form-group">
+                        <label for="requestedBySearch">Requested By</label>
+                        <input type="text"
+                               id="requestedBySearch"
+                               class="form-input"
+                               placeholder="Search and select a person"
+                               autocomplete="off" />
+                        <div id="requestedByOptions" class="dropdown-options hidden"></div>
+                    </div>
+                </div>
+                <div class="form-grid visit-location">
+                    <div class="form-group visit-location">
+                        <label for="visit-location-dropdown">Visit Location</label>
+                        <select id="visit-location-dropdown" class="form-input">
+                            <option class="visit-location-option" value="0" selected>My Office</option>
+                            <option class="visit-location-option" value="1">Meeting Area</option>
+                        </select>
+                    </div>
+
+                    <!-- Location Of Office -->
+                    <div class="office-lcation">
+                        <div class="top d-flex align-item-center gap-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                <g id="info" transform="translate(-2 -2)">
+                                    <path id="Path_40198" data-name="Path 40198" d="M14,2A12,12,0,1,0,26,14,12,12,0,0,0,14,2Zm0,22A10,10,0,1,1,24,14,10,10,0,0,1,14,24Z" transform="translate(0)" fill="#1e3a8a" />
+                                    <path id="Path_40199" data-name="Path 40199" d="M8.51,8.9a1,1,0,0,0-1,1v6.8a1,1,0,0,0,2,0V9.9A1,1,0,0,0,8.51,8.9Zm0-4.1a1.06,1.06,0,0,0-1.02,1.04V6a.94.94,0,0,0,1.02.94,1.04,1.04,0,0,0,1-1V5.7a.9.9,0,0,0-1-.9Z" transform="translate(5.49 2.797)" fill="#1e3a8a" />
+                                </g>
+                            </svg>
+                            <p class="m-0 p-0">My office location</p>
+                        </div>
+
+                        <div class="location-details flex-wrap  d-flex align-content-center gap-2 mt-2">
+                            <div class="box">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="15.114" height="16.02" viewBox="0 0 15.114 16.02">
+                                    <path id="Path_40638" data-name="Path 40638" d="M52.884,30.041l-7.208-5.323a.348.348,0,0,0-.412,0l-7.212,5.323a.338.338,0,0,0,.2.613H39.26v7.208h-.925a.351.351,0,0,0-.353.343v2.128a.343.343,0,0,0,.353.336H52.6a.345.345,0,0,0,.353-.336V38.206a.348.348,0,0,0-.353-.343h-.932V30.658h1.005a.342.342,0,0,0,.208-.617Zm-7.416-4.62,6.155,4.543H39.312Zm1.663,12.445V30.658h1.56v7.208ZM43.8,30.658v7.208h-1.56V30.658Zm.693,0h1.941v7.208H44.5Zm-4.54,0h1.594v7.208H39.957Zm12.3,9.323H38.675V38.559H52.26Zm-1.282-2.114H49.383V30.658h1.594Z" transform="translate(-37.909 -24.65)" fill="#2f2f2f"></path>
+                                </svg>
+                                @Model.visitRequestInfo.Building
+                            </div>
+
+
+                            <div class="box">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="9" height="23" viewBox="0 0 9 23">
+                                    <text id="Z" transform="translate(0 17)" fill="#2f2f2f" font-size="16" font-family="Poppins-Regular, Poppins" opacity="0.6"><tspan x="0" y="0">Z</tspan></text>
+                                </svg>
+                                @Model.visitRequestInfo.Zone
+                            </div>
+
+
+                            <div class="box">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="11.579" height="16.3" viewBox="0 0 11.579 16.3">
+                                    <g id="location_1_" data-name="location (1)" transform="translate(-15.2 -8.4)" opacity="0.6">
+                                        <path id="Path_40639" data-name="Path 40639" d="M20.989,24.7l-.31-.379c-.207-.276-5.479-6.444-5.479-10.131a5.789,5.789,0,1,1,11.579,0c0,3.687-5.273,9.89-5.479,10.132Zm0-15.507a4.964,4.964,0,0,0-4.962,4.962c0,2.895,3.825,7.823,4.962,9.236,1.137-1.413,4.962-6.306,4.962-9.236A4.964,4.964,0,0,0,20.989,9.193Z" transform="translate(0)" fill="#666"></path>
+                                        <path id="Path_40640" data-name="Path 40640" d="M27.806,23.211a2.205,2.205,0,1,1,2.205-2.205A2.221,2.221,0,0,1,27.806,23.211Zm0-3.584a1.378,1.378,0,1,0,1.378,1.378A1.382,1.382,0,0,0,27.806,19.627Z" transform="translate(-6.816 -6.816)" fill="#666"></path>
+                                    </g>
+                                </svg>
+                                @Model.visitRequestInfo.Floor
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Location Of Meeting Area -->
+                    <div class="meetingArea-lcation d-none">
+                        <div class="top d-flex align-item-center gap-3 mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                <g id="info" transform="translate(-2 -2)">
+                                    <path id="Path_40198" data-name="Path 40198" d="M14,2A12,12,0,1,0,26,14,12,12,0,0,0,14,2Zm0,22A10,10,0,1,1,24,14,10,10,0,0,1,14,24Z" transform="translate(0)" fill="#1e3a8a" />
+                                    <path id="Path_40199" data-name="Path 40199" d="M8.51,8.9a1,1,0,0,0-1,1v6.8a1,1,0,0,0,2,0V9.9A1,1,0,0,0,8.51,8.9Zm0-4.1a1.06,1.06,0,0,0-1.02,1.04V6a.94.94,0,0,0,1.02.94,1.04,1.04,0,0,0,1-1V5.7a.9.9,0,0,0-1-.9Z" transform="translate(5.49 2.797)" fill="#1e3a8a" />
+                                </g>
+                            </svg>
+                            <p class="m-0 p-0">Meeting area location</p>
+                        </div>
+
+                        <div class="form-grid w-100">
+                            <div class="form-group">
+                                <label for="building">Building</label>
+                                <select id="building" class="form-input">
+                                    <option value="">Select building</option>
+                                    <!-- Options here -->
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="zone">Zone</label>
+                                <select id="zone" class="form-input">
+                                    <option value="">Select zone</option>
+                                    <!-- Options here -->
+                                </select>
+                            </div>
+                            <div id="meetingAreasDropdown" class="form-group">
+                                <label for="meetingAreaSearch">Meeting Area</label>
+                                <input type="text"
+                                       id="meetingAreaSearch"
+                                       class="form-input"
+                                       placeholder="Search and select a meeting area"
+                                       autocomplete="off" />
+                                <div id="meetingAreaOptions" class="dropdown-options hidden"></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer border-0 d-flex justify-content-between w-100">
+                <button type="button" class="btn"
+                        style="width: 100%; background: #1E3A8A; box-shadow: 0px 4px 12px #00000029; border-radius: 4px;
+                               font-size: 15px; color: white; padding: 15px;" id="saveMeetingAreaBtn">
+                    Add
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@*Scripts*@
+
+@section Scripts {
+    <script>
+        const list_Item = document.querySelector(".sidebar-menu .VisitRequest")
+        list_Item.classList.add('active-sidebar-menu');
+    </script>
+
+    <script src="~/Content/VisitRequest/VistRequestDetails/VistRequestDetails.js"></script>
+}

@@ -1,0 +1,207 @@
+﻿
+.Steps-container {
+    width: 100%;
+    height: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 36px;
+    margin: 50px 0px 25px;
+}
+
+
+
+.step-bar {
+    background-color: #ccc;
+    height: 5px;
+    width: 8rem;
+    border-radius: 2px;
+    transition: background-color 0.3s;
+    border-radius:5px;
+}
+
+.step-bar-active {
+    background-color: #1E3A8A; 
+}
+
+
+
+.data-box {
+    border: 1px solid #E6E6E8;
+    opacity: 1;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+.data-title {
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+    .form-group label {
+        margin-bottom: 5px;
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+.form-input {
+    padding: 10px;
+    border: 1px solid #cccccc7d;
+    border-radius: 5px;
+    font-size: 14px;
+}
+.input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.form-input {
+    width: 100%;
+    padding-left: 30px; 
+    padding-right: 10px; 
+}
+
+.search-icon {
+    position: absolute;
+    left: 10px;
+    pointer-events: none; 
+    color: #aaa; 
+}
+
+
+.svg-btn {
+    width: 45px;
+    height: 45px;
+    background-color: #1E3A8A;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+/*New Zones Table*/
+/* Switch Toggle Btn */
+.switch {
+    font-size: 10px;
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 22px;
+}
+
+    .switch input {
+        opacity: 1;
+        width: 0;
+        height: 0;
+    }
+
+/* The slider */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #fff;
+    transition: .4s;
+    border-radius: 30px;
+    border: 1px solid #ccc;
+}
+
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 1.6em;
+        width: 1.6em;
+        border-radius: 50%;
+        left: 2px;
+        top: 2px;
+        background-color: white;
+        box-shadow: 0 2px 5px #999999;
+        transition: .4s;
+    }
+
+input:checked + .slider {
+    background-color: #5fdd54;
+    border: 1px solid transparent;
+}
+
+    input:checked + .slider:before {
+        transform: translateX(18px);
+    }
+
+.location, .userProfile {
+    cursor: pointer;
+}
+
+
+table th,
+table td {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    text-align: left !important;
+    background-color: white !important;
+}
+
+
+.slider-form {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #fff;
+    transition: .4s;
+    border-radius: 30px;
+    border: 1px solid #ccc;
+}
+
+    .slider-form:before {
+        position: absolute;
+        content: "";
+        height: 1.2em;
+        width: 1.2em;
+        border-radius: 50%;
+        left: 2px;
+        top: 1.5px;
+        background-color: white;
+        box-shadow: 0 2px 5px #999999;
+        transition: .4s;
+    }
+
+input:checked + .slider-form {
+    background-color: #5fdd54;
+    border: 1px solid transparent;
+}
+
+    input:checked + .slider-form:before {
+        transform: translateX(18px);
+    }
+
+.delete-zone, .delete-area {
+    cursor: pointer;
+}
+/* Responsive Styles */
+@media (max-width: 991px) {
+    .form-grid {
+        grid-template-columns: repeat(1,1fr)
+    }
+}

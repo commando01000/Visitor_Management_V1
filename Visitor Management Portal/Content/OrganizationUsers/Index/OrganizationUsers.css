@@ -1,0 +1,94 @@
+﻿.organization-dashboard-container {
+    padding: 20px;
+/*    background-color: #f9f9f9;*/
+    border-radius: 8px;
+}
+
+.organization-users-header {
+    margin-bottom: 20px;
+}
+
+.organization-users-search-bar {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    border: 1px solid #E6E6E8;
+    border-radius: 5px;
+    padding: 5px 10px;
+    background: #FFFFFF;
+    border-radius: 10px;
+    width: 20%;
+}
+
+    .organization-users-search-bar input {
+        flex-grow: 1;
+        border: none;
+        outline: none;
+        padding-left: 5px;
+        font-size: 14px;
+    }
+
+.svg-btn {
+    width: 45px;
+    height: 45px;
+    background-color: #1E3A8A;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+table th,
+table td {
+    max-width: 150px;
+    width: 150px;
+    text-overflow: ellipsis; /* Ensures text is truncated */
+    white-space: nowrap; /* Prevents text from wrapping */
+    overflow: hidden; /* Hides overflowing text */
+    text-align: left !important;
+    background-color: white !important;
+}
+
+.organization-user-details {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    max-width: 150px;
+    text-overflow: ellipsis; 
+    white-space: nowrap;/
+    overflow: hidden; 
+}
+
+.organization-user-text-container {
+    display: block;
+    max-width: 100%; 
+}
+
+    .organization-user-text-container h6 {
+        font-size: 16px;
+        font-weight: bold;
+        max-width: 100%; 
+        text-overflow: ellipsis; 
+        white-space: nowrap; 
+        overflow: hidden; 
+    }
+
+    .organization-user-text-container p {
+        font-size: 14px;
+        color: #888;
+        max-width: 100%; 
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+.organization-user-actions {
+    gap: 15px;
+}
+    .organization-user-actions i{
+        cursor:pointer;
+    }
+    .userDetails {
+        cursor: pointer;
+    }

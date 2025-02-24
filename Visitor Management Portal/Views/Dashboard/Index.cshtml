@@ -1,0 +1,44 @@
+﻿
+@{
+    ViewBag.Title = "Dashboard";
+    
+}
+@section styles{
+    <link rel="stylesheet" href="~/Content/Dashboard/Index/Dashboard.css" />
+}
+
+    <div class="dashboard-section-container">
+    
+        <div class="dashboard-title fw-bold">Set Up Your Organization</div>
+        <div class="dashboard-subtitle">Key steps to establish and operate your organization effectively</div>
+
+        <div class="dashboard-box">
+            <div class="dashboard-content">
+                <h3>Organization Setup</h3>
+                <p>Provide your organization's information to begin setting up your account in the system.</p>
+            </div>
+            <button class="dashboard-button">Set Up</button>
+        </div>
+
+        <div class="dashboard-row">
+            <div class="dashboard-small-box">
+                <h3>Organization Users</h3>
+                <p>Enhance your management capabilities by expanding your team and inviting users to join your organization.</p>
+                <button class="dashboard-button">Invite Users</button>
+            </div>
+
+            <div class="dashboard-small-box">
+                <h3>Build Your Organization</h3>
+                <p>To effectively manage all locations within your organization, make sure to include all buildings, zones, and meeting areas.</p>
+                <button class="dashboard-button">Add Locations</button>
+            </div>
+
+        </div>
+    </div>
+@section Scripts{
+    <script>
+        const list_Item = document.querySelector(".sidebar-menu .dashboard")
+        list_Item.classList.add('active-sidebar-menu');
+    </script>
+    
+    }
