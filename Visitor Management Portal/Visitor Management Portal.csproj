@@ -325,6 +325,7 @@
     <Content Include="Content\Images\DashboardLayout\DefualtProfilePic.svg" />
     <Content Include="Content\Images\DashboardLayout\Group_10458.svg" />
     <Content Include="Content\Images\DashboardLayout\Logout_icon.svg" />
+    <Content Include="Content\Images\DashboardLayout\notification.svg" />
     <Content Include="Content\Images\DashboardLayout\Settings_icon.svg" />
     <Content Include="Content\Images\DashboardLayout\Visitors Hub_icon.svg" />
     <Content Include="Content\Images\easyVisit_Logo_bold.svg" />
@@ -408,6 +409,7 @@
     <Compile Include="DAL\Repository\OrganizationSetupRepository\IZoneRepository.cs" />
     <Compile Include="DAL\Repository\OrganizationSetupRepository\ZoneRepository.cs" />
     <Compile Include="Helpers\RequireAuthenticationAttribute.cs" />
+    <Compile Include="Models\XRM\OptionSets.cs" />
     <Compile Include="Utilities\ClaimsManager.cs" />
     <Compile Include="Utilities\CustomEnumHelpers.cs" />
     <Compile Include="Utilities\Enums.cs" />
@@ -436,7 +438,6 @@
     <Compile Include="DAL\Repository\VisitRequestRepository\IVisitRequestRepository.cs" />
     <Compile Include="DAL\Repository\VisitRequestRepository\VisitRequestRepository.cs" />
     <Compile Include="Models\XRM\Entities.cs" />
-    <Compile Include="Models\XRM\OptionSets.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -467,6 +468,7 @@
     <Compile Include="ViewModels\OrganizationSetup\ZoneVM.cs" />
     <Compile Include="ViewModels\VisitorsHub\AddVisitorVM.cs" />
     <Compile Include="ViewModels\VisitorsHub\EditVisitorsVM.cs" />
+    <Compile Include="ViewModels\VisitorsHub\VisitingMemberWithRelatedRequestVM.cs" />
     <Compile Include="ViewModels\VisitorsHub\VisitingMemberVM.cs" />
     <Compile Include="ViewModels\VisitorsHub\VisitorsHubVM.cs" />
     <Compile Include="ViewModels\VisitRequest\AddVisitRequestVM.cs" />

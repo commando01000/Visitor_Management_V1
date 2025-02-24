@@ -157,9 +157,10 @@
 
                 <div class="profile-section">
                     <!-- Bell Icon with Click Event -->
-                    <img src="~/Content/Images/DashboardLayout/Group_10458.svg"
+                    <img src="~/Content/Images/DashboardLayout/notification.svg"
                          alt="Notifications"
                          class="notification-ico"
+                         style="cursor:pointer;"
                          id="notificationBell" /> &nbsp;
 
                     <img src="~/Content/Images/DashboardLayout/DefualtProfilePic.svg"
@@ -174,35 +175,160 @@
                     <!-- Notification Section -->
                     <div class="notification-container position-absolute" id="notificationBox">
                         <div class="notifications">
-                            <h5>Notifications</h5>
-                            <div class="notification-item">
-                                <p>
-                                    <strong>Ahmed Mohamed</strong> has requested a visit for John Doe on 26 Jan 2025 at 2:00 PM
-                                    <br> Reason: Project Discussion <br />
-                                    <small class="text-muted">2h ago</small>
-                                </p>
-                                <button class="confirm-btn dashboard-button">Confirm</button>
-                                <button class="reject-btn">Reject</button>
+                            <div class="header d-flex justify-content-between align-items-center">
+                                <h5>Notifications</h5>
+
+                                <img src="~/Content/Images/DashboardLayout/add.svg"
+                                     alt="Profile"
+                                     style="cursor:pointer;"
+                                     id="close-ico"
+                                     class="badge d-block rounded-5 close-ico" />
                             </div>
                             <div class="notification-item">
-                                <p><strong>Ahmed Mohamed</strong> has updated the visit request for John Doe, new date 28 Jan 2025 at 4:00 PM</p>
-                                <small class="text-muted">2h ago</small>
+                                <div>
+                                    <div class="d-flex gap-2 justify-content-between">
+                                        <div>
+                                            <img src="~/Content/Images/DashboardLayout/Group_10458.svg"
+                                                 alt="Profile"
+                                                 class="user-pic" />
+                                        </div>
+                                        <div>
+                                            <strong>Ahmed Mohamed</strong> has requested a visit <strong>
+                                                for <br /> John Doe on 26 Jan 2025 at 2:00 PM
+                                            </strong>
+                                            <br> Reason: Project Discussion <br />
+                                            <small class="text-muted">2h ago</small>
+                                            <br />
+                                            <div>
+                                                <button class="confirm-btn dashboard-button">Confirm</button>
+                                                <button class="reject-btn">Reject</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="blue-dot">
+                                </div>
                             </div>
                             <div class="notification-item">
-                                <p><strong>Ahmed Mohamed</strong> has updated the visit request for John Doe, new date 28 Jan 2025 at 4:00 PM</p>
-                                <small class="text-muted">2h ago</small>
+                                <div>
+                                    <div class="d-flex gap-2 justify-content-between">
+                                        <div>
+                                            <img src="~/Content/Images/DashboardLayout/Group_10458.svg"
+                                                 alt="Profile"
+                                                 class="user-pic" />
+                                        </div>
+                                        <div>
+                                            <strong>Ahmed Mohamed</strong> has updated the visit <br />
+                                            <strong> John Doe, new date 28 Jan 2025 at 4:00 PM</strong>
+                                            <div>
+                                                <small class="text-muted">2h ago</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="blue-dot">
+                                </div>
                             </div>
                             <div class="notification-item">
-                                <p><strong>Ahmed Mohamed</strong> has updated the visit request for John Doe, new date 28 Jan 2025 at 4:00 PM</p>
-                                <small class="text-muted">2h ago</small>
+                                <div>
+                                    <div class="d-flex gap-2 justify-content-between">
+                                        <div>
+                                            <img src="~/Content/Images/DashboardLayout/Group_10458.svg"
+                                                 alt="Profile"
+                                                 class="user-pic" />
+                                        </div>
+                                        <div>
+                                            <strong>Ahmed Mohamed</strong> has updated the visit <br />
+                                            <strong> John Doe, new date 28 Jan 2025 at 4:00 PM</strong>
+                                            <div>
+                                                <small class="text-muted">2h ago</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="blue-dot">
+                                </div>
                             </div>
                             <div class="notification-item">
-                                <p><strong>Ahmed Mohamed</strong> has updated the visit request for John Doe, new date 28 Jan 2025 at 4:00 PM</p>
-                                <small class="text-muted">2h ago</small>
+                                <div>
+                                    <div class="d-flex gap-2 justify-content-between">
+                                        <div>
+                                            <img src="~/Content/Images/DashboardLayout/Group_10458.svg"
+                                                 alt="Profile"
+                                                 class="user-pic" />
+                                        </div>
+                                        <div>
+                                            <strong>Ahmed Mohamed</strong> has updated the visit <br />
+                                            <strong> John Doe, new date 28 Jan 2025 at 4:00 PM</strong>
+                                            <div>
+                                                <small class="text-muted">2h ago</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="blue-dot">
+                                </div>
                             </div>
                             <div class="notification-item">
-                                <p><strong>Ahmed Mohamed</strong> has updated the visit request for John Doe, new date 28 Jan 2025 at 4:00 PM</p>
-                                <small class="text-muted">2h ago</small>
+                                <div>
+                                    <div class="d-flex gap-2 justify-content-between">
+                                        <div>
+                                            <img src="~/Content/Images/DashboardLayout/Group_10458.svg"
+                                                 alt="Profile"
+                                                 class="user-pic" />
+                                        </div>
+                                        <div>
+                                            <strong>Ahmed Mohamed</strong> has updated the visit <br />
+                                            <strong> John Doe, new date 28 Jan 2025 at 4:00 PM</strong>
+                                            <div>
+                                                <small class="text-muted">2h ago</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="blue-dot">
+                                </div>
+                            </div>
+                            <div class="notification-item">
+                                <div>
+                                    <div class="d-flex gap-2 justify-content-between">
+                                        <div>
+                                            <img src="~/Content/Images/DashboardLayout/Group_10458.svg"
+                                                 alt="Profile"
+                                                 class="user-pic" />
+                                        </div>
+                                        <div>
+                                            <strong>Ahmed Mohamed</strong> has updated the visit <br />
+                                            <strong> John Doe, new date 28 Jan 2025 at 4:00 PM</strong>
+                                            <div>
+                                                <small class="text-muted">2h ago</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="blue-dot">
+                                </div>
+                            </div>
+                            <div class="notification-item">
+                                <div>
+                                    <div class="d-flex gap-2 justify-content-between">
+                                        <div>
+                                            <img src="~/Content/Images/DashboardLayout/Group_10458.svg"
+                                                 alt="Profile"
+                                                 class="user-pic" />
+                                        </div>
+                                        <div>
+                                            <strong>Ahmed Mohamed</strong> has updated the visit <br />
+                                            <strong> John Doe, new date 28 Jan 2025 at 4:00 PM</strong>
+                                            <div>
+                                                <small class="text-muted">2h ago</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="blue-dot">
+                                </div>
                             </div>
                         </div>
                     </div>

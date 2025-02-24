@@ -3,7 +3,7 @@
     ViewBag.Title = "Visitors Hub";
 }
 
-@using Visitor_Management_Portal.ViewModels.VisitRequest;
+@using Visitor_Management_Portal.ViewModels.VisitorsHub;
 
 <link rel="stylesheet" href="~/Content/VisitorsHub/VisitorDetails/VisitorDetails.css">
 
@@ -131,9 +131,8 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (VisitRequestVM req in ViewBag.RelatedVisitRequests)
+                            @foreach (VisitingMemberWithRelatedRequestVM req in ViewBag.RelatedVisitRequests)
                             {
-
                                 <tr>
                                     <td>@req.Serial</td>
                                     <td>@req.VisitorsCount</td>

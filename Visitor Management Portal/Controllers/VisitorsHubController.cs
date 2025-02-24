@@ -58,7 +58,7 @@ namespace Visitor_Management_Portal.Controllers
         {
             var visitor = _visitorsService.GetVisitor(id);
 
-            List<VisitRequestVM> RelatedVisitRequests = await _visitorsService.GetVisitorRequestsHistory(id);
+            List<VisitingMemberWithRelatedRequestVM> RelatedVisitRequests = await _visitorsService.GetVisitorRequestsHistory(id);
 
             if (visitor == null)
                 return RedirectToAction("NotFound", "Error");

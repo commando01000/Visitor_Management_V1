@@ -101,7 +101,8 @@ namespace Visitor_Management_Portal.DAL.Repository.VisitRequestRepository
                       <condition attribute='vm_visitrequest' operator='eq' value='" + visitRequestId + @"' />
                     </filter>
                   </entity>
-                </fetch>";
+                </fetch>"
+            ;
 
             var fetchExpression = new FetchExpression(fetchXml);
             var result = _service.RetrieveMultiple(fetchExpression);

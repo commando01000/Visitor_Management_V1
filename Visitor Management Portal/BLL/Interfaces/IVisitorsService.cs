@@ -21,6 +21,6 @@ namespace Visitor_Management_Portal.BLL.Interfaces
         Task<OperationResult> UpdateVisitRequest(AddVisitRequestVM model);
         ViewModels.VisitorsHub.VisitorVM GetVisitor(Guid visitRequestId);
         OperationResult UpdateVisitor(ViewModels.VisitorsHub.VisitorVM visitorsVM);
-        Task<List<VisitRequestVM>> GetVisitorRequestsHistory(Guid visitorId);
+        Task<List<VisitingMemberWithRelatedRequestVM>> GetVisitorRequestsHistory(Guid visitorId);
     }
 }

@@ -372,64 +372,46 @@ namespace Visitor_Management_Portal.BLL.Services
             }
         }
 
-        public async Task<List<VisitRequestVM>> GetVisitorRequestsHistory(Guid visitorId)
+        public async Task<List<VisitingMemberWithRelatedRequestVM>> GetVisitorRequestsHistory(Guid visitorId)
         {
-            string fetchVisitingMembersQuery =
-                           $@"
-                            <fetch>
-                              <entity name='vm_visitingmember'>
-                                <attribute name='vm_visitrequest' />
-                                <attribute name='vm_visitor' />
-                                <filter>
-                                  <condition attribute='vm_visitor' operator='eq' value='{visitorId}' uitype='vm_visitor' />
-                                </filter>
-                              </entity>
-                            </fetch>";
+            string fetchRelatedVisitRequests = $@"
+                        <fetch distinct='false' useraworderby='false' no-lock='false' mapping='logical'>
+                          <entity name='vm_visitingmember'>
+                            <attribute name='vm_visitor' />
+                            <attribute name='vm_visitrequest' />
+                            <filter>
+                              <condition attribute='vm_visitor' operator='eq' value='{visitorId}' uitype='vm_visitor' />
+                            </filter>
+                            <link-entity name='vm_visitrequest' from='vm_visitrequestid' to='vm_visitrequest' link-type='inner' alias='requests'>
+                              <attribute name='vm_location' />
+                              <attribute name='vm_visitrequestid' />
+                              <attribute name='vm_approvedrejectedby' />
+                              <attribute name='statecode' />
+                              <attribute name='statuscode' />
+                              <attribute name='vm_newcolumn' />
+                              <attribute name='vm_requestedby' />
+                              <attribute name='vm_visitpurpose' />
+                              <attribute name='vm_visittime' />
+                              <attribute name='vm_visituntil' />
+                            </link-entity>
+                          </entity>
+                        </fetch>
+                        ";
 
-            var visitingMembers = _visitRequestRepository.GetAll(fetchVisitingMembersQuery);
-            if (visitingMembers is null || visitingMembers.Count == 0)
-                return new List<VisitRequestVM>();
+            var visitingMembersWithRelatedRequestes = _visitRequestRepository.GetAll(fetchRelatedVisitRequests);
+            if (visitingMembersWithRelatedRequestes is null || visitingMembersWithRelatedRequestes.Count == 0)
+                return new List<VisitingMemberWithRelatedRequestVM>();
 
-            List<VisitingMemberVM> visitingMemberVMs = visitingMembers
-                                     .Select(vm => VisitingMemberVM.MapFromEntity(vm.ToEntity<vm_visitingmember>()))
-                                     .ToList();
+            var visitingMemeberWithRelatedRequestVMS = new List<VisitingMemberWithRelatedRequestVM>();
 
-            StringBuilder fetchRelatedRequestsQueryBuilder = new StringBuilder(string.Format($@"
-                <fetch>
-                  <entity name='vm_visitrequest'>
-                    <filter>
-                      <condition attribute='vm_visitrequestid' operator='in'>
-           "));
-
-            foreach (var visitingMember in visitingMemberVMs)
+            foreach (var req in visitingMembersWithRelatedRequestes)
             {
-                fetchRelatedRequestsQueryBuilder.Append(string.Format($@"
-                    <value>{visitingMember.RequestId}</value>
-                "));
+                var visitingMemberWithRelatedRequestVM = VisitingMemberWithRelatedRequestVM.MapFromEntity(req.ToEntity<vm_visitingmember>());
+                visitingMemberWithRelatedRequestVM.VisitorsCount = GetVisitorCount(visitingMemberWithRelatedRequestVM.RequestId);
+                visitingMemeberWithRelatedRequestVMS.Add(visitingMemberWithRelatedRequestVM);
             }
 
-            fetchRelatedRequestsQueryBuilder.Append(string.Format($@"
-                      </condition>
-                    </filter>
-                  </entity>
-                </fetch>
-            "));
-
-            var relatedRequests = _visitRequestRepository.GetAll(fetchRelatedRequestsQueryBuilder.ToString());
-
-            if (relatedRequests is null || relatedRequests.Count == 0)
-                return new List<VisitRequestVM>();
-
-            var visiteRequestsVMS = new List<VisitRequestVM>();
-
-            foreach (var req in relatedRequests)
-            {
-                var visitRequestVM = VisitRequestVM.MapFromEntity(req.ToEntity<vm_VisitRequest>());
-                visitRequestVM.VisitorsCount = GetVisitorCount(req.Id);
-                visiteRequestsVMS.Add(visitRequestVM);
-            }
-
-            return await Task.FromResult(visiteRequestsVMS);
+            return await Task.FromResult(visitingMemeberWithRelatedRequestVMS);
         }
 
         public ViewModels.VisitorsHub.VisitorVM GetVisitor(Guid visitRequestId)

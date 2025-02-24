@@ -187,6 +187,25 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 
+    document.getElementById("notificationBell").addEventListener("click", function () {
+        var notificationBox = document.getElementById("notificationBox");
+        notificationBox.classList.toggle("show");
+    });
+
+    document.getElementById("close-ico").addEventListener("click", function () {
+        var notificationBox = document.getElementById("notificationBox");
+        notificationBox.classList.toggle("show");
+    });
+
+    // Optional: Close notifications when clicking outside
+    document.addEventListener("click", function (event) {
+        var notificationBox = document.getElementById("notificationBox");
+        var bellIcon = document.getElementById("notificationBell");
+
+        if (!notificationBox.contains(event.target) && event.target !== bellIcon) {
+            notificationBox.classList.remove("show");
+        }
+    });
 
 
 });
