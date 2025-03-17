@@ -1,0 +1,84 @@
+﻿@{
+    ViewBag.Title = "Settings";
+    
+}
+
+@section styles{
+    <link rel="stylesheet" href="~/Content/OrganizationDate/DataverseConnection/DataverseConnection.css">
+
+}
+
+<div class="section-container d-flex flex-column gap-4">
+
+    <top>
+        <a class="  navigation-btn">Settings ></a>
+        <a class="navigation-btn" onclick="stepBack('/OrganizationDate/Index')" >Organization Date ></a>
+        <a class="navigation-btn ">Dataverse Connection</a>
+    </top>
+
+    <div class="first-step d-flex align-items-center  step">
+        <span class="number">1</span>
+        <div><a class="link-dark fw-500">Signin</a> with your existing Microsoft account or <a class="link-dark fw-500">create new account</a></div>
+    </div>
+    <div class="second-step d-flex align-items-center  step active-setp">
+        <span class="number">2</span>
+        <div>Go to <a class="link-dark fw-500">Azure Portal</a> , First Click on <span class="fw-500">Azure Active Directory</span> in the left panel and then on  <a class="link-dark fw-500">App Registration</a></div>
+    </div>
+    <div class="third-step d-flex align-items-start flex-column  step">
+
+        @*First box *@
+
+        <div class="top d-flex">
+            <span class="number">3</span>
+            <div>Click on the <span class=" fw-500"> + New registration link</span> , complete the form with the following values and then click on the  <a class="link-dark fw-500">Register </a>button</div>
+        </div>
+
+        @*Second box *@
+
+        <div class="box w-100 my-4 d-flex flex-column gap-2">
+            <div class="d-flex align-items-center gap-2">
+                <span class="fw-500">Name</span> :
+                <span>Visitor Management</span>
+            </div>
+            <p class="p-0 m-0">Tick the <span class="fw-500">Accounts in any organizational directory and personal Microsoft accounts (e.g. Skype, Xbox, Outlook.com)</span> checkbox</p>
+
+            <div class="d-flex align-items-center gap-2">
+                <span class="fw-500">Redirect URL</span> :
+                <span>https://Visitormanagementapp.api.Com</span>
+            </div>
+        </div>
+
+        @*Third box *@
+        <div class="box w-100 my-4 d-flex flex-column gap-2">
+            <img src="~/Content/Images/temp_Image.png" class="rounded-2" width="450" height="450" />
+        </div>
+    </div>
+
+
+
+    <div class="fourth-step d-flex align-items-start flex-column step active-setp">
+        @*First box *@
+        <div class="top d-flex">
+            <span class="number">4</span>
+
+            <div>Look For <span class=" fw-500"> Client secrets</span> and copy & past the value in the form blew</div>
+        </div>
+
+        @*Second box *@
+
+        <div class="box  w-100 my-4 d-flex flex-column gap-2">
+            <label for="client-secret" class="fw-500"> <span class="text-danger">*</span>Client Secret</label>
+            <input type="text" id="client-secret" placeholder="Link" />
+        </div>
+    </div>
+
+    <button class="submit_btn">Update Application Keys</button>
+</div>
+@section Scripts {
+    <script>
+        const list_Item = document.querySelector(".sidebar-menu .settings ")
+        list_Item.classList.add('active-sidebar-menu');
+    </script>
+
+    <script src="~/Content/OrganizationDate/DataverseConnection/DataverseConnection.js"></script>
+}

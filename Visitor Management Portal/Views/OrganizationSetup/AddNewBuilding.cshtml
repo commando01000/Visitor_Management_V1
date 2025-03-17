@@ -1,4 +1,5 @@
-﻿
+﻿@using Visitor_Management_Portal.ViewModels.OrganizationUsers
+
 @{
     ViewBag.Title = "Settings";
 
@@ -67,9 +68,9 @@
                         <option value="">Select Contact Person</option>
                         @if (ViewBag.OrganizationUsers != null)
                         {
-                            foreach (var user in ViewBag.OrganizationUsers)
+                            foreach (var user in ViewBag.OrganizationUsers as List<OrganizationUserVM> ?? new List<OrganizationUserVM>())
                             {
-                                <option value="@user.Id">@($"{user.Name} ({user.Role})")</option>
+                                <option value="@user.Id">@($"{user.FullName} ({user.RoleName})")</option>
                             }
                         }
                     </select>

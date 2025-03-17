@@ -6,6 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const officeLocation = document.querySelector('.office-lcation');
     const meetingAreaLocation = document.querySelector('.meetingArea-lcation');
     const continueBtn = document.getElementById('saveMeetingAreaBtn');
+    const AddNewVisitRequest = document.querySelector('.addNewVisitRequest');
+
 
     const meetingAreaSearch = document.getElementById('meetingAreaSearch');
     const meetingAreaOptions = document.getElementById('meetingAreaOptions');
@@ -16,9 +18,29 @@ document.addEventListener('DOMContentLoaded', () => {
     var meetingAreaVal;
     let buildings = [];
     let allUsers = []; // Store users globally
+    let currentUser = {};
 
     getOrganizationUsers();
 
+    saveCurrentUserData();
+
+    function saveCurrentUserData() {
+        // Fetch organization users when the page loads
+        $.ajax({
+            url: '/VisitRequest/GetOrganizationUsers',
+            type: 'GET',
+            dataType: 'json',
+            success: function (response) {
+                currentUser = response; // Store users globally
+                console.log("Organization Users: ", allUsers);
+            },
+            error: function (xhr, status, error) {
+                console.error("Error fetching organization users:", error);
+            }
+        });
+    }
+
+    // Capture the initial data from the rendered table
     function getOrganizationUsers() {
 
         // Fetch organization users when the page loads
@@ -36,7 +58,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-
     $("#saveMeetingAreaBtn").on("click", function () {
         const visitRequestData = {
             VisiteRequestID: $("#editVisitRequestModel").data("visit-id"), // Assuming the visit request ID is stored in modal data
@@ -48,7 +69,6 @@ document.addEventListener('DOMContentLoaded', () => {
             Location: visitLocationDropdown.value,
             MeetingArea: meetingAreaVal,
         };
-        debugger;
         // Ensure validation before proceeding
         if (!validateVisitRequestData(visitRequestData)) {
             return;
@@ -139,6 +159,10 @@ document.addEventListener('DOMContentLoaded', () => {
         );
 
         populateOptions(filteredUsers);
+    });
+
+    AddNewVisitRequest.addEventListener('click', () => {
+        window.location.href = '/VisitRequest/AddNewVisit';
     });
 
     // Populate dropdown with filtered users
@@ -365,3 +389,56 @@ document.addEventListener('DOMContentLoaded', () => {
         checkMandatoryFields();
     };
 });
+
+function ConfirmDeleteVisitRequest(id) {
+    $.ajax({
+        url: '/VisitRequest/DeleteVisitRequest',
+        type: 'POST',
+        data: JSON.stringify({ id: id }),  // Send ID as JSON
+        contentType: 'application/json; charset=utf-8', // Ensure correct format
+        dataType: 'json',
+        success: function (response) {
+            console.log("Visit request deleted successfully:", response);
+            Notify(response.Message, "Success");
+
+            if (response.RedirectUrl) {
+                setTimeout(() => {
+                    window.location.href = response.RedirectUrl;
+                }, 3000);
+            }
+        },
+        error: function (xhr, status, error) {
+            console.error("Error deleting visit request:", error);
+
+            let errorMessage = "An error occurred while deleting the visit request.";
+            if (xhr.responseText) {
+                try {
+                    let errorResponse = JSON.parse(xhr.responseText);
+                    if (errorResponse.Message) {
+                        errorMessage = errorResponse.Message;
+                    }
+                } catch (e) {
+                    console.error("Error parsing error response:", e);
+                }
+            }
+
+            Notify(errorMessage, "Error");
+        }
+    });
+}
+
+function DeleteVisitRequest(id) {
+    Swal.fire({
+        title: "Are you sure?",
+        text: "This action cannot be undone!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#1E3A8A",
+        confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            ConfirmDeleteVisitRequest(id);
+        }
+    });
+}

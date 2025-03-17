@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Visitor_Management_Portal.Models
 {
@@ -16,5 +17,7 @@ namespace Visitor_Management_Portal.Models
         public string Message { get; set; }
         public string RedirectURL { get; set; }
         public T Data { get; set; }
+        public List<T> DataList { get; set; }
+
     }
 }

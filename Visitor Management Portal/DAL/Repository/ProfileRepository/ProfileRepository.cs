@@ -70,13 +70,7 @@ namespace Visitor_Management_Portal.DAL.Repository.ProfileRepository
             {
                 existingUser.vm_name = profileInfoVM.Name;
                 isChanged = true;
-            }
-
-            if (existingUser.vm_EmailAddress != profileInfoVM.EmailAddress)
-            {
-                existingUser.vm_EmailAddress = profileInfoVM.EmailAddress;
-                isChanged = true;
-            }
+            }            
 
             if (existingUser.vm_PhoneNumber != profileInfoVM.PhoneNumber)
             {
@@ -108,8 +102,6 @@ namespace Visitor_Management_Portal.DAL.Repository.ProfileRepository
             {
                 return false;
             }
-
-            _context.UpdateObject(existingUser);
 
             try
             {

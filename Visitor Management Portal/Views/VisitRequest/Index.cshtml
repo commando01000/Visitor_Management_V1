@@ -9,7 +9,6 @@
 }
 
 <div class="dashboard-section-container">
-
     @*TOP*@
     <div class="VisitRequest_topSection d-flex align-items-baseline justify-content-center justify-content-lg-between mb-4">
         <p class="p-0 m-0 d-none d-lg-block">You could keep track of visit requests for your organization</p>
@@ -26,7 +25,7 @@
                 <input type="text" placeholder="Search..." />
             </div>
 
-            <div class="FilterVisitRequests svg-btn">
+            <a id="filterIcon" class="FilterVisitRequests svg-btn" data-bs-toggle="modal" data-bs-target="#filterVisitRequestsModal">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="17" viewBox="0 0 24 17">
                     <g id="filter_1_" data-name="filter (1)" transform="translate(-3 -6.5)">
                         <path id="Path_40799" data-name="Path 40799" d="M17,11H4A1,1,0,0,1,4,9H17a1,1,0,0,1,0,2Zm9,0H22a1,1,0,0,1,0-2h4a1,1,0,0,1,0,2Z" fill="#fff" />
@@ -34,7 +33,7 @@
                         <path id="Path_40801" data-name="Path 40801" d="M10.5,23.5A3.5,3.5,0,1,1,14,20a3.5,3.5,0,0,1-3.5,3.5Zm0-5A1.5,1.5,0,1,0,12,20,1.5,1.5,0,0,0,10.5,18.5Z" fill="#fff" />
                     </g>
                 </svg>
-            </div>
+            </a>
 
             <div class="addNewVisitRequest svg-btn">
                 <svg xmlns="http://www.w3.org/2000/svg" id="add" width="24" height="24" viewBox="0 0 24 24">
@@ -78,8 +77,11 @@
                         </td>
                         <td><i class="fa-solid fa-user mx-1"></i> @visitRequest.VisitorsCount</td>
                         <td>@visitRequest.Purpose</td>
-                        <td>@visitRequest.Date</td>
-                        <td>@visitRequest.Time</td>
+
+                        <td>@(visitRequest.Date?.ToString("yyyy-MM-dd") ?? "-")</td>
+
+                        <td>@(visitRequest.Time?.ToString("hh:mm tt") ?? "-")</td>
+
                         <td>@visitRequest.Duration</td>
                         <td>@visitRequest.Location</td>
                         <td>@visitRequest.Status</td>
@@ -97,6 +99,77 @@
             <p class="mt-3">No visit requests found.</p>
         </div>
     }
+    <!-- Filter Visit Requests Modal -->
+    <div class="modal fade" id="filterVisitRequestsModal" data-visit-id="" tabindex="-1" aria-labelledby="modalTitleId" aria-hidden="true">
+        <div style="width:600px !important;" class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document" style="zoom: 90%;">
+            <div class="modal-content d-flex align-items-center border-0 rounded-4" style="padding: 20px;">
+                <div class="d-flex align-items-center justify-content-between w-100">
+                    <h6 class="m-0 p-0 w-100 text-center fw-500">Filter Visit Requests</h6>
+                    <div class="p-1" style="background: #FAFBFC 0% 0% no-repeat padding-box;border-radius:50px;">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                </div>
+
+                <div class="modal-body w-100 mt-2">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="date">Date</label>
+                            <input type="date" id="date" name="visitDate" class="form-input" placeholder="21/12/2024">
+                        </div>
+                        <div class="form-group">
+                            <label for="time">Time</label>
+                            <input type="time" id="time" name="visitTime" class="form-input" placeholder="21/12/2024">
+                        </div>
+                    </div>
+
+                    <label class="mt-4" for="requestedByDropdown">Requested By</label>
+                    <div id="requestedByDropdown" class="search-bar mt-3 w-100">
+                        <div class="d-flex w-100 gap-2 align-items-center ms-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="19.999" viewBox="0 0 20 19.999">
+                                <g id="search" opacity="0.5">
+                                    <path id="Path_9" data-name="Path 9" d="M9.166,18.332a9.166,9.166,0,1,1,9.166-9.166A9.177,9.177,0,0,1,9.166,18.332Zm0-16.666a7.5,7.5,0,1,0,7.5,7.5A7.508,7.508,0,0,0,9.166,1.667Z" fill="#2f2f2f"></path>
+                                    <path id="Path_10" data-name="Path 10" d="M22.034,22.867a.831.831,0,0,1-.589-.244l-4-4a.833.833,0,0,1,1.179-1.178l3.995,4a.832.832,0,0,1-.589,1.422Z" transform="translate(-2.868 -2.868)" fill="#2f2f2f"></path>
+                                </g>
+                            </svg>
+                            <div class="d-flex w-100 flex-row">
+                                <input type="text"
+                                       id="requestedBySearch"
+                                       placeholder=" Search and select a Person"
+                                       class="form-input"
+                                       autocomplete="off" />
+                            </div>
+                        </div>
+                    </div>
+                    <div id="requestedByOptions" class="dropdown-options hidden"></div>
+
+                    <div class="form-grid visit-status">
+                        <div class="form-group visit-status">
+                            <label for="visit-status-dropdown">Choose Visit Status</label>
+                            <select id="visit-statusn-dropdown" class="form-input">
+                                <option value="" class="text-muted" selected disabled>Select Status</option> <!-- Default Display -->
+                                @foreach (var status in Enum.GetValues(typeof(CrmEarlyBound.vm_VisitRequest_StatusCode)))
+                                {
+                                    <option class="visit-status-option" value="@Visitor_Management_Portal.Helpers.VMHelpers.FormatStatus(status.ToString())">
+                                        @Visitor_Management_Portal.Helpers.VMHelpers.FormatStatus(status.ToString())
+                                    </option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer border-0 d-flex justify-content-between w-100">
+                    <button type="button" class="btn"
+                            style="width: 100%; background: #12204B; box-shadow: 0px 4px 12px #00000029; border-radius: 6px; font-size: 15px; color: white; padding: 12px;" id="showFilteredResultsBtn">
+                        Show Results
+                    </button>
+                    <button type="button" class="btn"
+                            style="width: 100%; box-shadow: 0px 4px 12px #00000029; border-radius: 6px; font-size: 15px; color: black; padding: 12px;" id="resetFiltersBtn">
+                        Reset
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 @section Scripts {

@@ -6,12 +6,11 @@ using Microsoft.Xrm.Sdk.Query;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Visitor_Management_Portal.BLL.Interfaces;
 using Visitor_Management_Portal.DAL.Repository.OrganizationUsersRepository;
 using Visitor_Management_Portal.DAL.Repository.VisitorsHubRepository;
 using Visitor_Management_Portal.DAL.Repository.VisitRequestRepository;
+using Visitor_Management_Portal.Helpers;
 using Visitor_Management_Portal.Models;
 using Visitor_Management_Portal.Utilities;
 using Visitor_Management_Portal.ViewModels.VisitorsHub;
@@ -32,7 +31,6 @@ namespace Visitor_Management_Portal.BLL.Services
             _visitRequestRepository = visitRequestRepository;
             _organizationUsersRepository = organizationUsersRepository;
         }
-
         public List<VisitorsHubVM> GetByOrganization()
         {
             var organizationId = ClaimsManager.GetOrganizationId();
@@ -53,7 +51,8 @@ namespace Visitor_Management_Portal.BLL.Services
                 Email = e.GetAttributeValue<string>("vm_email"),
                 IDNumber = e.GetAttributeValue<string>("vm_idnumber"),
                 OrganizationName = e.Check("vm_organizationref") ? e.GetAttributeValue<EntityReference>("vm_organizationref").Name : string.Empty,
-
+                Status = VMHelpers.FormatStatus(Enum.GetName(typeof(vm_Visitor_StatusCode), e.GetAttributeValue<OptionSetValue>("statuscode").Value) ?? "--"),
+                StatusCode = e.GetAttributeValue<OptionSetValue>("statuscode").Value,
             }).ToList();
 
             return visitors;
@@ -88,7 +87,7 @@ namespace Visitor_Management_Portal.BLL.Services
             return new OperationResult<Guid> { Status = false, Message = "Failed to create visitor, Please try again" };
         }
 
-        public async Task<CurrentOfficeLocationVM> GetCurrentOfficeLocation()
+        public CurrentOfficeLocationVM GetCurrentOfficeLocation()
         {
             var UserId = ClaimsManager.GetUserId();
 
@@ -105,7 +104,7 @@ namespace Visitor_Management_Portal.BLL.Services
             };
         }
 
-        public async Task<OperationResult> AddVisitRequest(AddVisitRequestVM addVisitRequestVM)
+        public OperationResult AddVisitRequest(AddVisitRequestVM addVisitRequestVM)
         {
             try
             {
@@ -149,19 +148,29 @@ namespace Visitor_Management_Portal.BLL.Services
                     transactionRequests.Add(createVisitorMember);
                 }
 
-                // Execute the transaction
-                var response = _visitRequestRepository.ExecuteTransaction(transactionRequests);
+                try
+                {
+                    // Execute the transaction
+                    var response = _visitRequestRepository.ExecuteTransaction(transactionRequests);
 
-                if (response != null)
+                    if (response != null)
+                    {
+                        return new OperationResult
+                        {
+                            Id = visitRequest.Id,
+                            Message = "Visit request & visitor members created successfully!",
+                            Status = true
+                        };
+                    }
+                }
+                catch (Exception ex)
                 {
                     return new OperationResult
                     {
-                        Id = visitRequest.Id,
-                        Message = "Visit request & visitor members created successfully!",
-                        Status = true
+                        Message = "Failed to process transaction." + ex.Message,
+                        Status = false
                     };
                 }
-
                 return new OperationResult
                 {
                     Message = "Failed to process transaction.",
@@ -242,11 +251,14 @@ namespace Visitor_Management_Portal.BLL.Services
             visitRequestDetails.visitRequestInfo.RequestdBy = visitRequest.vm_RequestedBy?.Name ?? "";
             visitRequestDetails.visitRequestInfo.Organization = " ";
             visitRequestDetails.visitRequestInfo.Purpose = visitRequest.vm_VisitPurpose.ToString() ?? "";
-            visitRequestDetails.visitRequestInfo.Date = visitRequest.vm_VisitTime?.ToString("yyyy-MM-dd") ?? "";
-            visitRequestDetails.visitRequestInfo.Time = visitRequest.vm_VisitUntil?.ToString("hh:mm tt") ?? "";
+            //visitRequestDetails.visitRequestInfo.Date = visitRequest.vm_VisitTime?.ToString("yyyy-MM-dd") ?? "";
+            //visitRequestDetails.visitRequestInfo.Time = visitRequest.vm_VisitUntil?.ToString("hh:mm tt") ?? "";
+            visitRequestDetails.visitRequestInfo.Date = visitRequest.vm_VisitTime;
+            visitRequestDetails.visitRequestInfo.Time = visitRequest.vm_VisitTime;
             visitRequestDetails.visitRequestInfo.Duration = CalculateDuration(visitRequest.vm_VisitTime, visitRequest.vm_VisitUntil);
             visitRequestDetails.visitRequestInfo.Location = visitRequest.vm_Location.ToString() ?? "";
-            visitRequestDetails.visitRequestInfo.Status = visitRequest.StatusCode.ToString() ?? "";
+            visitRequestDetails.visitRequestInfo.Status = VMHelpers.FormatStatus(visitRequest.StatusCode.ToString()) ?? "";
+            visitRequestDetails.visitRequestInfo.StatusCode = (vm_VisitRequest_StatusCode)visitRequest.StatusCode;
             visitRequestDetails.visitRequestInfo.ApprovedBy = visitRequest.vm_ApprovedRejectedBy?.Name ?? " ";
 
 
@@ -259,38 +271,84 @@ namespace Visitor_Management_Portal.BLL.Services
             return visitRequestDetails;
         }
 
-        public async Task<List<VisitRequestVM>> GetVisitRequests()
+        public List<VisitRequestVM> GetVisitRequests()
         {
-            var userId = ClaimsManager.GetUserId();
-            var orgName = ClaimsManager.GetOrganizationName();
-            var organizationName = orgName;
+            string fetchXml = @"
+                                <fetch>
+                                    <entity name='vm_visitrequest'>
+                                    <attribute name='statuscode' />
+                                    <attribute name='vm_approvedrejectedby' />
+                                    <attribute name='vm_approvedrejectedon' />
+                                    <attribute name='vm_newcolumn' />
+                                    <attribute name='vm_requestedby' />
+                                    <attribute name='vm_subject' />
+                                    <attribute name='vm_visitpurpose' />
+                                    <attribute name='vm_visitrequestid' />
+                                    <attribute name='vm_visittime' />
+                                    <attribute name='vm_visituntil' />
+                                    <attribute name='vm_location' />
+                                    <attribute name='vm_visitorscount' />
+                                    <link-entity name='vm_organizationuser' from='vm_organizationuserid' to='vm_requestedby' alias='requestedBy' />
+                                    <filter>
+                                        <condition entityname='requestedBy' attribute='vm_organization' operator='eq' value='" + ClaimsManager.GetOrganizationId() + @"' />
+                                    </filter>
+                                    </entity>
+                                </fetch>";
 
-            var visitReqs = await _visitRequestRepository.GetVisitRequests(userId);
+            var visitReqs = _visitRequestRepository.GetAll(fetchXml);
 
+            List<VisitRequestVM> visitRequests = new List<VisitRequestVM>();
 
-            var visitRequests = visitReqs.Entities.Select(e => new VisitRequestVM
+            if (visitReqs != null)
             {
-                Serial = e.GetAttributeValue<string>("vm_newcolumn"),
-                RequestdBy = e.GetAttributeValue<EntityReference>("vm_requestedby")?.Name,
-                Organization = organizationName,
-                VisiteRequestID = e.Id,
-                Purpose = CustomEnumHelpers.GetEnumNameByValue<vm_VisitPurposes>(e.GetAttributeValue<OptionSetValue>("vm_visitpurpose")?.Value ?? 0),
-                Date = e.GetAttributeValue<DateTime?>("vm_visittime")?.ToString("yyyy-MM-dd"),
-                Time = e.GetAttributeValue<DateTime?>("vm_visittime")?.ToString("hh:mm tt"),
-                Duration = CalculateDuration(e.GetAttributeValue<DateTime?>("vm_visittime"), e.GetAttributeValue<DateTime?>("vm_visituntil")),
-                Location = CustomEnumHelpers.GetEnumNameByValue<vm_VisitRequest_vm_Location>(e.GetAttributeValue<OptionSetValue>("vm_location")?.Value ?? 0),
-                Status = CustomEnumHelpers.GetEnumNameByValue<vm_VisitRequest_StatusCode>(e.GetAttributeValue<OptionSetValue>("statuscode")?.Value ?? 0),
-                ApprovedBy = e.GetAttributeValue<EntityReference>("vm_approvedrejectedby")?.Name,
-                VisitorsCount = GetVisitorCount(e.GetAttributeValue<Guid>("vm_visitrequestid"))
-            }).ToList();
+                visitRequests = visitReqs.Select(e => e.ToEntity<vm_VisitRequest>()).Select(e => new VisitRequestVM
+                {
+                    Serial = e.vm_Newcolumn,
+                    RequestdBy = e.vm_RequestedBy?.Name,
+                    Organization = ClaimsManager.GetOrganizationName(),
+                    VisiteRequestID = e.Id,
+                    Purpose = CustomEnumHelpers.GetEnumNameByValue<vm_VisitPurposes>(e.vm_VisitPurpose.HasValue ? (int)e.vm_VisitPurpose : 0),
+                    //Date = e.vm_VisitTime?.ToString("yyyy-MM-dd"),
+                    //Time = e.vm_VisitTime?.ToString("hh:mm tt"),
+                    Date = e.vm_VisitTime,
+                    Time = e.vm_VisitUntil,
+                    Duration = CalculateDuration(e.vm_VisitTime, e.vm_VisitUntil),
+                    //Location = CustomEnumHelpers.GetEnumNameByValue<vm_VisitRequest_vm_Location>(e.vm_Location.HasValue ? (int)e.vm_Location : 0),
+                    Location = VMHelpers.FormatStatus(Enum.GetName(typeof(vm_VisitRequest_vm_Location), e.vm_Location.HasValue ? (int)e.vm_Location : 0) ?? "--"),
+                    //Status = CustomEnumHelpers.GetEnumNameByValue<vm_VisitRequest_StatusCode>(e.StatusCode.HasValue ? (int)e.StatusCode : 0),
+                    Status = VMHelpers.FormatStatus(Enum.GetName(typeof(vm_VisitRequest_StatusCode), e.StatusCode.HasValue ? (int)e.StatusCode : 0) ?? "--"),
+                    ApprovedBy = e.vm_ApprovedRejectedBy?.Name,
+                    VisitorsCount = e.vm_VisitorsCount.HasValue ? e.vm_VisitorsCount.Value : 0,
+                }).ToList();
+            }
 
-            return await Task.FromResult(visitRequests);
+            return visitRequests;
         }
 
         public int GetVisitorCount(Guid visitRequestId)
         {
-            var result = _visitRequestRepository.GetVisitorCount(visitRequestId);
-            return result;
+            string fetchXml = @"
+            <fetch aggregate='true'>
+                <entity name='vm_visitingmember'>
+                <attribute name='vm_visitor' alias='visitor_count' aggregate='count'/>
+                <filter>
+                    <condition attribute='vm_visitrequest' operator='eq' value='" + visitRequestId + @"' />
+                </filter>
+                </entity>
+            </fetch>"
+            ;
+
+            var entity = _visitRequestRepository.Get(fetchXml);
+
+            if (entity != null && entity.Attributes.Contains("visitor_count"))
+            {
+                int count = (int)((AliasedValue)entity["visitor_count"]).Value;
+                return count;
+            }
+            else
+            {
+                return 0;
+            }
         }
 
         public List<OptionSet> GetVisitRequestPurposes()
@@ -301,7 +359,7 @@ namespace Visitor_Management_Portal.BLL.Services
             return (optionSets);
         }
 
-        public async Task<OperationResult> UpdateVisitRequest(AddVisitRequestVM model)
+        public OperationResult UpdateVisitRequest(AddVisitRequestVM model)
         {
             // implemented with transaction in case we want to update the visit request and visitors at the same time
             try
@@ -329,7 +387,7 @@ namespace Visitor_Management_Portal.BLL.Services
 
                 // Update visit request entity with the new data
                 existingVisitRequest.vm_Subject = string.IsNullOrEmpty(model.Subject) ? existingVisitRequest.vm_Subject : model.Subject;
-                existingVisitRequest.vm_VisitPurpose = (vm_VisitPurposes)model.Purpose != null ? (vm_VisitPurposes)model.Purpose : existingVisitRequest.vm_VisitPurpose;
+                existingVisitRequest.vm_VisitPurpose = model.Purpose != 0 ? (vm_VisitPurposes)model.Purpose : existingVisitRequest.vm_VisitPurpose;
                 existingVisitRequest.vm_VisitTime = model.VisitTime != null ? model.VisitTime : existingVisitRequest.vm_VisitTime;
                 existingVisitRequest.vm_VisitUntil = existingVisitRequest.vm_VisitUntil;
                 existingVisitRequest.vm_RequestedBy = model.RequestedBy != null ? new EntityReference(vm_organizationuser.EntityLogicalName, model.RequestedBy) : new EntityReference(vm_organizationuser.EntityLogicalName, existingVisitRequest.vm_RequestedBy.Id);
@@ -372,27 +430,26 @@ namespace Visitor_Management_Portal.BLL.Services
             }
         }
 
-        public async Task<List<VisitingMemberWithRelatedRequestVM>> GetVisitorRequestsHistory(Guid visitorId)
+        public List<VisitingMemberWithRelatedRequestVM> GetVisitorRequestsHistory(Guid visitorId)
         {
             string fetchRelatedVisitRequests = $@"
                         <fetch distinct='false' useraworderby='false' no-lock='false' mapping='logical'>
-                          <entity name='vm_visitingmember'>
-                            <attribute name='vm_visitor' />
-                            <attribute name='vm_visitrequest' />
+                          <entity name='vm_visitrequest'>
+                            <attribute name='statuscode' />
+                            <attribute name='vm_approvedrejectedby' />
+                            <attribute name='vm_location' />
+                            <attribute name='vm_newcolumn' />
+                            <attribute name='vm_visitpurpose' />
+                            <attribute name='vm_visitrequestid' />
+                            <attribute name='vm_visittime' />
+                            <attribute name='vm_visituntil' />
+                            <attribute name='vm_requestedby' />
                             <filter>
-                              <condition attribute='vm_visitor' operator='eq' value='{visitorId}' uitype='vm_visitor' />
+                              <condition entityname='visitingMember' attribute='vm_visitor' operator='eq' value='{visitorId}'  uitype='vm_visitor' />
                             </filter>
-                            <link-entity name='vm_visitrequest' from='vm_visitrequestid' to='vm_visitrequest' link-type='inner' alias='requests'>
-                              <attribute name='vm_location' />
-                              <attribute name='vm_visitrequestid' />
-                              <attribute name='vm_approvedrejectedby' />
-                              <attribute name='statecode' />
-                              <attribute name='statuscode' />
-                              <attribute name='vm_newcolumn' />
-                              <attribute name='vm_requestedby' />
-                              <attribute name='vm_visitpurpose' />
-                              <attribute name='vm_visittime' />
-                              <attribute name='vm_visituntil' />
+                            <link-entity name='vm_visitingmember' from='vm_visitrequest' to='vm_visitrequestid' link-type='inner' alias='visitingMember'>
+                              <attribute name='vm_visitor' />
+                              <attribute name='vm_visitrequest' />
                             </link-entity>
                           </entity>
                         </fetch>
@@ -406,12 +463,12 @@ namespace Visitor_Management_Portal.BLL.Services
 
             foreach (var req in visitingMembersWithRelatedRequestes)
             {
-                var visitingMemberWithRelatedRequestVM = VisitingMemberWithRelatedRequestVM.MapFromEntity(req.ToEntity<vm_visitingmember>());
+                var visitingMemberWithRelatedRequestVM = VisitingMemberWithRelatedRequestVM.MapFromEntity(req.ToEntity<vm_VisitRequest>());
                 visitingMemberWithRelatedRequestVM.VisitorsCount = GetVisitorCount(visitingMemberWithRelatedRequestVM.RequestId);
                 visitingMemeberWithRelatedRequestVMS.Add(visitingMemberWithRelatedRequestVM);
             }
 
-            return await Task.FromResult(visitingMemeberWithRelatedRequestVMS);
+            return visitingMemeberWithRelatedRequestVMS;
         }
 
         public ViewModels.VisitorsHub.VisitorVM GetVisitor(Guid visitRequestId)
@@ -463,6 +520,179 @@ namespace Visitor_Management_Portal.BLL.Services
             {
                 return new OperationResult { Status = false, Message = "Something went wrong" };
             }
+        }
+
+        public OperationResult DeleteVisitorRequest(Guid visitRequestId)
+        {
+            var response = _visitRequestRepository.Delete(visitRequestId);
+
+            if (response)
+            {
+                return new OperationResult { Status = true, Message = "Visit request deleted successfully", RedirectURL = "/VisitRequest/Index" };
+            }
+            else
+            {
+                return new OperationResult { Status = false, Message = "Failed to delete visit request" };
+            }
+        }
+
+        public OperationResult DeleteVisitorHub(Guid visitorId)
+        {
+            var response = _visitorsHubRepository.Delete(visitorId);
+
+            if (response)
+            {
+                return new OperationResult { Status = true, Message = "Visitor deleted successfully", RedirectURL = "/VisitorsHub/Index" };
+            }
+            else
+            {
+                return new OperationResult { Status = false, Message = "Failed to delete visitor" };
+            }
+        }
+
+        public List<VisitRequestVM> GetVisitRequestsFiltered(VisitRequestVM filter)
+        {
+            //var visitorRequestsFiltered = _visitRequestRepository.GetAll(v =>
+            //(filter.Date == null || (v.vm_VisitTime != null && v.vm_VisitTime.Value.Date == filter.Date.Value.Date)) &&
+            //(filter.Time == null || (v.vm_VisitTime != null && v.vm_VisitTime.Value.TimeOfDay == filter.Time.Value.TimeOfDay)) &&
+            //((v.vm_RequestedBy != null && v.vm_RequestedBy.Id == filter.RequestedBy)) &&
+            //(filter.StatusCode == null || (v.StatusCode != null && v.StatusCode.Value == filter.StatusCode))
+            //).ToList();
+
+            // Build FetchXML dynamically
+            string fetchXml = $@"
+                <fetch>
+                    <entity name='vm_visitrequest'>
+                        <all-attributes />
+                        <link-entity name='vm_organizationuser' from='vm_organizationuserid' to='vm_requestedby' alias='requestedBy' />
+                            <filter>
+                                <condition entityname='requestedBy' attribute='vm_organization' operator='eq' value='{ClaimsManager.GetOrganizationId()}' />
+                            </filter>
+                        <filter type='and'>";
+
+            // Add Date filter if provided
+            if (filter.Date.HasValue)
+            {
+                fetchXml += $@"
+                            <condition attribute='vm_visittime' operator='on' value='{filter.Date.Value:yyyy-MM-dd}' />";
+            }
+
+            // Add Time filter if provided (approximated as part of vm_visittime)
+            if (filter.Time.HasValue)
+            {
+                // Note: FetchXML doesn't directly filter by TimeOfDay, so we approximate with a range
+                var startTime = filter.Time.Value;
+                var endTime = startTime.AddMinutes(1); // Small range for time match
+                fetchXml += $@"
+                            <condition attribute='vm_visittime' operator='ge' value='{filter.Time.Value:yyyy-MM-dd}T{startTime:hh:mm:ss}' />
+                            <condition attribute='vm_visittime' operator='lt' value='{filter.Time.Value:yyyy-MM-dd}T{endTime:hh:mm:ss}' />";
+            }
+
+            // Add RequestedBy filter if provided
+            if (filter.RequestedBy.HasValue)
+            {
+                fetchXml += $@"
+                            <condition attribute='vm_requestedby' operator='eq' value='{filter.RequestedBy.Value}' />";
+            }
+
+            // Add StatusCode filter if provided
+            if (filter.StatusCode != null && filter.StatusCode != 0)
+            {
+                fetchXml += $@"
+                            <condition attribute='statuscode' operator='eq' value='{(int)filter.StatusCode}' />";
+            }
+
+            fetchXml += $@"
+                        </filter>
+                    </entity>
+                </fetch>";
+
+            // Execute the query
+            var visitorRequestsFiltered = _visitRequestRepository.GetAll(fetchXml);
+
+            if (visitorRequestsFiltered == null)
+            {
+                //var VisitRequestsMapped = GetVisitRequests();
+                return null;
+            }
+
+            var mappedFilteredVisitRequests = visitorRequestsFiltered.Select(e => e.ToEntity<vm_VisitRequest>()).Select(e => new VisitRequestVM
+            {
+                Serial = e.vm_Newcolumn,
+                RequestdBy = e.vm_RequestedBy?.Name,
+                Organization = ClaimsManager.GetOrganizationName(),
+                VisiteRequestID = e.Id,
+                Purpose = CustomEnumHelpers.GetEnumNameByValue<vm_VisitPurposes>(e.vm_VisitPurpose.HasValue ? (int)e.vm_VisitPurpose : 0),
+                Date = e.vm_VisitTime != null ? e.vm_VisitTime.Value.Date : DateTime.MinValue.Date,
+                Time = e.vm_VisitTime != null ? e.vm_VisitTime.Value.Date : DateTime.MinValue.Date,
+                Duration = CalculateDuration(e.vm_VisitTime, e.vm_VisitUntil),
+                //Location = CustomEnumHelpers.GetEnumNameByValue<vm_VisitRequest_vm_Location>(e.vm_Location.HasValue ? (int)e.vm_Location : 0),
+                Location = VMHelpers.FormatStatus(Enum.GetName(typeof(vm_VisitRequest_vm_Location), e.vm_Location.HasValue ? (int)e.vm_Location : 0) ?? "--"),
+                //Status = CustomEnumHelpers.GetEnumNameByValue<vm_VisitRequest_StatusCode>(e.StatusCode.HasValue ? (int)e.StatusCode : 0),
+                Status = VMHelpers.FormatStatus(Enum.GetName(typeof(vm_VisitRequest_StatusCode), e.StatusCode.HasValue ? (int)e.StatusCode : 0) ?? "--"),
+                ApprovedBy = e.vm_ApprovedRejectedBy?.Name,
+                VisitorsCount = e.vm_VisitorsCount.HasValue ? e.vm_VisitorsCount.Value : 0,
+            }).ToList();
+
+            return mappedFilteredVisitRequests;
+        }
+
+        public List<VisitorsHubVM> GetVisitorsHubFiltered(VisitorsHubVM visitorsHubVM)
+        {
+            var organizationId = ClaimsManager.GetOrganizationId();
+
+            var query = new QueryExpression(vm_Visitor.EntityLogicalName)
+            {
+                ColumnSet = new ColumnSet(true)
+            };
+
+            var criteria = new FilterExpression(LogicalOperator.And);
+            criteria.AddCondition("vm_organizationref", ConditionOperator.Equal, organizationId);
+
+            // Apply filters only if they have values
+            if (visitorsHubVM.StatusCode != null)
+            {
+                criteria.AddCondition("statuscode", ConditionOperator.Equal, (int)visitorsHubVM.StatusCode);
+            }
+
+            if (visitorsHubVM.Id != null && visitorsHubVM.Id != Guid.Empty)
+            {
+                criteria.AddCondition("vm_visitorid", ConditionOperator.Equal, visitorsHubVM.Id);
+            }
+
+            if (!string.IsNullOrEmpty(visitorsHubVM.IDNumber))
+            {
+                criteria.AddCondition("vm_idnumber", ConditionOperator.Equal, visitorsHubVM.IDNumber);
+            }
+
+            query.Criteria.AddFilter(criteria);
+
+            var entities = _visitorsHubRepository.GetAll(query);
+
+            var visitors = entities.Select(e => new VisitorsHubVM
+            {
+                Id = e.Id,
+                Name = e.GetAttributeValue<string>("vm_visitorfullname"),
+                Email = e.GetAttributeValue<string>("vm_email"),
+                IDNumber = e.GetAttributeValue<string>("vm_idnumber"),
+                OrganizationName = e.Check("vm_organizationref") ? e.GetAttributeValue<EntityReference>("vm_organizationref").Name : string.Empty,
+
+            }).ToList();
+
+            return visitors;
+        }
+
+        public List<OptionSet<Guid>> GetVisitors()
+        {
+            var visitors = _visitorsHubRepository.GetAll().ToList();
+
+            var result = visitors.Select(vm => new OptionSet<Guid>()
+            {
+                Id = vm.vm_VisitorId.Value,
+                Name = vm.vm_FullName
+            }).ToList();
+
+            return result;
         }
     }
 }

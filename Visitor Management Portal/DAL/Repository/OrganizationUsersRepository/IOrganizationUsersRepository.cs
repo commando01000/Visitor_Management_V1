@@ -16,7 +16,6 @@ namespace Visitor_Management_Portal.DAL.Repository.OrganizationUsersRepository
         OrganizationUserDetailsVM GetOrganizationUserDetails(Guid UserID);
         OrganizationUserDetailsVM GetOrganizationUserInfo(Guid UserID);
         bool UpdateOrganizationUserInfo(OrganizationUserDetailsVM organizationUserDetailsVM);
-
         bool DeleteOrganizationUser(Guid UserID);
 
     }

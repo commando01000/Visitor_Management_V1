@@ -90,26 +90,6 @@ namespace Visitor_Management_Portal.DAL.Repository.VisitRequestRepository
             return visitors;
         }
 
-        // Helper Functions ->
-        public int GetVisitorCount(Guid visitRequestId)
-        {
-            string fetchXml = @"
-                <fetch>
-                  <entity name='vm_visitingmember'>
-                    <attribute name='vm_visitor' />
-                    <filter>
-                      <condition attribute='vm_visitrequest' operator='eq' value='" + visitRequestId + @"' />
-                    </filter>
-                  </entity>
-                </fetch>"
-            ;
-
-            var fetchExpression = new FetchExpression(fetchXml);
-            var result = _service.RetrieveMultiple(fetchExpression);
-
-            return result.Entities.Count;
-        }
-
         public dynamic GetOrganizationByUserID(Guid UserID)
         {
             var result = _context.vm_organizationuserSet.Where(u => u.Id == UserID).FirstOrDefault();

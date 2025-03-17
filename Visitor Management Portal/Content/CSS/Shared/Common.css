@@ -5,3 +5,7 @@
     font-size: 1rem;
     vertical-align: middle;
 }
+
+.not-allowed {
+    cursor: not-allowed !important;
+}

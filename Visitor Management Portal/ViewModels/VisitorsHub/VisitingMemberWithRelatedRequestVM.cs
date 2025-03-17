@@ -37,25 +37,23 @@ namespace Visitor_Management_Portal.ViewModels.VisitorsHub
 
         public string ApprovedBy { get; set; }
 
-        public static VisitingMemberWithRelatedRequestVM MapFromEntity(vm_visitingmember e)
+        public static VisitingMemberWithRelatedRequestVM MapFromEntity(vm_VisitRequest e)
         {
             return new VisitingMemberWithRelatedRequestVM()
             {
-                RequestId = e.vm_VisitRequest != null ? e.vm_VisitRequest.Id : Guid.Empty,
-                VisitorId = e.vm_Visitor != null ? e.vm_Visitor.Id : Guid.Empty,
-
-                Serial = e.GetAliasedValue<string>("requests.vm_newcolumn"),
-                RequestdBy = e.GetAliasedValue<EntityReference>("requests.vm_requestedby")?.Name,
-                //Organization = organizationName,
+                Serial = e.GetAttributeValue<string>("vm_newcolumn"),
+                RequestdBy = e.GetAttributeValue<EntityReference>("vm_requestedby")?.Name,
                 VisiteRequestID = e.Id,
-                Purpose = CustomEnumHelpers.GetEnumNameByValue<vm_VisitPurposes>(e.GetAliasedValue<OptionSetValue>("requests.vm_visitpurpose")?.Value ?? 0),
-                Date = e.GetAliasedValue<DateTime?>("requests.vm_visittime")?.ToString("yyyy-MM-dd"),
-                Time = e.GetAliasedValue<DateTime?>("requests.vm_visittime")?.ToString("hh:mm tt"),
-                Duration = CalculateDuration(e.GetAliasedValue<DateTime?>("requests.vm_visittime"), e.GetAliasedValue<DateTime?>("requests.vm_visituntil")),
-                Location = CustomEnumHelpers.GetEnumNameByValue<vm_VisitRequest_vm_Location>(e.GetAliasedValue<OptionSetValue>("requests.vm_location")?.Value ?? 0),
-                Status = CustomEnumHelpers.GetEnumNameByValue<vm_VisitRequest_StatusCode>(e.GetAliasedValue<OptionSetValue>("requests.statuscode")?.Value ?? 0),
-                ApprovedBy = e.GetAliasedValue<EntityReference>("requests.vm_approvedrejectedby")?.Name ?? "NA",
-                //VisitorsCount = GetVisitorCount(e.GetAttributeValue<Guid>("vm_visitrequestid"))
+                Purpose = CustomEnumHelpers.GetEnumNameByValue<vm_VisitPurposes>(e.GetAttributeValue<OptionSetValue>("vm_visitpurpose")?.Value ?? 0),
+                Date = e.GetAttributeValue<DateTime?>("vm_visittime")?.ToString("yyyy-MM-dd"),
+                Time = e.GetAttributeValue<DateTime?>("vm_visittime")?.ToString("hh:mm tt"),
+                Duration = CalculateDuration(e.GetAttributeValue<DateTime?>("vm_visittime"), e.GetAttributeValue<DateTime?>("vm_visituntil")),
+                Location = CustomEnumHelpers.GetEnumNameByValue<vm_VisitRequest_vm_Location>(e.GetAttributeValue<OptionSetValue>("vm_location")?.Value ?? 0),
+                Status = CustomEnumHelpers.GetEnumNameByValue<vm_VisitRequest_StatusCode>(e.GetAttributeValue<OptionSetValue>("statuscode")?.Value ?? 0),
+                ApprovedBy = e.GetAttributeValue<EntityReference>("vm_approvedrejectedby")?.Name ?? "NA",
+
+                RequestId = e.GetAliasedValue<EntityReference>("visitingMember.vm_visitrequest")?.Id ?? Guid.Empty,
+                VisitorId = e.GetAliasedValue<EntityReference>("visitingMember.vm_visitor")?.Id ?? Guid.Empty,
             };
         }
 

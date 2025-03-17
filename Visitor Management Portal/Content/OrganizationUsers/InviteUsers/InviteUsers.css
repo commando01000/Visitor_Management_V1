@@ -27,7 +27,10 @@
     }
 
 
-
+.custom-class {
+    opacity: .5;
+    cursor: no-drop;
+}
 
 .data-box {
     border: 1px solid #E6E6E8;
@@ -141,6 +144,42 @@ input#confirm-password, input#new-password, input#old-password {
         background-color: #1E3A8A;
         color: white;
         cursor: pointer;
+    }
+
+#Reporting-To {
+    position: relative;
+}
+
+    #Reporting-To label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    #Reporting-To .dropdown-options {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: #fff;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        max-height: 200px;
+        overflow-y: auto;
+        z-index: 1000;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    #Reporting-To .dropdown-item {
+        padding: 8px 12px;
+        cursor: pointer;
+    }
+
+        #Reporting-To .dropdown-item:hover {
+            background-color: #f1f1f1;
+        }
+
+    #Reporting-To .hidden {
+        display: none;
     }
 /* Responsive Styles */
 @media (max-width: 991px) {

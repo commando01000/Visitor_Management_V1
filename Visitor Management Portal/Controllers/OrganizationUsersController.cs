@@ -6,18 +6,21 @@ using System.Web.Mvc;
 using Visitor_Management_Portal.Utilities;
 using Visitor_Management_Portal.DAL.Repository.OrganizationUsersRepository;
 using Visitor_Management_Portal.ViewModels.OrganizationUsers;
+using Visitor_Management_Portal.BLL.Interfaces;
 
 namespace Visitor_Management_Portal.Controllers
 {
-    
+
 
     public class OrganizationUsersController : Controller
     {
         private readonly IOrganizationUsersRepository organizationUsersRepository;
+        private readonly IOrganizationUserService _organizationUsersServices;
 
-        public OrganizationUsersController(IOrganizationUsersRepository organizationUsersRepository)
+        public OrganizationUsersController(IOrganizationUsersRepository organizationUsersRepository, IOrganizationUserService organizationUsersServices)
         {
             this.organizationUsersRepository = organizationUsersRepository;
+            _organizationUsersServices = organizationUsersServices;
         }
         public ActionResult Index()
         {
@@ -33,7 +36,7 @@ namespace Visitor_Management_Portal.Controllers
                 if (result == null || !result.Any())
                 {
                     ViewBag.ErrorMessage = "No organization users found.";
-                    return View(new List<OrganizationUserVM>()); 
+                    return View(new List<OrganizationUserVM>());
                 }
 
                 return View(result);
@@ -47,14 +50,28 @@ namespace Visitor_Management_Portal.Controllers
 
         public ActionResult InviteUsers()
         {
-            return View(); 
+            return View();
+        }
+
+        [HttpPost]
+        public JsonResult CreateUser(OrganizationUserDetailsVM organizationUserVM)
+        {
+            var result = _organizationUsersServices.CreateUser(organizationUserVM);
+
+            if (result.Status)
+            {
+                return Json(new { Status = true, Message = "User created successfully" });
+            }
+            else
+            {
+                return Json(new { Status = false, Message = result.Message });
+            }
         }
 
         public ActionResult UserDetails(Guid userId)
         {
             OrganizationUserDetailsVM result = organizationUsersRepository.GetOrganizationUserDetails(userId);
             return View(result);
-
         }
 
         public ActionResult EditUser(Guid userId)
@@ -85,7 +102,7 @@ namespace Visitor_Management_Portal.Controllers
         {
             try
             {
-                if (organizationUserDetailsVM == null || organizationUserDetailsVM.id== Guid.Empty)
+                if (organizationUserDetailsVM == null || organizationUserDetailsVM.id == Guid.Empty)
                 {
                     throw new ArgumentNullException(nameof(organizationUserDetailsVM), "Invalid user details provided.");
                 }
@@ -104,11 +121,30 @@ namespace Visitor_Management_Portal.Controllers
             }
         }
         [HttpPost]
+        public JsonResult UpdateVisitApprovalStatus(OrganizationUserDetailsVM organizationUserDetailsVM)
+        {
+            if (organizationUserDetailsVM == null || organizationUserDetailsVM.id == Guid.Empty)
+            {
+                throw new ArgumentNullException(nameof(organizationUserDetailsVM), "Invalid user details provided.");
+            }
+            bool isUpdated = _organizationUsersServices.UpdateApprovalStatus(organizationUserDetailsVM);
+
+            if (!isUpdated)
+            {
+                return Json(new { success = false, message = "Failed to update user information" });
+            }
+            else
+            {
+                return Json(new { success = true, message = "User information updated successfully" });
+            }
+        }
+
+        [HttpPost]
         public JsonResult DeleteUser(Guid userId)
         {
             try
             {
-               
+
                 bool isDeleted = organizationUsersRepository.DeleteOrganizationUser(userId);
                 if (!isDeleted)
                 {
@@ -119,7 +155,7 @@ namespace Visitor_Management_Portal.Controllers
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("An error occurred while deleting user.", ex);   
+                throw new ApplicationException("An error occurred while deleting user.", ex);
             }
         }
 

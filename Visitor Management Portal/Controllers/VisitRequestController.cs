@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using Visitor_Management_Portal.BLL.Interfaces;
@@ -21,7 +23,7 @@ namespace Visitor_Management_Portal.Controllers
         }
         public ActionResult Index()
         {
-            var result = _visitorsService.GetVisitRequests().Result;
+            var result = _visitorsService.GetVisitRequests();
             return View(result);
         }
 
@@ -37,23 +39,12 @@ namespace Visitor_Management_Portal.Controllers
         }
 
         [HttpPost]
-        public async Task<JsonResult> AddVisitRequest(AddVisitRequestVM addVisitRequestVM)
+        public JsonResult AddVisitRequest(AddVisitRequestVM addVisitRequestVM)
         {
             try
             {
-                if (!ModelState.IsValid)
-                {
-                    return Json(new OperationResult
-                    {
-                        Id = Guid.Empty,
-                        Status = false,
-                        Message = "Invalid data.",
-                        RedirectURL = ""
-                    });
-                }
-
                 // Call the service method asynchronously and wait for the result
-                var result = await _visitorsService.AddVisitRequest(addVisitRequestVM);
+                var result = _visitorsService.AddVisitRequest(addVisitRequestVM);
 
                 // Return the result as a JSON response
                 return Json(result);
@@ -71,24 +62,75 @@ namespace Visitor_Management_Portal.Controllers
         }
 
         [HttpPost]
-        public async Task<JsonResult> UpdateVisitRequest(AddVisitRequestVM updateVisitRequestVM)
+        public JsonResult UpdateVisitRequest(AddVisitRequestVM updateVisitRequestVM)
         {
-            var result = await _visitorsService.UpdateVisitRequest(updateVisitRequestVM);
+            var result = _visitorsService.UpdateVisitRequest(updateVisitRequestVM);
             return Json(new { Status = result.Status, Message = result.Message });
         }
 
-        [HttpGet]
-        public async Task<ActionResult> AddNewVisit()
+        [HttpPost]
+        public ActionResult GetVisitRequestsFiltered(VisitRequestVM visitRequestVM)
         {
-            var locationResult = await _visitorsService.GetCurrentOfficeLocation();
+            try
+            {
+                // check if visitRequestVM fields are null or empty
+                if (visitRequestVM.Date == null && visitRequestVM.Time == null && visitRequestVM.StatusCode == 0 && visitRequestVM.RequestedBy == null)
+                {
+                    var response = _visitorsService.GetVisitRequests();
+
+                    return Json(new { success = true, data = response });
+                }
+
+                var result = _visitorsService.GetVisitRequestsFiltered(visitRequestVM);
+
+                if (result == null || !result.Any())
+                {
+                    return Json(new { success = true, data = new List<VisitRequestVM>() }); // Return empty array
+                }
+
+                return Json(new { success = true, data = result });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Error fetching visit requests", error = ex.Message });
+            }
+        }
+
+
+        [HttpGet]
+        public ActionResult AddNewVisit(Guid? visitorId)
+        {
+            var locationResult = _visitorsService.GetCurrentOfficeLocation();
+
+            if (visitorId != null)
+            {
+                var user = _visitorsService.GetVisitor((Guid)visitorId);
+                ViewBag.VisitorId = visitorId;
+                ViewBag.VisitorName = user.FullName;
+                ViewBag.VisitorEmail = user.EmailAddress;
+            }
 
             ViewBag.Location = locationResult;
-
             return View();
         }
 
+        [HttpPost]
+        public JsonResult DeleteVisitRequest(Guid id)
+        {
+            var response = _visitorsService.DeleteVisitorRequest(id);
+
+            if (response.Status)
+            {
+                return Json(new { Status = response.Status, Message = response.Message, RedirectUrl = response.RedirectURL });
+            }
+            else
+            {
+                return Json(new { Status = response.Status, Message = response.Message });
+            }
+        }
+
         [HttpGet]
-        public async Task<ActionResult> GetVisitors()
+        public ActionResult GetVisitors()
         {
             var result = _visitorsService.GetByOrganization();
             return Json(result, JsonRequestBehavior.AllowGet); // Ensures JSON response
@@ -107,7 +149,6 @@ namespace Visitor_Management_Portal.Controllers
         }
 
         // Helpers  
-
         [HttpGet]
         public JsonResult GetOrganizationUsers()
         {
@@ -123,6 +164,5 @@ namespace Visitor_Management_Portal.Controllers
                 return Json(new { success = false, message = "An error occurred while fetching organization users." });
             }
         }
-
     }
 }

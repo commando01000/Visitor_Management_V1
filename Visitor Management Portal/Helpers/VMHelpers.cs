@@ -18,5 +18,13 @@
             return $"{count} Meeting Area{(count == 1 ? "" : "s")}";
         }
 
+        public static string FormatStatus(string status)
+        {
+            return status.Replace("AutoClosed", "Auto-Closed")
+                         .Replace("InProgress", "In Progress") // Add more mappings if needed
+                         .Replace("PendingApproval", "Pending Approval")
+                         .Replace("MeetingCancelled", "Meeting Cancelled")
+                         .Replace("MeetingArea", "Meeting Area");
+        }
     }
 }

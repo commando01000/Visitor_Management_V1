@@ -39,7 +39,9 @@
                     <div class="data-box">
                         <div class="data-title">Details</div>
                         <div class="form-grid">
-
+                            <input type="hidden" id="visitor_id" data-id="@ViewBag.VisitorId" value="@ViewBag.VisitorId" />
+                            <input type="hidden" id="visitor_name" data-id="@ViewBag.VisitorName" value="@ViewBag.VisitorName" />
+                            <input type="hidden" id="visitor_email" data-email="@ViewBag.VisitorEmail" value="@ViewBag.VisitorEmail" />
                             <div class="form-group">
                                 <label for="subject">Subject  <span class="text-muted">(Optional)</span></label>
                                 <input type="text" id="subject" name="subject" class="form-input" placeholder="Enter visit subject">

@@ -64,8 +64,10 @@ namespace Visitor_Management_Portal
             container.RegisterType<IVisitRequestRepository, VisitRequestRepository>();
             container.RegisterType<IOrganizationDataRepository, OrganizationDataRepository>();
             container.RegisterType<IOrganizationUsersRepository, OrganizationUsersRepository>();
+            container.RegisterType<IOrganizationUserService, OrganizationUserService>();
             container.RegisterType<IBuildingRepository, BuildingRepository>();
             container.RegisterType<IVisitorsHubRepository, VisitorsHubRepository>();
+            container.RegisterType<IOrganizationService, OrganizationService>();
 
             container.RegisterType<IZoneRepository, ZoneRepository>();
             container.RegisterType<IZoneService, ZoneService>();

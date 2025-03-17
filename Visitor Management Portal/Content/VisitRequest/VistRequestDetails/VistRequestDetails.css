@@ -19,6 +19,11 @@ i {
     text-decoration: none;
 }
 
+.disabled {
+    display: none;
+}
+
+
 .left-side-box {
     font-size: 14px;
 }
@@ -235,6 +240,7 @@ input:checked + .slider {
     #meetingAreasDropdown .dropdown-item:hover {
         background-color: #f1f1f1;
     }
+
     #meetingAreasDropdown .hidden {
         display: none;
     }

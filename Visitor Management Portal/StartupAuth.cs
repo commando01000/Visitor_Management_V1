@@ -1,12 +1,14 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.Identity.Client;
 using Microsoft.IdentityModel.Logging;
+using Microsoft.IdentityModel.Protocols.Configuration;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Owin;
 using Microsoft.Owin.Host.SystemWeb;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
+using Microsoft.Owin.Security.Google;
 using Microsoft.Owin.Security.Notifications;
 using Microsoft.Owin.Security.OpenIdConnect;
 using Owin;
@@ -15,6 +17,9 @@ using System.Configuration;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
+using Visitor_Management_Portal.BLL.Interfaces;
+using Visitor_Management_Portal.BLL.Services;
+using Visitor_Management_Portal.DAL.Repository.AccountRepository;
 using Visitor_Management_Portal.Helpers;
 
 [assembly: OwinStartupAttribute(typeof(Visitor_Management_Portal.StartupAuth))]
@@ -24,6 +29,7 @@ namespace Visitor_Management_Portal
 {
     public class StartupAuth
     {
+        
         private static string clientId = ConfigurationManager.AppSettings["MS:ClientId"];
 
         // RedirectUri is the URL where the user will be redirected to after they sign in.
@@ -34,19 +40,27 @@ namespace Visitor_Management_Portal
         private static string secretId = ConfigurationManager.AppSettings["MS:ClientSecret"];
 
         // Authority is the URL for authority, composed by Microsoft identity platform endpoint and the tenant name (e.g. https://login.microsoftonline.com/contoso.onmicrosoft.com/v2.0)
+        //private static string authority = String.Format(System.Globalization.CultureInfo.InvariantCulture, ConfigurationManager.AppSettings["Authority"], tenant);
         private static string authority = String.Format(System.Globalization.CultureInfo.InvariantCulture, ConfigurationManager.AppSettings["Authority"], tenant);
 
         private static string graphScopes = ConfigurationManager.AppSettings["AppScopes"];
+       
+        public StartupAuth()
+        {
+        }
 
         public void Configuration(IAppBuilder app)
         {
             app.SetDefaultSignInAsAuthenticationType(CookieAuthenticationDefaults.AuthenticationType);
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
+                CookieName = "VMAppCookie",
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
-                CookieManager = new SystemWebCookieManager()
+                CookieManager = new SystemWebCookieManager(),
+                LoginPath = new PathString("/Account/Login"),
             });
 
+            // for Azure Accounts
             app.UseOpenIdConnectAuthentication(
                 new OpenIdConnectAuthenticationOptions
                 {
@@ -60,6 +74,7 @@ namespace Visitor_Management_Portal
                     Scope = $"{graphScopes}",
                     // ResponseType is set to request the code id_token, which contains basic information about the signed-in user
                     ResponseType = OpenIdConnectResponseType.CodeIdToken,
+                    SignInAsAuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
 
                     TokenValidationParameters = new TokenValidationParameters()
                     {
@@ -76,6 +91,13 @@ namespace Visitor_Management_Portal
             );
             IdentityModelEventSource.ShowPII = true;
 
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = ConfigurationManager.AppSettings["Google:ClientId"],
+                ClientSecret = ConfigurationManager.AppSettings["Google:ClientSecret"],
+                CallbackPath = new PathString("/signin-google"),
+                SignInAsAuthenticationType = DefaultAuthenticationTypes.ApplicationCookie
+            });
         }
 
         private static Task OnAuthenticationFailedAsync(AuthenticationFailedNotification<OpenIdConnectMessage,
@@ -121,7 +143,26 @@ namespace Visitor_Management_Portal
 
                 // Save user email in session
                 HttpContext.Current.Session["AzureUserEmail"] = userDetails.Email;
-                notification.HandleCodeRedemption(null, result.IdToken);
+                HttpContext.Current.Session["AzureUserName"] = userDetails.FullName;
+                notification.HandleCodeRedemption(result.AccessToken, result.IdToken);
+                //notification.HandleCodeRedemption(null, result.IdToken);
+                notification.Response.Redirect("/Home/Index"); // Redirect to your home page
+
+
+                // Check if user already exists
+                //var existingUser = _accountService.FindUserByEmail(userDetails.Email);
+                //if (existingUser != null)
+                //{
+                //    //TempData["ErrorMessage"] = "This email is already registered.";
+                //    notification.Response.Redirect("/Account/FinalizeLogin"); 
+                //    //return RedirectToAction("FinalizeLoginGoogle");
+                //}
+                //else
+                //{
+                //    //ViewBag.RegisterFromGoogle = true;
+                //    notification.Response.Redirect("/Account/RegisterFromProvider");
+                //    //return View("RegisterFromProvider");
+                //}
             }
             catch (MsalException ex)
             {

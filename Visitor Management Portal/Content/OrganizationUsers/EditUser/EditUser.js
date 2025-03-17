@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     console.log(document.getElementById('current-userID').value);
-   
+
     // DOM Elements
     const backBtn = document.querySelector(".cancle");
     const buildingDropdown = document.getElementById('building');
@@ -21,6 +21,8 @@ document.addEventListener('DOMContentLoaded', () => {
     buildingDropdown.addEventListener('focus', handleBuildingDropdownFocus);
     buildingDropdown.addEventListener('change', handleBuildingDropdownChange);
 
+    handleBuildingDropdownChange();
+
     roleDropdown.addEventListener('focus', handleRoleDropdownFocus);
 
     searchInput.addEventListener('focus', handleSearchInputFocus);
@@ -31,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
     saveChangesBtn.addEventListener('click', handleSaveChanges);
 
     // Helper Functions
-    const showLoadingSpinnerForLocation = (element) => {
+    function showLoadingSpinnerForLocation(element) {
         console.log(`Showing loading spinner for ${element.id}`);
         element.innerHTML = '<option value="" disabled selected>Loading...</option>';
         element.classList.remove('hidden');
@@ -108,9 +110,8 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // Async Functions
-    const fetchBuildings = async () => {
+    async function fetchBuildings() {
 
-        debugger;
         console.log('Fetching buildings...');
         try {
             const response = await fetch('/Location/GetAllBuildings');
@@ -124,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    const fetchZones = async (buildingId) => {
+    async function fetchZones(buildingId) {
         console.log(`Fetching zones for building ID: ${buildingId}`);
         try {
             const response = await fetch(`/Location/GetZonesByBuildingId?buildingId=${buildingId}`);
@@ -138,9 +139,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    const fetchOrganizationUsers = async () => {
+    async function fetchOrganizationUsers() {
         console.log('Fetching organization users...');
-        debugger;
         try {
             const response = await fetch('/VisitRequest/GetOrganizationUsers');
             if (!response.ok) throw new Error('Network response was not ok');
@@ -187,20 +187,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const buildings = await fetchBuildings();
         const selectedBuilding = buildings.find(b => b.Id === selectedValue);
         populateDropdown(buildingDropdown, buildings, 'Select building', selectedBuilding);
-    }
-
-    async function handleBuildingDropdownChange(event) {
-        console.log('Building dropdown changed');
-        const buildingId = event.target.value;
-        if (buildingId) {
-            const selectedZoneValue = zoneDropdown.value;
-            showLoadingSpinnerForLocation(zoneDropdown);
-            const zones = await fetchZones(buildingId);
-            const selectedZone = zones.find(z => z.Id === selectedZoneValue);
-            populateDropdown(zoneDropdown, zones, 'Select zone', selectedZone);
-        } else {
-            zoneDropdown.innerHTML = '<option value="">Select zone</option>';
-        }
     }
 
     async function handleRoleDropdownFocus(event) {
@@ -263,4 +249,22 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         updateOrganizationUserInfo(profileInfoVM);
     }
+
+    async function handleBuildingDropdownChange() {
+        // get the value of the default selected value of buildingDropdown
+        const selectedBuildingValue = buildingDropdown.value;
+        console.log('Building dropdown changed');
+        const buildingId = selectedBuildingValue;
+        if (buildingId) {
+            const selectedZoneValue = zoneDropdown.value;
+            showLoadingSpinnerForLocation(zoneDropdown);
+            const zones = await fetchZones(buildingId);
+            const selectedZone = zones.find(z => z.Id === selectedZoneValue);
+            populateDropdown(zoneDropdown, zones, 'Select zone', selectedZone);
+        } else {
+            zoneDropdown.innerHTML = '<option value="">Select zone</option>';
+        }
+    }
 });
+
+

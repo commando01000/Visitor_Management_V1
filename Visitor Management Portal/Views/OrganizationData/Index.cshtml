@@ -1,0 +1,110 @@
+﻿@model Visitor_Management_Portal.ViewModels.OrganizationDate.OrganizationDataVM
+
+@{
+    ViewBag.Title = "Settings";
+}
+
+@section styles{
+    <link rel="stylesheet" href="~/Content/OrganizationData/Index/OrganizationData.css">
+}
+
+<div class="section-container d-flex flex-column gap-4">
+    <top>
+        <a class="navigation-btn">Settings ></a>
+        <a class="navigation-btn">Organization Data</a>
+    </top>
+
+    <div class="top-section opacity-75">
+        <div class="dashboard-title fw-semibold mb-1 op">Organization Data</div>
+        <div class="dashboard-subtitle">Please provide your organization's information to begin setting up your account in the system.</div>
+    </div>
+
+    <div class="data-box mt-4">
+        <div class="form-grid">
+            <div class="form-group">
+                <label for="Organization-Name">Organization Name</label>
+                <input type="text" id="Organization-Name" class="form-input" placeholder="Enter the name" value="@Model.OrganizationName">
+            </div>
+
+            <div class="form-group">
+                <label for="Organization-Domain">Organization Domain</label>
+                <input type="text" id="Organization-Domain" class="form-input" placeholder="Organization Domain" value="@Model.OrganizationDomain">
+            </div>
+
+            <div class="form-group">
+                <label for="Email-Address">Email Address</label>
+                <input type="text" id="Email-Address" class="form-input" placeholder="Enter the email" value="@Model.EmailAddress">
+            </div>
+
+            <div class="form-group">
+                <label for="Organization-Website">Organization Website</label>
+                <input type="email" id="Organization-Website" class="form-input" placeholder="Enter the website" value="@Model.OrganizationWebsite">
+            </div>
+
+            <div class="form-group">
+                <label for="Organization-Phone">Organization Phone</label>
+                <input type="text" id="Organization-Phone" class="form-input" placeholder="Enter the phone" value="@Model.OrganizationPhone">
+            </div>
+
+
+            <input type="hidden" id="organizationID" value="@Model.OrganizationId" />
+        </div>
+    </div>
+
+    <div class="data-box Dataverse-Connection mt-4">
+        <div class="top d-flex align-items-center justify-content-between mb-3">
+            <div class="d-flex align-items-center justify-content-center gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                    <g id="info" transform="translate(-2 -2)">
+                        <path id="Path_40198" data-name="Path 40198" d="M14,2A12,12,0,1,0,26,14,12,12,0,0,0,14,2Zm0,22A10,10,0,1,1,24,14,10,10,0,0,1,14,24Z" transform="translate(0)" fill="#1e3a8a" />
+                        <path id="Path_40199" data-name="Path 40199" d="M8.51,8.9a1,1,0,0,0-1,1v6.8a1,1,0,0,0,2,0V9.9A1,1,0,0,0,8.51,8.9Zm0-4.1a1.06,1.06,0,0,0-1.02,1.04V6a.94.94,0,0,0,1.02.94,1.04,1.04,0,0,0,1-1V5.7a.9.9,0,0,0-1-.9Z" transform="translate(5.49 2.797)" fill="#1e3a8a" />
+                    </g>
+                </svg>
+                <p class="p-0 m-0">Dataverse Connection</p>
+                <label class="switch">
+                    <input disabled type="checkbox" id="dataverseSwitch" @(Model.EnableDataverseConnection ? "checked" : "")>
+                    <span class="slider" style="cursor:not-allowed" title="COMING SOON"></span>
+                </label>
+            </div>
+            <button class="custome-btn-action microsoft_app_setup d-none" id="microsoftAppSetupBtn">Microsoft App Setup</button>
+        </div>
+        <div class="form-grid d-none" id="formGrid">
+            <div class="form-group">
+                <label for="Organization-URL">Organization URL</label>
+                <input type="text" id="Organization-URL" class="form-input" placeholder="Enter URL" value="@Model.OrganizationURL">
+            </div>
+
+            <div class="form-group">
+                <label for="Client-ID">Client ID</label>
+                <input type="text" id="Client-ID" class="form-input" placeholder="Enter client id" value="@Model.ClientID">
+            </div>
+
+            <div class="form-group">
+                <label for="Client-Secret">Client Secret</label>
+                <input type="text" id="Client-Secret" class="form-input" placeholder="Client Secret" value="@Model.ClientSecret">
+            </div>
+            <div class="form-group">
+                <label for="TenantID">Tenant ID</label>
+                <input type="text" id="TenantID" class="form-input" placeholder="Tenant ID" value="@Model.TenantID">
+            </div>
+            <div class="form-group">
+                <label for="WebApi">WebApi</label>
+                <input type="text" id="WebApi" class="form-input" placeholder="WebApi" value="@Model.WebApi">
+            </div>
+        </div>
+    </div>
+
+    <div class="btns d-flex align-items-center justify-content-end gap-5">
+        <button class="custome-btn-cancle back-btn">Cancel</button>
+        <button class="custome-btn-action save-changes-btn">Save Changes</button>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        const list_Item = document.querySelector(".sidebar-menu .settings ")
+        list_Item.classList.add('active-sidebar-menu');
+    </script>
+
+    <script src="~/Content/OrganizationData/Index/OrganizationData.js"></script>
+}

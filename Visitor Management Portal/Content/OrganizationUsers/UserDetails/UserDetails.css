@@ -15,6 +15,32 @@
     font-size: 14px;
 }
 
+.info-parent-icon {
+    cursor: pointer;
+    position: relative;
+}
+
+.tooltip-text {
+    position: absolute;
+    background: #12204B;
+    color: #fff;
+    padding: 8px;
+    border-radius: 6px;
+    font-size: 12px;
+    white-space: nowrap;
+    top: -42px;
+    left: 81%;
+    transform: translateX(-50%);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s, visibility 0.2s;
+}
+
+.info-icon:hover + .tooltip-text {
+    opacity: 1;
+    visibility: visible;
+}
+
 #visitorsHistoryTable td, #visitorsHistoryTable th {
     max-width: 100px;
     white-space: nowrap;

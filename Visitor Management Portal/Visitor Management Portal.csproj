@@ -148,6 +148,9 @@
     <Reference Include="Microsoft.Owin.Security.Cookies, Version=4.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.Security.Cookies.4.2.2\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Owin.Security.Google, Version=4.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Google.4.2.2\lib\net45\Microsoft.Owin.Security.Google.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Owin.Security.OAuth, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
     </Reference>
@@ -327,6 +330,7 @@
     <Content Include="Content\Images\DashboardLayout\Logout_icon.svg" />
     <Content Include="Content\Images\DashboardLayout\notification.svg" />
     <Content Include="Content\Images\DashboardLayout\Settings_icon.svg" />
+    <Content Include="Content\Images\DashboardLayout\Visit Requests.svg" />
     <Content Include="Content\Images\DashboardLayout\Visitors Hub_icon.svg" />
     <Content Include="Content\Images\easyVisit_Logo_bold.svg" />
     <Content Include="Content\Images\easyVisit_Logo_light.svg" />
@@ -334,14 +338,15 @@
     <Content Include="Content\Images\NotifyIcons\error.svg" />
     <Content Include="Content\Images\NotifyIcons\info.svg" />
     <Content Include="Content\Images\NotifyIcons\success.svg" />
+    <Content Include="Content\Images\search.svg" />
     <Content Include="Content\Images\temp_Image.png" />
     <Content Include="Content\Images\Waypass-Logo.svg" />
     <Content Include="Content\JS\App.js" />
     <Content Include="Content\JS\Dashboard_Layout.js" />
-    <Content Include="Content\OrganizationDate\DataverseConnection\DataverseConnection.css" />
-    <Content Include="Content\OrganizationDate\DataverseConnection\DataverseConnection.js" />
-    <Content Include="Content\OrganizationDate\Index\OrganizationData.css" />
-    <Content Include="Content\OrganizationDate\Index\OrganizationData.js" />
+    <Content Include="Content\OrganizationData\DataverseConnection\DataverseConnection.css" />
+    <Content Include="Content\OrganizationData\DataverseConnection\DataverseConnection.js" />
+    <Content Include="Content\OrganizationData\Index\OrganizationData.css" />
+    <Content Include="Content\OrganizationData\Index\OrganizationData.js" />
     <Content Include="Content\OrganizationSetup\AddNewBuilding\AddNewBuilding.css" />
     <Content Include="Content\OrganizationSetup\AddNewBuilding\AddNewBuilding.js" />
     <Content Include="Content\OrganizationSetup\BuildingDetails\BuildingDetails.css" />
@@ -390,12 +395,16 @@
     <Compile Include="BLL\Interfaces\IDashboardService.cs" />
     <Compile Include="BLL\Interfaces\IMeetingAreaService.cs" />
     <Compile Include="BLL\Interfaces\IAccountService.cs" />
+    <Compile Include="BLL\Interfaces\IOrganizationService.cs" />
+    <Compile Include="BLL\Interfaces\IOrganizationUserService.cs" />
     <Compile Include="BLL\Interfaces\IVisitorsService.cs" />
     <Compile Include="BLL\Interfaces\IZoneService.cs" />
     <Compile Include="BLL\Services\AccountService.cs" />
     <Compile Include="BLL\Services\BuildingService.cs" />
     <Compile Include="BLL\Services\DashboardService.cs" />
     <Compile Include="BLL\Services\MeetingAreaService.cs" />
+    <Compile Include="BLL\Services\OrganizationService.cs" />
+    <Compile Include="BLL\Services\OrganizationUserService.cs" />
     <Compile Include="BLL\Services\ZoneService.cs" />
     <Compile Include="BLL\Services\VisitorsService.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
@@ -409,6 +418,7 @@
     <Compile Include="DAL\Repository\OrganizationSetupRepository\IZoneRepository.cs" />
     <Compile Include="DAL\Repository\OrganizationSetupRepository\ZoneRepository.cs" />
     <Compile Include="Helpers\RequireAuthenticationAttribute.cs" />
+    <Compile Include="Models\XRM\Entities.cs" />
     <Compile Include="Models\XRM\OptionSets.cs" />
     <Compile Include="Utilities\ClaimsManager.cs" />
     <Compile Include="Utilities\CustomEnumHelpers.cs" />
@@ -419,7 +429,7 @@
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LocationController.cs" />
-    <Compile Include="Controllers\OrganizationDateController.cs" />
+    <Compile Include="Controllers\OrganizationDataController.cs" />
     <Compile Include="Controllers\OrganizationSetupController.cs" />
     <Compile Include="Controllers\OrganizationUsersController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
@@ -437,7 +447,6 @@
     <Compile Include="DAL\Repository\ProfileRepository\ProfileRepository.cs" />
     <Compile Include="DAL\Repository\VisitRequestRepository\IVisitRequestRepository.cs" />
     <Compile Include="DAL\Repository\VisitRequestRepository\VisitRequestRepository.cs" />
-    <Compile Include="Models\XRM\Entities.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -485,8 +494,8 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\OrganizationDate\DataverseConnection.cshtml" />
-    <Content Include="Views\OrganizationDate\Index.cshtml" />
+    <Content Include="Views\OrganizationData\DataverseConnection.cshtml" />
+    <Content Include="Views\OrganizationData\Index.cshtml" />
     <Content Include="Views\OrganizationUsers\EditUser.cshtml" />
     <Content Include="Views\OrganizationUsers\Index.cshtml" />
     <Content Include="Views\OrganizationUsers\InviteUsers.cshtml" />
@@ -511,6 +520,7 @@
     <Content Include="Views\OrganizationSetup\_ZonesByBuilding.cshtml" />
     <Content Include="Views\OrganizationSetup\_MeetingAreasByBuilding.cshtml" />
     <Content Include="Views\OrganizationSetup\ZoneFullDetails.cshtml" />
+    <Content Include="Views\Account\RegisterFromProvider.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

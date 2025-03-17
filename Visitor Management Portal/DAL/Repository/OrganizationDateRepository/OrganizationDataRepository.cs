@@ -5,7 +5,9 @@ using Microsoft.Xrm.Sdk;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Visitor_Management_Portal.BLL.Interfaces;
 using Visitor_Management_Portal.ViewModels.OrganizationDate;
+using IOrganizationService = Microsoft.Xrm.Sdk.IOrganizationService;
 
 namespace Visitor_Management_Portal.DAL.Repository.OrganizationDate
 {
@@ -57,46 +59,6 @@ namespace Visitor_Management_Portal.DAL.Repository.OrganizationDate
             catch (Exception ex)
             {
                 return null;
-            }
-        }
-
-        public bool UpdateOrganizationDate(OrganizationDataVM organizationDataVM)
-        {
-            if (organizationDataVM == null)
-            {
-                throw new ArgumentNullException(nameof(organizationDataVM), "The organization data cannot be null.");
-            }
-            
-            var organization = _context.vm_OrganizationSet
-                .Where(o => o.Id == organizationDataVM.OrganizationId) 
-                .FirstOrDefault();
-
-            if (organization == null)
-            {
-                throw new KeyNotFoundException("The specified organization was not found.");
-            }
-       
-            organization.vm_OrganizationName = organizationDataVM.OrganizationName;
-            organization.vm_DomainName = organizationDataVM.OrganizationDomain;
-            organization.vm_EmailAddress = organizationDataVM.EmailAddress;
-            organization.vm_WebsiteURL = organizationDataVM.OrganizationWebsite;
-            organization.vm_PhoneNumber = organizationDataVM.OrganizationPhone;
-            organization.vm_OrganizationURL = organizationDataVM.OrganizationURL;
-            organization.vm_ClientID = organizationDataVM.ClientID;
-            organization.vm_ClientSecret = organizationDataVM.ClientSecret;
-            organization.vm_EnableDataverseConnection = organizationDataVM.EnableDataverseConnection;
-            organization.vm_WebAPIBaseURL = organizationDataVM.WebApi;
-            organization.vm_TenantID=organizationDataVM.TenantID;
-
-            try
-            {
-                _context.UpdateObject(organization);
-                _context.SaveChanges();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                return false;
             }
         }
 

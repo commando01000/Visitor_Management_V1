@@ -85,7 +85,6 @@ document.addEventListener('DOMContentLoaded', function () {
         return {
             Name: document.getElementById('full-name').value,
             PhoneNumber: document.getElementById('phone-number').value,
-            EmailAddress: document.getElementById('email-address').value,
             JobTitle: document.getElementById('job-title').value,
             FloorNumber: document.getElementById('floor-number').value,
             Building: buildingId === "0" ? null : {

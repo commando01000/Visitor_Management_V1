@@ -1,4 +1,4 @@
-const continueBtn = document.querySelector(".continue");
+﻿const continueBtn = document.querySelector(".continue");
 const backBtn = document.querySelector(".back");
 const cancelBtn = document.querySelector(".cancel");
 const stepTabs = document.querySelectorAll(".step-tab .nav-link");
@@ -14,6 +14,8 @@ const meetingAreaOptions = document.getElementById('meetingAreaOptions');
 const visitTimeInput = document.getElementById('date');
 const visitUntilInput = document.getElementById('time');
 const statusDropdown = document.getElementById('status');
+const VisitorEmail = document.getElementById('visitor_email'); // hidden input that contains visitor email (Optional)
+const VisitorName = document.getElementById('visitor_name'); // hidden input that contains visitor name (Optional)
 const visitPurposeDropdown = document.getElementById('visitPurpose');
 const subjectText = document.getElementById('subject');
 visitLocationOptions.value = 0;
@@ -27,6 +29,7 @@ var meetingAreaVal;
 var allVisitors = [];
 var selectedVisitors = [];
 
+let storedVisitor = {};
 // Initially disable Zone & Meeting Area
 zoneDropdown.disabled = true;
 meetingAreaSearch.disabled = true;
@@ -73,7 +76,7 @@ function saveVisitRequest() {
         RequestedBy: reqBy,
         VisitorsIds: selectedIds
     };
-    debugger;
+    //debugger;
     // AJAX request to `VisitorRequest/AddVisitRequest`
     $.ajax({
         url: '/VisitRequest/AddVisitRequest',
@@ -206,6 +209,9 @@ function getVisitorsFromMyOrg() {
         success: function (visitors) {
             console.log("Visitors fetched:", visitors);
             allVisitors = visitors;
+            if (storedVisitor != null) {
+                allVisitors = allVisitors.filter(visitor => visitor.Id !== storedVisitor.Id);
+            }
         },
         error: function (xhr, status, error) {
             console.error("Error fetching visitors:", error);
@@ -283,6 +289,29 @@ $(document).ready(function () {
     });
 
     $(".search-seciton").append(autocompleteContainer);
+
+    // Get stored visitor values
+    const storedVisitorName = $("#visitor_name").val().trim();
+    const storedVisitorEmail = $("#visitor_email").val().trim();
+    const storedVisitorId = $("#visitor_id").data("id");
+
+    //debugger;
+
+    // If the visitor exists, add them automatically
+    if (storedVisitorName && storedVisitorEmail && storedVisitorId) {
+
+        storedVisitor = {
+            Id: storedVisitorId,
+            Name: storedVisitorName,
+            Email: storedVisitorEmail
+        };
+
+        //debugger;
+
+        // add storedVisitor to selectedVisitors
+        selectedVisitors.push(storedVisitor.Id);
+        addVisitorToList(storedVisitor); // Add stored visitor to the list
+    }
 
     searchInput.on("input", function () {
         var query = $(this).val().trim().toLowerCase();

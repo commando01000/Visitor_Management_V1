@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.editUser').forEach((user) => {
         user.addEventListener('click', () => {
             const userId = user.getAttribute('data-userId');
-            window.location.href = `/OrganizationUsers/UserDetails?userId=${userId}`;
+            window.location.href = `/OrganizationUsers/EditUser?userId=${userId}`;
         });
     });
 
@@ -55,27 +55,20 @@ document.addEventListener('DOMContentLoaded', () => {
         user.addEventListener('click', () => {
             const userId = user.getAttribute('data-userId');
 
-            // jQuery Confirm Dialog
-            $.confirm({
-                title: 'Delete User',
-                content: 'Are you sure you want to delete this user?',
-                type: 'red',
-                buttons: {
-                    confirm: {
-                        text: 'Delete',
-                        btnClass: 'btn-red',
-                        action: function () {
-                            deleteUser(userId, user);
-                        }
-                    },
-                    cancel: {
-                        text: 'Cancel',
-                        action: function () {
-                          
-                        }
-                    }
+            Swal.fire({
+                title: "Are you sure?",
+                text: "This action cannot be undone!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#1E3A8A",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    deleteUser(userId, user);
                 }
             });
+
         });
     });
 
@@ -101,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             .catch(error => {
                 console.error('Error:', error);
-  Notify("An error occurred while deleting the user", NotifyStatus.Error);
+                Notify("An error occurred while deleting the user", NotifyStatus.Error);
             });
     }
 });

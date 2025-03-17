@@ -22,7 +22,7 @@ namespace Visitor_Management_Portal.DAL.Repository.AccountRepository
             _context = new CrmServiceContext(_service);
         }
 
-        public bool Register(string fullName, string email, string password, string organizationName, string organizationDomain)
+        public bool Register(string fullName, string email, string password , string organizationName, string organizationDomain)
         {
             try
             {

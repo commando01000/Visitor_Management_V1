@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CrmEarlyBound;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -10,6 +11,8 @@ namespace Visitor_Management_Portal.ViewModels.VisitorsHub
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
+        public int StatusCode { get; set; }
+        public string Status { get; set; }
         public string Email { get; set; }
         public string IDNumber { get; set; }
         public string OrganizationName { get; set; }

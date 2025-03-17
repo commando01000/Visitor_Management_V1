@@ -11,12 +11,8 @@ namespace Visitor_Management_Portal.DAL.Repository.VisitRequestRepository
     {
 
         Task<EntityCollection> GetVisitRequests(Guid UserID);
-
-        //Task<OperationResult> AddVisitRequest(vm_VisitRequest visitRequest);
         List<vm_organizationuser> GetOrganizationUsers(Guid userID);
-
         Task<vm_organizationuser> GetCurrentOfficeLocation(Guid userID);
-        int GetVisitorCount(Guid visitRequestId);
         vm_VisitRequest GetVisitRequestDetails(Guid VisitRequestSerial);
         List<Guid> GetVisitorMembers(Guid VisitRequestId);
         vm_Visitor GetVisitingMember(Guid VisitorId);

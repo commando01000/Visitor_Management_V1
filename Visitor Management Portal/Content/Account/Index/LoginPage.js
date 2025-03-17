@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Step Navigation Buttons
     const continueBtn = document.querySelector('.Continue-btn');
     const completeRegisterBtn = document.querySelector('.Complete-SignUp-btn');
+    //const completeRegisterFromGoogleBtn = document.querySelector('.Complete-RegisterFromGoogle-btn');
 
     // Step Wrappers
     const firstStepWrapper = document.querySelector('.first-singup-step');
@@ -169,6 +170,43 @@ document.addEventListener('DOMContentLoaded', function () {
             });
 
     });
+
+    //completeRegisterFromGoogleBtn.addEventListener('click', (event) => {
+    //    event.preventDefault();
+
+    //    const organizationName = document.querySelector('#register-OrganizationName').value;
+    //    const organizationDomain = document.querySelector('#register-DomainName').value;
+
+    //    $(document).trigger('ajaxStart');
+
+    //    fetch('/Account/CompleteRegisterGoogle', {
+    //        method: 'POST',
+    //        headers: {
+    //            'Content-Type': 'application/json'
+    //        },
+    //        body: JSON.stringify({
+    //            organizationName: organizationName,
+    //            organizationDomain: organizationDomain
+    //        })
+    //    })
+    //        .then(response => response.json())
+    //        .then(data => {
+    //            if (data.success) {
+    //                Notify(data.message, NotifyStatus.Success);
+    //                window.location.href = '/Dashboard/Index';
+    //            } else {
+    //                Notify(data.message, NotifyStatus.Error);
+    //            }
+    //        })
+    //        .catch(error => {
+    //            console.error('Error:', error);
+    //            Notify('An unexpected error occurred.', NotifyStatus.Error);
+    //        })
+    //        .finally(() => {
+    //            $(document).trigger('ajaxStop');
+    //        });
+
+    //});
 
     /** ========================
      * Validation Logic

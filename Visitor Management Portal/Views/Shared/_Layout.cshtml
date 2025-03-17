@@ -78,8 +78,7 @@
                     <div class="profile-section-sidebar">
                         <img src="~/Content/Images/DashboardLayout/DefualtProfilePic.svg" alt="Profile" class="profile-pic" />
                         <div class="profile-info">
-                            <div class="name">test</div>
-                            <div class="title">test</div>
+                            <div class="name">@ClaimsManager.GetUserName()</div>
                         </div>
                     </div>
 
@@ -92,7 +91,7 @@
 
                     <li class="VisitRequest">
                         <a href="@Url.Action("Index", "VisitRequest")" class="menu-item">
-                            <img src="~/Content/Images/DashboardLayout/Dashboard_icon.svg" alt="Visit Request Icon" />
+                            <img src="~/Content/Images/DashboardLayout/Visit Requests.svg" alt="Visit Request Icon" />
                             <span>Visit Request</span>
                         </a>
                     </li>
@@ -115,7 +114,7 @@
                         </a>
                         <div class="settings-items">
                             <ul>
-                                <li data-path="/OrganizationDate/Index" data-short-text="O D" data-full-text="Organization Data">Organization Data</li>
+                                <li data-path="/OrganizationData/Index" data-short-text="O D" data-full-text="Organization Data">Organization Data</li>
                                 <li data-path="/OrganizationUsers/Index" data-short-text="O U" data-full-text="Organization Users">Organization Users</li>
                                 <li data-path="/OrganizationSetup/Index" data-short-text="O S" data-full-text="Organization Setup">Organization Setup</li>
                             </ul>
@@ -159,7 +158,7 @@
                     <!-- Bell Icon with Click Event -->
                     <img src="~/Content/Images/DashboardLayout/notification.svg"
                          alt="Notifications"
-                         class="notification-ico"
+                         class="notification-ico not-allowed"
                          style="cursor:pointer;"
                          id="notificationBell" /> &nbsp;
 
@@ -175,7 +174,7 @@
                     <!-- Notification Section -->
                     <div class="notification-container position-absolute" id="notificationBox">
                         <div class="notifications">
-                            <div class="header d-flex justify-content-between align-items-center">
+                            <div class="header pt-3 d-flex justify-content-between align-items-center">
                                 <h5>Notifications</h5>
 
                                 <img src="~/Content/Images/DashboardLayout/add.svg"
@@ -201,7 +200,7 @@
                                             <br />
                                             <div>
                                                 <button class="confirm-btn dashboard-button">Confirm</button>
-                                                <button class="reject-btn">Reject</button>
+                                                <button class="reject-btn ms-2">Reject</button>
                                             </div>
                                         </div>
                                     </div>

@@ -72,7 +72,7 @@ namespace Visitor_Management_Portal.DAL.Repository.OrganizationUsersRepository
             OrganizationUserDetailsVM organizationUserDetailsVM = new OrganizationUserDetailsVM();
 
             var user = _context.vm_organizationuserSet.Where(u => u.Id == UserID).FirstOrDefault();
-            organizationUserDetailsVM.CreateVisitsWithoutApproval = user.vm_CreateVisitsWithoutApproval.Value;
+            organizationUserDetailsVM.CreateVisitsWithoutApproval = !user.vm_CreateVisitsWithoutApproval.Value;
             organizationUserDetailsVM.id = user.Id;
             organizationUserDetailsVM.Floor = user.vm_FloorNumber?.ToString() ?? "";
             organizationUserDetailsVM.Name = user.vm_name ?? "";
@@ -104,25 +104,26 @@ namespace Visitor_Management_Portal.DAL.Repository.OrganizationUsersRepository
             var organizationName = result.vm_Organization.Name;
 
             string fetchXml = @"
-    <fetch top='50'>
-      <entity name='vm_visitrequest'>
-        <attribute name='statuscode' />
-        <attribute name='vm_approvedrejectedby' />
-        <attribute name='vm_approvedrejectedon' />
-        <attribute name='vm_newcolumn' />
-        <attribute name='vm_requestedby' />
-        <attribute name='vm_subject' />
-        <attribute name='vm_visitpurpose' />
-        <attribute name='vm_visitrequestid' />
-        <attribute name='vm_visittime' />
-        <attribute name='vm_visituntil' />
-        <attribute name='vm_location' />
-        <filter>
-         <condition  attribute='vm_requestedby' operator='eq' value='" + UserID + @"'  uitype='vm_organizationuser' />
-        </filter>
-        <link-entity name='vm_organizationuser' from='vm_organizationuserid' to='vm_requestedby' alias='requestedBy' />
-         </entity>
-         </fetch>";
+                    <fetch>
+                          <entity name='vm_visitrequest'>
+                            <attribute name='statuscode' />
+                            <attribute name='vm_approvedrejectedby' />
+                            <attribute name='vm_approvedrejectedon' />
+                            <attribute name='vm_newcolumn' />
+                            <attribute name='vm_requestedby' />
+                            <attribute name='vm_subject' />
+                            <attribute name='vm_visitpurpose' />
+                            <attribute name='vm_visitorscount' />
+                            <attribute name='vm_visitrequestid' />
+                            <attribute name='vm_visittime' />
+                            <attribute name='vm_visituntil' />
+                            <attribute name='vm_location' />
+                            <filter>
+                             <condition  attribute='vm_requestedby' operator='eq' value='" + UserID + @"'  uitype='vm_organizationuser' />
+                            </filter>
+                            <link-entity name='vm_organizationuser' from='vm_organizationuserid' to='vm_requestedby' alias='requestedBy' />
+                             </entity>
+                    </fetch>";
 
             var fetchExpression = new FetchExpression(fetchXml);
             var visitRequestsResult = _service.RetrieveMultiple(fetchExpression);
@@ -133,13 +134,16 @@ namespace Visitor_Management_Portal.DAL.Repository.OrganizationUsersRepository
                 RequestdBy = e.GetAttributeValue<EntityReference>("vm_requestedby")?.Name,
                 Organization = organizationName,
                 Purpose = CustomEnumHelpers.GetEnumNameByValue<vm_VisitPurposes>(e.GetAttributeValue<OptionSetValue>("vm_visitpurpose")?.Value ?? 0),
-                Date = e.GetAttributeValue<DateTime?>("vm_visittime")?.ToString("yyyy-MM-dd"),
-                Time = e.GetAttributeValue<DateTime?>("vm_visittime")?.ToString("hh:mm tt"),
+                //Date = e.GetAttributeValue<DateTime?>("vm_visittime")?.ToString("yyyy-MM-dd"),
+                //Time = e.GetAttributeValue<DateTime?>("vm_visittime")?.ToString("hh:mm tt"),
+                Date = e.GetAttributeValue<DateTime?>("vm_visittime").Value,
+                Time = e.GetAttributeValue<DateTime?>("vm_visittime").Value,
                 Duration = CalculateDuration(e.GetAttributeValue<DateTime?>("vm_visittime"), e.GetAttributeValue<DateTime?>("vm_visituntil")),
                 Location = CustomEnumHelpers.GetEnumNameByValue<vm_VisitRequest_vm_Location>(e.GetAttributeValue<OptionSetValue>("vm_location")?.Value ?? 0),
                 Status = CustomEnumHelpers.GetEnumNameByValue<vm_VisitRequest_StatusCode>(e.GetAttributeValue<OptionSetValue>("statuscode")?.Value ?? 0),
                 ApprovedBy = e.GetAttributeValue<EntityReference>("vm_approvedrejectedby")?.Name,
-                VisitorsCount = GetVisitorCount(e.GetAttributeValue<Guid>("vm_visitrequestid"))
+                //VisitorsCount = GetVisitorCount(e.GetAttributeValue<Guid>("vm_visitrequestid"))
+                VisitorsCount = e.GetAttributeValue<int>("vm_visitorscount") // Updated VisitorCount without the need of another API Call
             }).ToList();
 
             return visitRequests;
@@ -149,14 +153,14 @@ namespace Visitor_Management_Portal.DAL.Repository.OrganizationUsersRepository
         private int GetVisitorCount(Guid visitRequestId)
         {
             string fetchXml = @"
-    <fetch>
-      <entity name='vm_visitingmember'>
-        <attribute name='vm_visitor' />
-        <filter>
-          <condition attribute='vm_visitrequest' operator='eq' value='" + visitRequestId + @"' />
-        </filter>
-      </entity>
-    </fetch>";
+            <fetch>
+              <entity name='vm_visitingmember'>
+                <attribute name='vm_visitor' />
+                <filter>
+                  <condition attribute='vm_visitrequest' operator='eq' value='" + visitRequestId + @"' />
+                </filter>
+              </entity>
+            </fetch>";
 
             var fetchExpression = new FetchExpression(fetchXml);
             var result = _service.RetrieveMultiple(fetchExpression);
@@ -191,7 +195,7 @@ namespace Visitor_Management_Portal.DAL.Repository.OrganizationUsersRepository
             OrganizationUserDetailsVM organizationUserDetailsVM = new OrganizationUserDetailsVM();
 
             var user = _context.vm_organizationuserSet.Where(u => u.Id == UserID).FirstOrDefault();
-            organizationUserDetailsVM.CreateVisitsWithoutApproval = user.vm_CreateVisitsWithoutApproval.Value;
+            organizationUserDetailsVM.CreateVisitsWithoutApproval = !user.vm_CreateVisitsWithoutApproval.Value;
             organizationUserDetailsVM.Floor = user.vm_FloorNumber?.ToString() ?? "";
             organizationUserDetailsVM.Name = user.vm_name ?? "";
             organizationUserDetailsVM.JobTitle = user.vm_JobTitle ?? "";
@@ -224,7 +228,7 @@ namespace Visitor_Management_Portal.DAL.Repository.OrganizationUsersRepository
                 return false;
             }
 
-            user.vm_CreateVisitsWithoutApproval = organizationUserDetailsVM.CreateVisitsWithoutApproval;
+            user.vm_CreateVisitsWithoutApproval = !organizationUserDetailsVM.CreateVisitsWithoutApproval;
             user.vm_FloorNumber = string.IsNullOrEmpty(organizationUserDetailsVM.Floor) ? (int?)null : int.Parse(organizationUserDetailsVM.Floor);
             user.vm_name = organizationUserDetailsVM.Name;
             user.vm_JobTitle = organizationUserDetailsVM.JobTitle;

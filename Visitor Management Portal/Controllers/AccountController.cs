@@ -1,4 +1,5 @@
-﻿using Microsoft.Graph;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.Graph;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OpenIdConnect;
@@ -32,18 +33,160 @@ namespace Visitor_Management_Portal.Controllers
             {
                 return RedirectToAction("Dashboard", "Dashboard");
             }
+
             return View();
         }
 
-        public void SignIn()
+        public void RegisterWithProvider(Provider provider)
         {
-            if (!Request.IsAuthenticated)
+            if (provider == Provider.Google)
             {
-                // Signal OWIN to send an authorization request to Azure
-                Request.GetOwinContext().Authentication.Challenge(
-                    new AuthenticationProperties { RedirectUri = Url.Action("FinalizeLogin", "Account", null, Request.Url.Scheme) },
-                    OpenIdConnectAuthenticationDefaults.AuthenticationType);
+                string redirectUri = Url.Action("FinalizeRegisterGoogle", "Account", null, Request.Url.Scheme);
+                var properties = new AuthenticationProperties { RedirectUri = redirectUri };
+                Request.GetOwinContext().Authentication.Challenge(properties, "Google");
             }
+            else if (provider == Provider.Microsoft)
+            {
+                string redirectUri = Url.Action("FinalizeRegisterMicrosoft", "Account", null, Request.Url.Scheme);
+                var properties = new AuthenticationProperties { RedirectUri = redirectUri };
+                Request.GetOwinContext().Authentication.Challenge(properties, OpenIdConnectAuthenticationDefaults.AuthenticationType);
+            }
+        }
+
+        public ActionResult FinalizeRegisterGoogle()
+        {
+            var email = ClaimsManager.GetUserEmail();
+            if (string.IsNullOrEmpty(email))
+                return RedirectToAction("FinalizeLoginGoogle");
+
+            // Check if user already exists
+            var existingUser = _accountService.FindUserByEmail(email);
+            if (existingUser != null)
+            {
+                TempData["ErrorMessage"] = "This email is already registered.";
+                return RedirectToAction("FinalizeLoginGoogle");
+            }
+
+            ViewBag.RegisterFromGoogle = true;
+            return View("RegisterFromProvider");
+        }
+
+        public ActionResult FinalizeRegisterMicrosoft()
+        {
+            var email = ClaimsManager.GetUserEmailFromSession();
+            
+            // Check if user already exists
+            var existingUser = _accountService.FindUserByEmail(email);
+            if (existingUser != null)
+            {
+                TempData["ErrorMessage"] = "This email is already registered.";
+                return RedirectToAction("FinalizeLogin");
+            }
+
+            ViewBag.RegisterFromGoogle = false;
+            return View("RegisterFromProvider");
+        }
+
+        public ActionResult CompleteRegisterGoogle(string organizationName, string organizationDomain)
+        {
+            var email = ClaimsManager.GetUserEmail();
+            if (string.IsNullOrEmpty(email))
+                return RedirectToAction("FinalizeLoginGoogle");
+
+            // Check if user already exists
+            var existingUser = _accountService.FindUserByEmail(email);
+            if (existingUser != null)
+            {
+                TempData["ErrorMessage"] = "This email is already registered.";
+                return RedirectToAction("FinalizeLoginGoogle");
+            }
+
+            var userFullName = ClaimsManager.GetUserName();
+
+            bool success = _accountRepository.Register(userFullName, email, string.Empty, organizationName, organizationDomain);
+            if (success)
+            {
+                return Json(new { success = true, message = "Registration successful." });
+            }
+            else
+            {
+                return Json(new { success = false, message = "This organization is already registered" });
+            }
+        }
+
+        public ActionResult CompleteRegisterMicrosoft(string organizationName, string organizationDomain)
+        {
+            var email = ClaimsManager.GetUserEmailFromSession();
+            if (string.IsNullOrEmpty(email))
+                return RedirectToAction("FinalizeLogin");
+
+            // Check if user already exists
+            var existingUser = _accountService.FindUserByEmail(email);
+            if (existingUser != null)
+            {
+                TempData["ErrorMessage"] = "This email is already registered.";
+                return RedirectToAction("FinalizeLogin");
+            }
+
+            var userFullName = ClaimsManager.GetUserNameFromSession();
+
+            bool success = _accountRepository.Register(userFullName, email, string.Empty, organizationName, organizationDomain);
+            if (success)
+            {
+                return Json(new { success = true, message = "Registration successful." });
+            }
+            else
+            {
+                return Json(new { success = false, message = "This organization is already registered" });
+            }
+        }
+
+        public void SignIn(Provider provider)
+        {
+            if (provider == Provider.Google)
+            {
+                string redirectUri = Url.Action("FinalizeLoginGoogle", "Account", null, Request.Url.Scheme);
+                var properties = new AuthenticationProperties { RedirectUri = redirectUri };
+                Request.GetOwinContext().Authentication.Challenge(properties, "Google");
+            }
+            else if (provider == Provider.Microsoft)
+            {
+                string redirectUri = Url.Action("FinalizeLogin", "Account", null, Request.Url.Scheme);
+                var properties = new AuthenticationProperties { RedirectUri = redirectUri };
+                Request.GetOwinContext().Authentication.Challenge(properties, OpenIdConnectAuthenticationDefaults.AuthenticationType);
+            }
+        }
+
+        public ActionResult FinalizeLoginGoogle()
+        {
+            var email = ClaimsManager.GetUserEmail();
+            if (string.IsNullOrEmpty(email))
+                return RedirectToAction("Logout");
+
+            var userVm = _accountService.FindUserByEmail(email);
+            if (userVm == null)
+            {
+                ResetCookies();
+                TempData.Add("ErrorMessage", "Invalid Email Or Password");
+                return RedirectToAction("Index");
+            }
+
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.NameIdentifier, userVm.Id.ToString()),
+                new Claim(ClaimTypes.Name, userVm.FullName),
+                new Claim(ClaimTypes.Email, email),
+                new Claim(ClaimTypes.Role, userVm.RoleName),
+                new Claim(ClaimTypes.AuthenticationMethod, Utilities.AuthenticationMethod.Google.ToString()),
+                new Claim(ClaimsManager.OrganizationId, userVm.OranizationId.ToString()),
+                new Claim(ClaimsManager.OrganizationName, userVm.OrganizationName)
+            };
+
+            var identity = new ClaimsIdentity(claims, DefaultAuthenticationTypes.ApplicationCookie);
+            var authenticationProperties = new AuthenticationProperties { IsPersistent = true };
+            Request.GetOwinContext().Authentication.SignIn(authenticationProperties, identity);
+
+            return RedirectToAction("Dashboard", "Dashboard");
         }
 
         public ActionResult FinalizeLogin()
@@ -52,15 +195,14 @@ namespace Visitor_Management_Portal.Controllers
             {
                 var email = ClaimsManager.GetUserEmailFromSession();
                 if (string.IsNullOrEmpty(email))
-                {
                     return RedirectToAction("Logout");
-                }
 
                 var userVm = _accountService.FindUserByEmail(email);
                 if (userVm == null)
                 {
-                    ViewBag.ErrorMessage = "Invalid Email Or Password";
-                    return View("Index");
+                    ResetCookies();
+                    TempData.Add("ErrorMessage", "Invalid Email Or Password");
+                    return RedirectToAction("Index");
                 }
 
                 var claims = new List<Claim>();
@@ -68,6 +210,7 @@ namespace Visitor_Management_Portal.Controllers
                 claims.Add(new Claim(ClaimTypes.NameIdentifier, userVm.Id.ToString()));
                 claims.Add(new Claim(ClaimTypes.Name, userVm.FullName));
                 claims.Add(new Claim(ClaimTypes.Role, userVm.RoleName));
+                claims.Add(new Claim(ClaimTypes.Email, email));
                 claims.Add(new Claim(ClaimTypes.AuthenticationMethod, Utilities.AuthenticationMethod.Microsoft.ToString()));
                 claims.Add(new Claim(ClaimsManager.OrganizationId, userVm.OranizationId.ToString()));
                 claims.Add(new Claim(ClaimsManager.OrganizationName, userVm.OrganizationName));
@@ -83,8 +226,8 @@ namespace Visitor_Management_Portal.Controllers
             }
             catch (Exception ex)
             {
-                ViewBag.ErrorMessage = "Something Went Wrong , Please Try Again Later";
-                return View("Index");
+                TempData.Add("ErrorMessage", "Something Went Wrong , Please Try Again Later");
+                return RedirectToAction("Index");
             }
         }
 
@@ -176,6 +319,7 @@ namespace Visitor_Management_Portal.Controllers
                 claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
                 claims.Add(new Claim(ClaimTypes.Name, user.FullName));
                 claims.Add(new Claim(ClaimTypes.Role, user.RoleName));
+                claims.Add(new Claim(ClaimTypes.Email, user.Email));
                 claims.Add(new Claim(ClaimTypes.AuthenticationMethod, Utilities.AuthenticationMethod.Normal.ToString()));
                 claims.Add(new Claim(ClaimsManager.OrganizationId, user.OranizationId.ToString()));
                 claims.Add(new Claim(ClaimsManager.OrganizationName, user.OrganizationName));
@@ -198,8 +342,11 @@ namespace Visitor_Management_Portal.Controllers
 
         public ActionResult Logout()
         {
-            Utilities.AuthenticationMethod authenticationMethod = (Utilities.AuthenticationMethod)
-                Enum.Parse(typeof(Utilities.AuthenticationMethod), ClaimsManager.GetAuthenticationMethod());
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Index", "Account");
+
+            string authMethodStr = ClaimsManager.GetAuthenticationMethod();
+            Enum.TryParse(authMethodStr, out Utilities.AuthenticationMethod authenticationMethod);
 
             var authenticationManager = Request.GetOwinContext().Authentication;
 
@@ -216,6 +363,18 @@ namespace Visitor_Management_Portal.Controllers
                     );
                     break;
 
+                case Utilities.AuthenticationMethod.Google:
+                    authenticationManager.SignOut(
+                        new AuthenticationProperties
+                        {
+                            RedirectUri = Url.Action("Index", "Account", null, Request.Url.Scheme)
+                        },
+                        "Google",
+                        CookieAuthenticationDefaults.AuthenticationType
+                    );
+                    break;
+
+
                 case Utilities.AuthenticationMethod.Normal:
                 default:
                     authenticationManager.SignOut(
@@ -225,35 +384,34 @@ namespace Visitor_Management_Portal.Controllers
             }
 
             // Clear session and cache to ensure full logout
+            ResetSessionsAndCookies();
+
+            return RedirectToAction("Index", "Account");
+        }
+
+        private void ResetSessionsAndCookies()
+        {
+            ResetSessions();
+            ResetCookies();
+        }
+        private void ResetSessions()
+        {
             Session.Clear();
             Session.Abandon();
             Response.Cache.SetCacheability(HttpCacheability.NoCache);
             Response.Cache.SetNoStore();
-
-            if (Request.Cookies[".AspNet.ApplicationCookie"] != null)
+        }
+        private void ResetCookies()
+        {
+            if (Request.Cookies["VMAppCookie"] != null)
             {
-                var cookie = new HttpCookie(".AspNet.ApplicationCookie")
+                var cookie = new HttpCookie("VMAppCookie")
                 {
                     Expires = DateTime.Now.AddDays(-1),
                     Path = "/"
                 };
                 Response.Cookies.Add(cookie);
             }
-            return RedirectToAction("Index", "Account");
-        }
-
-
-        private Guid GetCurrentUserId()
-        {
-            var identity = User.Identity as ClaimsIdentity;
-            if (identity == null)
-            {
-                throw new Exception("User identity not found");
-            }
-
-            var userIdClaim = identity.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-            return new Guid(userIdClaim);
         }
 
     }

@@ -6,7 +6,7 @@
 //     Changes to this file may cause incorrect behavior and will be lost if
 //     the code is regenerated.
 // </auto-generated>
-// Created via this command line: "C:\Users\HameedHassan\AppData\Roaming\MscrmTools\XrmToolBox\Plugins\DLaB.EarlyBoundGenerator\crmsvcutil.exe" /url:"https://initiumsolutionsdefault.api.crm4.dynamics.com" /namespace:"CrmEarlyBound" /SuppressGeneratedCodeAttribute /out:"C:\Users\HameedHassan\OneDrive - Initium Solutions\Projects Files\WayPass\OneDrive - Initium Solutions\WayPass XRM\XRM\Entities.cs" /servicecontextname:"CrmServiceContext" /codecustomization:"DLaB.CrmSvcUtilExtensions.Entity.CustomizeCodeDomService,DLaB.CrmSvcUtilExtensions" /codegenerationservice:"DLaB.CrmSvcUtilExtensions.Entity.CustomCodeGenerationService,DLaB.CrmSvcUtilExtensions" /codewriterfilter:"DLaB.CrmSvcUtilExtensions.Entity.CodeWriterFilterService,DLaB.CrmSvcUtilExtensions" /namingservice:"DLaB.CrmSvcUtilExtensions.NamingService,DLaB.CrmSvcUtilExtensions" /metadataproviderservice:"DLaB.CrmSvcUtilExtensions.Entity.MetadataProviderService,DLaB.CrmSvcUtilExtensions" 
+// Created via this command line: "C:\Users\MahmoudYasser\AppData\Roaming\MscrmTools\XrmToolBox\Plugins\DLaB.EarlyBoundGenerator\crmsvcutil.exe" /url:"https://initiumsolutionsdefault.api.crm4.dynamics.com" /namespace:"CrmEarlyBound" /SuppressGeneratedCodeAttribute /out:"C:\Users\MahmoudYasser\OneDrive - Initium Solutions\Projects Files\WayPass\OneDrive - Initium Solutions\WayPass XRM\XRM\Entities.cs" /servicecontextname:"CrmServiceContext" /codecustomization:"DLaB.CrmSvcUtilExtensions.Entity.CustomizeCodeDomService,DLaB.CrmSvcUtilExtensions" /codegenerationservice:"DLaB.CrmSvcUtilExtensions.Entity.CustomCodeGenerationService,DLaB.CrmSvcUtilExtensions" /codewriterfilter:"DLaB.CrmSvcUtilExtensions.Entity.CodeWriterFilterService,DLaB.CrmSvcUtilExtensions" /namingservice:"DLaB.CrmSvcUtilExtensions.NamingService,DLaB.CrmSvcUtilExtensions" /metadataproviderservice:"DLaB.CrmSvcUtilExtensions.Entity.MetadataProviderService,DLaB.CrmSvcUtilExtensions" 
 //------------------------------------------------------------------------------
 
 [assembly: Microsoft.Xrm.Sdk.Client.ProxyTypesAssemblyAttribute()]
@@ -7006,6 +7006,26 @@ namespace CrmEarlyBound
 		/// <summary>
 		/// 
 		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("vm_autoclosevisitrequests")]
+		public System.Nullable<bool> vm_AutoCloseVisitRequests
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("vm_autoclosevisitrequests");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("vm_AutoCloseVisitRequests");
+				this.SetAttributeValue("vm_autoclosevisitrequests", value);
+				this.OnPropertyChanged("vm_AutoCloseVisitRequests");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("vm_clientid")]
 		public string vm_ClientID
 		{
@@ -7912,6 +7932,26 @@ namespace CrmEarlyBound
 				this.OnPropertyChanging("vm_CurrentAppVersion");
 				this.SetAttributeValue("vm_currentappversion", value);
 				this.OnPropertyChanged("vm_CurrentAppVersion");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("vm_department")]
+		public string vm_Department
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("vm_department");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("vm_Department");
+				this.SetAttributeValue("vm_department", value);
+				this.OnPropertyChanged("vm_Department");
 			}
 		}
 		
@@ -9007,6 +9047,26 @@ namespace CrmEarlyBound
 				this.OnPropertyChanging("vm_IDCardLeft");
 				this.SetAttributeValue("vm_idcardleft", value);
 				this.OnPropertyChanged("vm_IDCardLeft");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("vm_invitationacceptedrejectedon")]
+		public System.Nullable<System.DateTime> vm_InvitationAcceptedRejectedOn
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("vm_invitationacceptedrejectedon");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("vm_InvitationAcceptedRejectedOn");
+				this.SetAttributeValue("vm_invitationacceptedrejectedon", value);
+				this.OnPropertyChanged("vm_InvitationAcceptedRejectedOn");
 			}
 		}
 		
@@ -10685,6 +10745,45 @@ namespace CrmEarlyBound
 				this.OnPropertyChanging("vm_Subject");
 				this.SetAttributeValue("vm_subject", value);
 				this.OnPropertyChanged("vm_Subject");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("vm_visitorscount")]
+		public System.Nullable<int> vm_VisitorsCount
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("vm_visitorscount");
+			}
+		}
+		
+		/// <summary>
+		/// Last Updated time of rollup field Visitors Count.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("vm_visitorscount_date")]
+		public System.Nullable<System.DateTime> vm_VisitorsCount_Date
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("vm_visitorscount_date");
+			}
+		}
+		
+		/// <summary>
+		/// State of rollup field Visitors Count.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("vm_visitorscount_state")]
+		public System.Nullable<int> vm_VisitorsCount_State
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("vm_visitorscount_state");
 			}
 		}
 		

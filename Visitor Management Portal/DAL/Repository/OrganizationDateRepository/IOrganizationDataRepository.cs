@@ -8,6 +8,5 @@ namespace Visitor_Management_Portal.DAL.Repository.OrganizationDate
     public interface IOrganizationDataRepository : IBaseRepository<vm_Organization>
     {
         OrganizationDataVM GetOrganizationDate(Guid UserId);
-        bool UpdateOrganizationDate(OrganizationDataVM organizationDataVM);
     }
 }

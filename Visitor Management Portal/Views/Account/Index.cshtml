@@ -1,9 +1,8 @@
-﻿@{
+﻿@using Visitor_Management_Portal.Utilities
+@{
     ViewBag.Title = "Login";
     Layout = "~/Views/Shared/_AuthLayout.cshtml";
 }
-
-
 
 <div class="login-container">
     <!-- Left Section -->
@@ -32,14 +31,14 @@
                 <p class="text-center mb-4">Login to your account below</p>
 
 
-                <button class="singIn-with-microsoft-btn mb-4" onclick="window.location.href='/Account/Signin'">
+                <button class="singIn-with-microsoft-btn mb-4" onclick="window.location.href='/Account/Signin?provider=@Provider.Microsoft'">
                     <img src="https://img.icons8.com/color/48/microsoft.png" alt="Microsoft Icon" style="width: 20px;" class="me-2">
                     Login With Microsoft
                 </button>
 
-                <button class=" signIn-with-google-btn mb-4" style=" cursor: not-allowed;" title="COMING SOON">
+                <button class=" signIn-with-google-btn mb-4" onclick="window.location.href='/Account/SignIn?provider=@Provider.Google'">
                     <img src="https://img.icons8.com/color/48/google-logo.png" alt="Google Icon" style="width: 20px;" class="me-2">
-                    Sign Up With Google
+                    Login With Google
                 </button>
 
                 <div class="d-flex align-items-center my-4">
@@ -76,9 +75,15 @@
                 <h3 class="text-center  fw-semiBold fs-3 mb-3">Sign Up</h3>
                 <p class="text-center mb-4">Enter details to create your new account</p>
 
-                <button class="btn singIn-with-microsoft-btn mb-4">
+
+                <button class="singIn-with-microsoft-btn mb-4" onclick="window.location.href='/Account/RegisterWithProvider?provider=@Provider.Microsoft'">
                     <img src="https://img.icons8.com/color/48/microsoft.png" alt="Microsoft Icon" style="width: 20px;" class="me-2">
                     Sign Up With Microsoft
+                </button>
+
+                <button class=" signIn-with-google-btn mb-4" onclick="window.location.href='/Account/RegisterWithProvider?provider=@Provider.Google'">
+                    <img src="https://img.icons8.com/color/48/google-logo.png" alt="Google Icon" style="width: 20px;" class="me-2">
+                    Sign Up With Google
                 </button>
 
                 <div class="d-flex align-items-center my-4">
