@@ -1,0 +1,144 @@
+﻿@model Visitor_Management_Portal.ViewModels.VisitingMember.VisitingMemberDataVM
+@{
+    ViewBag.Title = "Invite";
+    Layout = "~/Views/Shared/_InvitationLayout.cshtml";
+}
+
+@section styles{
+    <link rel="stylesheet" href="~/Content/Invitation/Invitation.css">
+}
+<div class="container">
+    <div class="logo">
+        <img src="~/Content/Images/InvitationIcons/Waypass.svg" alt="WayPass Logo">
+    </div>
+
+    <div class="progress_bar">
+        <div class="progress active"></div>
+        <div class="progress"></div>
+        <div class="progress"></div>
+    </div>
+
+    <div class="step">
+        <div class="message">
+            <h2>Visit Invitation from @Model.RequestedBy at @Model.OrganizationName</h2>
+            <p>Hello @Model.VisitorFullName, You have a scheduled @Model.VisitPurpose at @Model.OrganizationName</p>
+        </div>
+
+        <div class="info-box">
+            <div class="info">
+                <div class="row1"><p class="label">Date</p><img src="~/Content/Images/InvitationIcons/date.svg" /></div>
+                <div class="row2"><p class="value">@Model.VisitTime.ToString("yyyy-MM-dd")</p></div>
+            </div>
+            <div class="info">
+                <div class="row1"><p class="label">Time</p><img src="~/Content/Images/InvitationIcons/time.svg" /></div>
+                <div class="row2"><p class="value">@Model.VisitTime.ToString("hh:mm tt") - @( (Model.Duration / 60.0).ToString("0.00") ) h</p></div>
+            </div>
+        </div>
+
+        <div class="location-container">
+            <div class="location-header"><span>Location</span><img src="~/Content/Images/InvitationIcons/location.svg" class="icon-small"></div>
+            <div class="location-details">
+                <div class="location-item"><img src="~/Content/Images/InvitationIcons/building.svg" class="icon"><span>@(string.IsNullOrEmpty(Model.BuildingName) ? "N/A" : Model.BuildingName)</span></div>
+                <div class="location-item"><span>Z @(string.IsNullOrEmpty(Model.ZoneName) ? "N/A" : Model.ZoneName)</span></div>
+                @if (Model.Location == "Office")
+                {
+                    <div class="location-item"><img src="~/Content/Images/InvitationIcons/location.svg" class="icon"><span>@(string.IsNullOrEmpty(Model.FloorNumber) ? "N/A" : Model.FloorNumber)</span></div>
+
+                }
+                else
+                {
+                    <div class="location-item"><img src="~/Content/Images/InvitationIcons/location.svg" class="icon"><span>@(string.IsNullOrEmpty(Model.MeetingArea) ? "N/A" : Model.MeetingArea)</span></div>
+
+                }
+            </div>
+        </div>
+
+        <p class="warning-text">To proceed, please complete your details</p>
+        <button type="button" class="continue-btn">Continue</button>
+        <button type="button" class="reject-btn">Reject Invitation</button>
+    </div>
+
+    <div class="step hide">
+        <div class="message">
+            <h2>Confirm Your Visit</h2>
+            <p>Please enter your details to confirm your visit</p>
+        </div>
+        <form class="form-container">
+            <div class="form-group"><label>Full Name</label><input type="text" placeholder="Enter Your Full Name" value="@Model.VisitorFullName" id="visitor-FullName" required/></div>
+            <div class="form-group"><label>Organization</label><input type="text" placeholder="Enter Organization" value="@Model.OrganizationName" id="visitor-OrganizationName" required/></div>
+            <div class="form-group"><label>Email</label><input type="text" placeholder="Enter Your Email Address" disabled value="@Model.Email" id="visitor-EmailAddress" readonly /></div>
+            <div class="form-group"><label>Job Title</label><input type="text" placeholder="Enter Your Job Title" value="@Model.JobTitle" id="visitor-JobTitle" required/></div>
+            <div class="form-group"><label>Mobile Number</label><input type="text" placeholder="Enter Your Mobile Number" value="@Model.MobileNumber" id="visitor-PhoneNumber" required/></div>
+            <div class="form-group"><label>ID Number</label><input type="text" placeholder="Enter Your ID Number" value="@Model.IdNumber" id="visitor-IdNumber" required/></div>
+            <button type="button" class="btn-confirm-visit" id="btn-confirm-visit">Confirm Visit</button>
+            <button type="button" class="btn-cancel">Cancel</button>
+        </form>
+    </div>
+
+    <div class="step hide">
+        <div class="message">
+            <h2>Your Visit is Confirmed</h2>
+            <p>Check in with this QR code upon arrival</p>
+        </div>
+        <div class="info-box">
+            <div class="info">
+                <div class="row1"><p class="label">Requested by</p><img src="~/Content/Images/InvitationIcons/person-svgrepo-com.svg" /></div>
+                <div class="row2"><p class="value">@Model.RequestedBy</p></div>
+            </div>
+            <div class="info">
+                <div class="row1"><p class="label">Purpose</p><img src="~/Content/Images/InvitationIcons/question.svg" /></div>
+                <div class="row2"><p class="value">@Model.VisitPurpose</p></div>
+            </div>
+        </div>
+        <div class="info-box">
+            <div class="info">
+                <div class="row1"><p class="label">Date</p><img src="~/Content/Images/InvitationIcons/date.svg" /></div>
+                <div class="row2"><p class="value">@Model.VisitTime.ToString("MMM d, yyyy")</p></div>
+            </div>
+            <div class="info">
+                <div class="row1"><p class="label">Time</p><img src="~/Content/Images/InvitationIcons/time.svg" /></div>
+                <div class="row2"><p class="value">@Model.VisitTime.ToString("hh:mm tt") - @( (Model.Duration / 60.0).ToString("0.00") ) h</p></div>
+            </div>
+        </div>
+
+        <div class="location-container">
+            <div class="location-header"><span>Location</span><img src="~/Content/Images/InvitationIcons/location.svg" class="icon-small"></div>
+            <div class="location-details">
+                <div class="location-item"><img src="~/Content/Images/InvitationIcons/building.svg" class="icon"><span>@(string.IsNullOrEmpty(Model.BuildingName) ? "N/A" : Model.BuildingName)</span></div>
+                <div class="location-item"><span>Z @(string.IsNullOrEmpty(Model.ZoneName) ? "N/A" : Model.ZoneName)</span></div>
+                @if (Model.Location == "Office")
+                {
+                    <div class="location-item"><img src="~/Content/Images/InvitationIcons/location.svg" class="icon"><span>@(string.IsNullOrEmpty(Model.FloorNumber) ? "N/A" : Model.FloorNumber)</span></div>
+
+                }
+                else
+                {
+                    <div class="location-item"><img src="~/Content/Images/InvitationIcons/location.svg" class="icon"><span>@Model.MeetingArea</span></div>
+
+                }
+            </div>
+        </div>
+        <div class="qr-code"><img class="QrCodeImage" src="" /></div>
+        <button class="download-qr-code-btn">Download QR Code</button>
+        <button class="add-to-calendare-btn" disabled>Add to Calendare</button>
+
+    </div>
+
+    <footer>© 2025 WayPass. All rights reserved</footer>
+
+    <div class="modal" id="rejectModal">
+        <div class="modal-content">
+            <p class="modal-title">Are you sure you want to reject this invitation?</p>
+            <p class="modal-text">You will not be able to complete your registration or enter the premises later.</p>
+            <div class="modal-buttons">
+                <button class="modal-btn confirm-btn" id="yes-btn">Yes</button>
+                <button class="modal-btn cancel-btn" id="no-btn">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var visitorId = '@Model.VisitorId';
+    var visitingMemberId = '@Model.VisitingMemberId';
+    var shortCode = '@Model.ShortCode';
+</script>

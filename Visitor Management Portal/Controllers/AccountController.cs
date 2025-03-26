@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNet.Identity;
-using Microsoft.Graph;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OpenIdConnect;
@@ -12,6 +11,9 @@ using Visitor_Management_Portal.BLL.Interfaces;
 using Visitor_Management_Portal.DAL.Repository.AccountRepository;
 using Visitor_Management_Portal.Utilities;
 using Visitor_Management_Portal.ViewModels.OrganizationUsers;
+using Visitor_Management_Portal.ViewModels.VisitingMember;
+using Visitor_Management_Portal.ViewModels.VisitorsHub;
+using OperationResult = Visitor_Management_Portal.Models.OperationResult;
 
 namespace Visitor_Management_Portal.Controllers
 {
@@ -20,10 +22,13 @@ namespace Visitor_Management_Portal.Controllers
         private readonly IAccountRepository _accountRepository;
 
         private readonly IAccountService _accountService;
-        public AccountController(IAccountRepository accountRepository, IAccountService accountService)
+        private readonly IVisitingMemberService _visitingMemberService;
+
+        public AccountController(IAccountRepository accountRepository, IAccountService accountService , IVisitingMemberService visitingMemberService)
         {
             _accountRepository = accountRepository;
             _accountService = accountService;
+            _visitingMemberService = visitingMemberService;
         }
 
         // GET: Account
@@ -388,6 +393,10 @@ namespace Visitor_Management_Portal.Controllers
 
             return RedirectToAction("Index", "Account");
         }
+
+        
+        
+
 
         private void ResetSessionsAndCookies()
         {

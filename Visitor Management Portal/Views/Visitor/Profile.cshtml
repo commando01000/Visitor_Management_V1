@@ -1,0 +1,109 @@
+﻿@model Visitor_Management_Portal.ViewModels.VisitorsHub.VisitorProfileVM
+@{
+    ViewBag.Title = "Profile";
+    Layout = "~/Views/Shared/_InvitationLayout.cshtml";
+}
+@section styles{
+    <link rel="stylesheet" href="~/Content/Invitation/VisitorProfile.css">
+}
+
+<div class="container">
+    <div class="card-header">
+        <img src="~/Content/Images/InvitationIcons/Waypass.svg" alt="WayPass Logo" class="logo" />
+        <button class="close-btn"><img src="~/Content/Images/InvitationIcons/add.svg" /></button>
+    </div>
+    <div class="profile-section">
+        <div class="avatar"><img src="~/Content/Images/InvitationIcons/profile.svg" /></div>
+        <h2>@Model.VisitorFullName</h2>
+        <p class="sub-text">@(string.IsNullOrEmpty(Model.JobTitle) ? "N/A" : Model.JobTitle)</p>
+    </div>
+    <div class="details-section">
+        <div class="info-row">
+            <div class="column">
+                <img src="~/Content/Images/InvitationIcons/user (2).svg" />
+                <span class="label">ID</span>
+            </div>
+            <div class="column">
+                <span class="value1">@(string.IsNullOrEmpty(Model.IdNumber) ? "N/A" : Model.IdNumber)</span>
+            </div>
+        </div>
+        <div class="info-row">
+            <div class="column">
+                <img src="~/Content/Images/InvitationIcons/office.svg" />
+                <span class="label">Company</span>
+            </div>
+            <div class="column">
+                <span class="value1">@(string.IsNullOrEmpty(Model.OrganizationName) ? "N/A" : Model.OrganizationName)</span>
+            </div>
+        </div>
+        <div class="info-row">
+            <div class="column">
+                <img src="~/Content/Images/InvitationIcons/examp.svg" />
+                <span class="label">Visits Count</span>
+            </div>
+            <div class="column">
+                <span class="value1">@Model.VisitsCount </span>
+            </div>
+        </div>
+    </div>
+    <h3 class="details-title">Today's visit details</h3>
+    <div class="details-section">
+        <div class="info-row">
+            <div class="column">
+                <img src="~/Content/Images/InvitationIcons/user (2).svg" />
+                <span class="label">Host</span>
+            </div>
+            <div class="column">
+                <span class="value">@(string.IsNullOrEmpty(Model.RequestedBy) ? "N/A" : Model.RequestedBy)</span>
+            </div>
+        </div>
+        <div class="info-row">
+            <div class="column">
+                <img src="~/Content/Images/InvitationIcons/question.svg" />
+                <span class="label">Purpose</span>
+            </div>
+            <div class="column">
+                <span class="value">@(string.IsNullOrEmpty(Model.VisitPurpose) ? "N/A" : Model.VisitPurpose)</span>
+            </div>
+        </div>
+        <div class="info-row">
+            <div class="column">
+                <img src="~/Content/Images/InvitationIcons/date.svg" />
+                <span class="label">Date</span>
+            </div>
+            <div class="column">
+                <span class="value">@Model.VisitTime.ToString("MMM d, yyyy")</span>
+            </div>
+        </div>
+        <div class="info-row">
+            <div class="column">
+                <img src="~/Content/Images/InvitationIcons/time.svg" />
+                <span class="label">Time</span>
+            </div>
+            <div class="column">
+                <span class="value">@Model.VisitTime.ToString("hh:mm tt") - @( (Model.Duration / 60.0).ToString("0.00") ) h</span>
+            </div>
+        </div>
+    </div>
+    <div class="details-section">
+        <div class="column title">
+            <img src="~/Content/Images/InvitationIcons/location.svg" />
+            <span class="location-label">Location</span>
+        </div>
+        <div class="location-details">
+            <div class="location-item"><img src="~/Content/Images/InvitationIcons/building.svg" class="icon"><span>@(string.IsNullOrEmpty(Model.BuildingName) ? "N/A" : Model.BuildingName)</span></div>
+            <div class="location-item"><img src="~/Content/Images/InvitationIcons/Z.svg" class="icon"><span> @(string.IsNullOrEmpty(Model.ZoneName) ? "N/A" : Model.ZoneName)</span></div>
+            @if (Model.Location == "Office")
+            {
+                <div class="location-item"><img src="~/Content/Images/InvitationIcons/location.svg" class="icon"><span>Floor @(string.IsNullOrEmpty(Model.FloorNumber) ? "N/A" : Model.FloorNumber)</span></div>
+
+            }
+            else
+            {
+                <div class="location-item"><img src="~/Content/Images/InvitationIcons/location.svg" class="icon"><span>@Model.MeetingArea</span></div>
+
+            }
+        </div>
+    </div>
+    <footer>© @DateTime.Now.Year WayPass. All rights reserved</footer>
+</div>

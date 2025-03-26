@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Visitor_Management_Portal.BLL.Interfaces;
 using Visitor_Management_Portal.DAL.Repository.OrganizationUsersRepository;
+using Visitor_Management_Portal.DAL.Repository.VisitingMemberRepository;
 using Visitor_Management_Portal.DAL.Repository.VisitorsHubRepository;
 using Visitor_Management_Portal.DAL.Repository.VisitRequestRepository;
 using Visitor_Management_Portal.Helpers;
@@ -24,11 +25,14 @@ namespace Visitor_Management_Portal.BLL.Services
         private readonly IVisitorsHubRepository _visitorsHubRepository;
         private readonly IVisitRequestRepository _visitRequestRepository;
         private readonly IOrganizationUsersRepository _organizationUsersRepository;
+        private readonly IVisitingMemberRepository _visitingMemberRepository;
 
-        public VisitorsService(IVisitorsHubRepository visitorsHubRepository, IVisitRequestRepository visitRequestRepository, IOrganizationUsersRepository organizationUsersRepository)
+
+        public VisitorsService(IVisitorsHubRepository visitorsHubRepository, IVisitRequestRepository visitRequestRepository, IVisitingMemberRepository visitingMemberRepository, IOrganizationUsersRepository organizationUsersRepository)
         {
             _visitorsHubRepository = visitorsHubRepository;
             _visitRequestRepository = visitRequestRepository;
+            _visitingMemberRepository = visitingMemberRepository;
             _organizationUsersRepository = organizationUsersRepository;
         }
         public List<VisitorsHubVM> GetByOrganization()
@@ -214,6 +218,8 @@ namespace Visitor_Management_Portal.BLL.Services
                     VisitorName = visitor.vm_FullName ?? "",
                     Email = visitor.vm_Email ?? "",
                     IdNumber = visitor.vm_IDNumber ?? "",
+                    Phone = visitor.vm_MobileNumber ?? "",
+                    JobTitle = visitor.vm_JobTitle ?? "",
                     Status = visitor.StatusCode.ToString() ?? "",
                     Organization = visitor.vm_Organization,
                 };
@@ -250,6 +256,7 @@ namespace Visitor_Management_Portal.BLL.Services
             visitRequestDetails.visitRequestInfo.Serial = visitRequest.vm_Newcolumn ?? "";
             visitRequestDetails.visitRequestInfo.RequestdBy = visitRequest.vm_RequestedBy?.Name ?? "";
             visitRequestDetails.visitRequestInfo.Organization = " ";
+            visitRequestDetails.visitRequestInfo.Subject = visitRequest.vm_Subject ?? "";
             visitRequestDetails.visitRequestInfo.Purpose = visitRequest.vm_VisitPurpose.ToString() ?? "";
             //visitRequestDetails.visitRequestInfo.Date = visitRequest.vm_VisitTime?.ToString("yyyy-MM-dd") ?? "";
             //visitRequestDetails.visitRequestInfo.Time = visitRequest.vm_VisitUntil?.ToString("hh:mm tt") ?? "";
@@ -263,7 +270,7 @@ namespace Visitor_Management_Portal.BLL.Services
 
 
             // Location Info
-            visitRequestDetails.visitRequestInfo.Building = User.vm_Building.Name ?? "Building";
+            visitRequestDetails.visitRequestInfo.Building = User.vm_Building?.Name ?? "Building";
             visitRequestDetails.visitRequestInfo.Zone = User.vm_Zone?.Name ?? " Zone";
             visitRequestDetails.visitRequestInfo.Floor = User.vm_FloorNumber.HasValue ? User.vm_FloorNumber.ToString() : "--";
 
@@ -357,6 +364,126 @@ namespace Visitor_Management_Portal.BLL.Services
             // cast to OptionSet
             var optionSets = result.Select(e => new OptionSet { Id = e.Value, Name = CustomEnumHelpers.GetEnumNameByValue<vm_VisitPurposes>(e.Value) }).ToList();
             return (optionSets);
+        }
+
+        public OperationResult UpdateVisitRequestVisitors(AddVisitRequestVM model)
+        {
+            // Create a transaction request collection
+            var transactionRequests = new OrganizationRequestCollection();
+
+            var existingVisitRequest = _visitRequestRepository.Get(model.VisiteRequestID);
+            if (existingVisitRequest == null)
+            {
+                return new OperationResult
+                {
+                    Message = "Visit request not found.",
+                    Status = false
+                };
+            }
+
+            // Validate new VisitTime
+            if (model.VisitTime >= existingVisitRequest.vm_VisitUntil)
+            {
+                return new OperationResult
+                {
+                    Message = "Visit Time must be earlier than the existing Visit Until time.",
+                    Status = false
+                };
+            }
+
+            try
+            {
+                // Get existing visitor members
+                var existingVisitors = _visitingMemberRepository.GetAll(vm => vm.vm_VisitRequest.Id == model.VisiteRequestID).ToList();
+
+                // If VisitorsIds is empty or null, remove all existing visitors
+                if (model.VisitorsIds == null || !model.VisitorsIds.Any())
+                {
+                    foreach (var visitor in existingVisitors)
+                    {
+                        var deleteRequest = new DeleteRequest
+                        {
+                            Target = new EntityReference(vm_visitingmember.EntityLogicalName, visitor.Id)
+                        };
+                        transactionRequests.Add(deleteRequest);
+                    }
+                }
+                else
+                {
+                    // Process visitor updates
+                    var existingVisitorIds = existingVisitors.Select(v => v.vm_Visitor.Id).ToList();
+
+                    // Remove visitors not in the new list
+                    foreach (var existingVisitor in existingVisitors)
+                    {
+                        if (!model.VisitorsIds.Contains(existingVisitor.vm_Visitor.Id))
+                        {
+                            var deleteRequest = new DeleteRequest
+                            {
+                                Target = new EntityReference(vm_visitingmember.EntityLogicalName, existingVisitor.Id)
+                            };
+                            transactionRequests.Add(deleteRequest);
+                        }
+                    }
+
+                    // Add new visitors
+                    foreach (var visitorId in model.VisitorsIds)
+                    {
+                        if (!existingVisitorIds.Contains(visitorId))
+                        {
+                            var visitorMember = new vm_visitingmember
+                            {
+                                vm_VisitRequest = new EntityReference(vm_VisitRequest.EntityLogicalName, model.VisiteRequestID),
+                                vm_Visitor = new EntityReference(vm_Visitor.EntityLogicalName, visitorId)
+                            };
+
+                            // Use CreateRequest instead of UpdateRequest for new records
+                            var createRequest = new CreateRequest { Target = visitorMember };
+                            transactionRequests.Add(createRequest);
+                        }
+                    }
+                }
+
+                // Execute transaction if there are any changes
+                if (transactionRequests.Any())
+                {
+                    var response = _visitRequestRepository.ExecuteTransaction(transactionRequests);
+
+                    if (response != null)
+                    {
+                        return new OperationResult
+                        {
+                            Id = model.VisiteRequestID,
+                            Message = "Visit request updated successfully!",
+                            Status = true,
+                        };
+                    }
+                    else
+                    {
+                        return new OperationResult
+                        {
+                            Message = "Failed to execute transaction.",
+                            Status = false
+                        };
+                    }
+                }
+
+                // Return success if no changes were needed
+                return new OperationResult
+                {
+                    Id = model.VisiteRequestID,
+                    Message = "Visit request updated successfully - no changes needed!",
+                    Status = true,
+                };
+            }
+            catch (Exception ex)
+            {
+                return new OperationResult
+                {
+                    Message = "Failed to process transaction: " + ex.Message,
+                    Status = false
+                };
+            }
         }
 
         public OperationResult UpdateVisitRequest(AddVisitRequestVM model)
@@ -497,10 +624,13 @@ namespace Visitor_Management_Portal.BLL.Services
         {
             try
             {
+                // GetNameParts(model.FullName, out string firstName, out string middleName, out string lastName); // throwing exception
+
+                // full name is split into first name, middle name and last name
                 vm_Visitor visitor = new vm_Visitor
                 {
                     Id = model.Id,
-                    vm_FullName = model.FirstName,
+                    vm_FullName = model.FirstName + " " + model.MiddleName + " " + model.LastName,
                     vm_MiddleName = model.MiddleName,
                     vm_LastName = model.LastName,
                     vm_IDNumber = model.IdNumber,
@@ -689,10 +819,34 @@ namespace Visitor_Management_Portal.BLL.Services
             var result = visitors.Select(vm => new OptionSet<Guid>()
             {
                 Id = vm.vm_VisitorId.Value,
-                Name = vm.vm_FullName
+                Name = vm.vm_FullName,
             }).ToList();
 
             return result;
+        }
+
+        static void GetNameParts(string fullName, out string firstName, out string middleName, out string lastName)
+        {
+            string[] nameParts = fullName.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+            if (nameParts.Length == 1)
+            {
+                firstName = nameParts[0];
+                middleName = "";
+                lastName = "";
+            }
+            else if (nameParts.Length == 2)
+            {
+                firstName = nameParts[0];
+                middleName = "";
+                lastName = nameParts[1];
+            }
+            else
+            {
+                firstName = nameParts[0];
+                lastName = nameParts[nameParts.Length - 1]; // Last element in the array
+                middleName = string.Join(" ", nameParts, 1, nameParts.Length - 2); // Everything in between
+            }
         }
     }
 }

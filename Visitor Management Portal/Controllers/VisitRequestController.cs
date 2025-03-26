@@ -16,9 +16,12 @@ namespace Visitor_Management_Portal.Controllers
 
         private readonly IVisitorsService _visitorsService;
 
-        public VisitRequestController(IVisitRequestRepository visitRequesRepository, IVisitorsService visitorsService)
+        private readonly IVisitingMemberService _visitingMemberService;
+
+        public VisitRequestController(IVisitRequestRepository visitRequesRepository, IVisitingMemberService visitingMemberService, IVisitorsService visitorsService)
         {
             this.visitRequestRepository = visitRequesRepository;
+            _visitingMemberService = visitingMemberService;
             _visitorsService = visitorsService;
         }
         public ActionResult Index()
@@ -61,10 +64,31 @@ namespace Visitor_Management_Portal.Controllers
             }
         }
 
+        [HttpGet]
+        public ActionResult EditVisitRequest(string visitRequestId, string visitorIds)
+        {
+            // You can now use visitRequestId and visitorIdsList as needed in your logic.
+            return RedirectToAction("AddNewVisit", new { visitRequestId = visitRequestId, visitorsIds = visitorIds });
+        }
+
         [HttpPost]
         public JsonResult UpdateVisitRequest(AddVisitRequestVM updateVisitRequestVM)
         {
             var result = _visitorsService.UpdateVisitRequest(updateVisitRequestVM);
+            return Json(new { Status = result.Status, Message = result.Message });
+        }
+
+        [HttpPost]
+        public JsonResult UpdateVisitRequestVisitors(AddVisitRequestVM updateVisitRequestVM)
+        {
+            var result = _visitorsService.UpdateVisitRequestVisitors(updateVisitRequestVM);
+            return Json(new { Status = result.Status, Message = result.Message });
+        }
+
+        [HttpPost]
+        public JsonResult RemoveVisitRequestVisitors(Guid VisitorId, Guid VisitRequestId)
+        {
+            var result = _visitingMemberService.RemoveVisitRequestVisitors(VisitorId, VisitRequestId);
             return Json(new { Status = result.Status, Message = result.Message });
         }
 
@@ -98,9 +122,35 @@ namespace Visitor_Management_Portal.Controllers
 
 
         [HttpGet]
-        public ActionResult AddNewVisit(Guid? visitorId)
+        public ActionResult AddNewVisit(Guid? visitorId, Guid? visitRequestId, string visitorsIds)
         {
             var locationResult = _visitorsService.GetCurrentOfficeLocation();
+
+            if (visitorsIds != null && visitorsIds != "")
+            {
+                // Convert the comma-separated visitorsIds string into a List<Guid?>
+                var visitorsIdsList = visitorsIds?.Split(',')
+                                                  .Select(id => (Guid?)Guid.Parse(id))
+                                                  .ToList();
+
+                ViewBag.VisitRequestId = visitRequestId;
+
+                // Store users' information in a list in ViewBag
+                var visitorsList = new List<VisitorVM>();
+                foreach (var id in visitorsIdsList)
+                {
+                    var user = _visitorsService.GetVisitor((Guid.Parse(id.ToString())));
+
+                    // Store the user details in the list (can be a dictionary or anonymous object)
+                    visitorsList.Add(new VisitorVM()
+                    {
+                        VisitorId = user.Id,
+                        VisitorName = user.FullName,
+                        Email = user.EmailAddress
+                    });
+                }
+                ViewBag.Visitors = visitorsList;
+            }
 
             if (visitorId != null)
             {

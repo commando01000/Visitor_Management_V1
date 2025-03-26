@@ -6,19 +6,24 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using System.Windows.Documents;
 using Visitor_Management_Portal.BLL.Interfaces;
+using Visitor_Management_Portal.BLL.Services;
 using Visitor_Management_Portal.Models;
+using Visitor_Management_Portal.ViewModels.VisitingMember;
 using Visitor_Management_Portal.ViewModels.VisitorsHub;
 using Visitor_Management_Portal.ViewModels.VisitRequest;
 
 namespace Visitor_Management_Portal.Controllers
 {
-
     public class VisitorsHubController : Controller
     {
         private readonly IVisitorsService _visitorsService;
-        public VisitorsHubController(IVisitorsService visitorsService)
+        private readonly IVisitingMemberService _visitingMemberService;
+
+        public VisitorsHubController(IVisitorsService visitorsService, IVisitingMemberService visitingMemberService)
         {
             _visitorsService = visitorsService;
+            _visitingMemberService = visitingMemberService;
+
         }
 
         public ActionResult Index()
@@ -48,6 +53,7 @@ namespace Visitor_Management_Portal.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpGet]
         public ActionResult EditVisitor(Guid id)
         {
             ViewModels.VisitorsHub.VisitorVM visitor = _visitorsService.GetVisitor(id);
@@ -118,6 +124,6 @@ namespace Visitor_Management_Portal.Controllers
 
             ViewBag.RelatedVisitRequests = RelatedVisitRequests;
             return View(visitor);
-        }
+        }        
     }
 }

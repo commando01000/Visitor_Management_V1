@@ -69,6 +69,9 @@
     <Reference Include="Microsoft.Bcl.TimeProvider, Version=8.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.TimeProvider.8.0.1\lib\net462\Microsoft.Bcl.TimeProvider.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=2.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Crm.Sdk.Proxy, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CrmSdk.CoreAssemblies.9.0.2.56\lib\net462\Microsoft.Crm.Sdk.Proxy.dll</HintPath>
     </Reference>
@@ -181,7 +184,11 @@
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="QRCoder, Version=1.6.0.0, Culture=neutral, PublicKeyToken=c4ed5b9ae8358a28, processorArchitecture=MSIL">
+      <HintPath>..\packages\QRCoder.1.6.0\lib\net40\QRCoder.dll</HintPath>
+    </Reference>
     <Reference Include="Std.UriTemplate, Version=2.0.1.0, Culture=neutral, PublicKeyToken=c118b0afb4598f9a, processorArchitecture=MSIL">
       <HintPath>..\packages\Std.UriTemplate.2.0.1\lib\netstandard2.0\Std.UriTemplate.dll</HintPath>
     </Reference>
@@ -282,6 +289,7 @@
     <Reference Include="WebGrease, Version=1.5.2.14234, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
     </Reference>
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Web.Razor">
@@ -305,9 +313,6 @@
     <Reference Include="System.Web.Mvc">
       <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.9\lib\net45\System.Web.Mvc.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
-      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Account\Index\LoginPage.css" />
@@ -322,6 +327,9 @@
     <Content Include="Content\Dashboard\Index\Dashboard.js" />
     <Content Include="Content\Dashboard\Index\DashboardV2.css" />
     <Content Include="Content\Dashboard\Index\DashboardV2.js" />
+    <Content Include="Content\Dashboard\Index\DashboardV3.css" />
+    <Content Include="Content\Dashboard\Index\DashboardCharts.js" />
+    <Content Include="Content\Dashboard\Index\ListsHandling.js" />
     <Content Include="Content\Images\building.svg" />
     <Content Include="Content\Images\DashboardLayout\add.svg" />
     <Content Include="Content\Images\DashboardLayout\Dashboard_icon.svg" />
@@ -335,12 +343,29 @@
     <Content Include="Content\Images\easyVisit_Logo_bold.svg" />
     <Content Include="Content\Images\easyVisit_Logo_light.svg" />
     <Content Include="Content\Images\email.svg" />
+    <Content Include="Content\Images\InvitationIcons\add.svg" />
+    <Content Include="Content\Images\InvitationIcons\building.svg" />
+    <Content Include="Content\Images\InvitationIcons\date.svg" />
+    <Content Include="Content\Images\InvitationIcons\examp.svg" />
+    <Content Include="Content\Images\InvitationIcons\location.svg" />
+    <Content Include="Content\Images\InvitationIcons\office.svg" />
+    <Content Include="Content\Images\InvitationIcons\person-svgrepo-com.svg" />
+    <Content Include="Content\Images\InvitationIcons\profile.svg" />
+    <Content Include="Content\Images\InvitationIcons\QR_code.svg" />
+    <Content Include="Content\Images\InvitationIcons\question.svg" />
+    <Content Include="Content\Images\InvitationIcons\time.svg" />
+    <Content Include="Content\Images\InvitationIcons\user %282%29.svg" />
+    <Content Include="Content\Images\InvitationIcons\Z.svg" />
     <Content Include="Content\Images\NotifyIcons\error.svg" />
     <Content Include="Content\Images\NotifyIcons\info.svg" />
     <Content Include="Content\Images\NotifyIcons\success.svg" />
     <Content Include="Content\Images\search.svg" />
     <Content Include="Content\Images\temp_Image.png" />
     <Content Include="Content\Images\Waypass-Logo.svg" />
+    <Content Include="Content\Images\InvitationIcons\Waypass.svg" />
+    <Content Include="Content\Invitation\Invitation.css" />
+    <Content Include="Content\Invitation\invitation.js" />
+    <Content Include="Content\Invitation\VisitorProfile.css" />
     <Content Include="Content\JS\App.js" />
     <Content Include="Content\JS\Dashboard_Layout.js" />
     <Content Include="Content\OrganizationData\DataverseConnection\DataverseConnection.css" />
@@ -396,6 +421,7 @@
     <Compile Include="BLL\Interfaces\IMeetingAreaService.cs" />
     <Compile Include="BLL\Interfaces\IAccountService.cs" />
     <Compile Include="BLL\Interfaces\IOrganizationService.cs" />
+    <Compile Include="BLL\Interfaces\IVisitingMemberService.cs" />
     <Compile Include="BLL\Interfaces\IOrganizationUserService.cs" />
     <Compile Include="BLL\Interfaces\IVisitorsService.cs" />
     <Compile Include="BLL\Interfaces\IZoneService.cs" />
@@ -404,15 +430,22 @@
     <Compile Include="BLL\Services\DashboardService.cs" />
     <Compile Include="BLL\Services\MeetingAreaService.cs" />
     <Compile Include="BLL\Services\OrganizationService.cs" />
+    <Compile Include="BLL\Services\VisitingMemberService.cs" />
     <Compile Include="BLL\Services\OrganizationUserService.cs" />
     <Compile Include="BLL\Services\ZoneService.cs" />
     <Compile Include="BLL\Services\VisitorsService.cs" />
+    <Content Include="Content\Dashboard\Index\HeightAdjsetemnt.js" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\BuildingController.cs" />
+    <Compile Include="Controllers\VisitorController.cs" />
     <Compile Include="DAL\Repository\OrganizationSetupRepository\BuildingRepository.cs" />
     <Compile Include="DAL\Repository\OrganizationSetupRepository\IBuildingRepository.cs" />
     <Compile Include="DAL\Repository\OrganizationSetupRepository\IMeetingAreaRepository.cs" />
     <Compile Include="DAL\Repository\OrganizationSetupRepository\MeetingAreaRepository.cs" />
+    <Compile Include="DAL\Repository\VisitorMemberHubRepository\IVisitorMemberHubRepository.cs" />
+    <Compile Include="DAL\Repository\VisitorMemberHubRepository\VisitorMemberHubRepository.cs" />
+    <Compile Include="DAL\Repository\VisitingMemberRepository\IVisitingMemberRepository.cs" />
+    <Compile Include="DAL\Repository\VisitingMemberRepository\VisitingMemberRepository.cs" />
     <Compile Include="DAL\Repository\VisitorsHubRepository\IVisitorsHubRepository.cs" />
     <Compile Include="DAL\Repository\VisitorsHubRepository\VisitorsHubRepository.cs" />
     <Compile Include="DAL\Repository\OrganizationSetupRepository\IZoneRepository.cs" />
@@ -422,6 +455,7 @@
     <Compile Include="Models\XRM\OptionSets.cs" />
     <Compile Include="Utilities\ClaimsManager.cs" />
     <Compile Include="Utilities\CustomEnumHelpers.cs" />
+    <Compile Include="Utilities\DictionaryExtensions.cs" />
     <Compile Include="Utilities\Enums.cs" />
     <Compile Include="Helpers\GraphHelper.cs" />
     <Compile Include="Utilities\DataEncryptionHelper .cs" />
@@ -455,6 +489,21 @@
     <Compile Include="Models\OperationResult.cs" />
     <Compile Include="Models\OptionSet.cs" />
     <Compile Include="Helpers\VMHelpers.cs" />
+    <Compile Include="ViewModels\Analysis\BusiestAreasData.cs" />
+    <Compile Include="ViewModels\Analysis\peakTimeChartAnalysis.cs" />
+    <Compile Include="ViewModels\Analysis\peakTimeChartData.cs" />
+    <Compile Include="ViewModels\Analysis\TopVisitorsDataView.cs" />
+    <Compile Include="ViewModels\Analysis\TotalVisistsChatData.cs" />
+    <Compile Include="ViewModels\Analysis\DashboardNumbers.cs" />
+    <Compile Include="ViewModels\Analysis\PurposeChart.cs" />
+    <Compile Include="ViewModels\Analysis\TotalVisitChartAnalysis.cs" />
+    <Compile Include="ViewModels\Analysis\TotalVisitsChart.cs" />
+    <Compile Include="ViewModels\Analysis\UserAnalysis.cs" />
+    <Compile Include="ViewModels\Analysis\VisitDepartmentData.cs" />
+    <Compile Include="ViewModels\Analysis\VisitorAnalysis.cs" />
+    <Compile Include="ViewModels\Analysis\VisitsByLocationsData.cs" />
+    <Compile Include="ViewModels\Analysis\VisitsByZoneData.cs" />
+    <Compile Include="Utilities\Utilities.cs" />
     <Compile Include="ViewModels\Auth\LoginSuccessInfoVM.cs" />
     <Compile Include="ViewModels\OrganizationDate\OrganizationDataVM.cs" />
     <Compile Include="ViewModels\OrganizationSetup\AddZoneVM.cs" />
@@ -475,11 +524,14 @@
     <Compile Include="ViewModels\OrganizationSetup\MeetingAreaVM.cs" />
     <Compile Include="ViewModels\Profile\ProfileInfoVM.cs" />
     <Compile Include="ViewModels\OrganizationSetup\ZoneVM.cs" />
+    <Compile Include="ViewModels\VisitingMember\VisitingMemberDataVM.cs" />
     <Compile Include="ViewModels\VisitorsHub\AddVisitorVM.cs" />
     <Compile Include="ViewModels\VisitorsHub\EditVisitorsVM.cs" />
     <Compile Include="ViewModels\VisitorsHub\VisitingMemberWithRelatedRequestVM.cs" />
     <Compile Include="ViewModels\VisitorsHub\VisitingMemberVM.cs" />
+    <Compile Include="ViewModels\VisitorsHub\VisitorProfileVM.cs" />
     <Compile Include="ViewModels\VisitorsHub\VisitorsHubVM.cs" />
+    <Compile Include="ViewModels\VisitorsHub\VisitorTokenVM.cs" />
     <Compile Include="ViewModels\VisitRequest\AddVisitRequestVM.cs" />
     <Compile Include="ViewModels\VisitRequest\CurrentOfficeLocationVM.cs" />
     <Compile Include="ViewModels\VisitRequest\OrganizationUsersVM.cs" />
@@ -521,6 +573,11 @@
     <Content Include="Views\OrganizationSetup\_MeetingAreasByBuilding.cshtml" />
     <Content Include="Views\OrganizationSetup\ZoneFullDetails.cshtml" />
     <Content Include="Views\Account\RegisterFromProvider.cshtml" />
+    <Content Include="Views\Shared\_InvitationLayout.cshtml" />
+    <Content Include="Views\Visitor\Invite.cshtml" />
+    <Content Include="Views\Account\VisitorProfile.cshtml" />
+    <Content Include="Views\Visitor\Information.cshtml" />
+    <Content Include="Views\Visitor\Profile.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -23,7 +23,7 @@
                     <!-- Profile Section -->
                     <div class="profile-detials d-flex flex-column gap-1">
                         <h5>@Model.visitRequestInfo.Serial</h5>
-                        <p class="m-0 p-0 status">Schaduled</p>
+                        <p class="m-0 p-0 status">@Model.visitRequestInfo.Status</p>
                     </div>
 
                     <div class="label-boxes d-flex flex-column gap-3 p-2 mt-4">
@@ -140,7 +140,7 @@
 
                         <div class="d-flex w-100 m-auto">
                             <button onclick="DeleteVisitRequest('@Model.VisiteRequestID')" class="btn"
-                                    style="width: 100%; background: #12204B; box-shadow: 0px 4px 12px #00000029; border-radius: 6px; font-size: 15px; color: white; padding: 12px;" id="showFilteredResultsBtn">
+                                    style="width: 100%; background: #12204B; box-shadow: 0px 4px 12px #00000029; border-radius: 6px; font-size: 15px; color: white; padding: 12px;" id="deleteVisitRequestBtn">
                                 Delete
                             </button>
                         </div>
@@ -177,7 +177,7 @@
                                 </div>
 
                                 <div class="d-flex flex-row gap-2">
-                                    <a id="filterIcon" class="FilterVisitRequests svg-btn" data-bs-toggle="modal" data-bs-target="#">
+                                    <a id="filterVisitorsIcon" class="FilterVisitRequests svg-btn" data-bs-toggle="modal" data-bs-target="#filterVisitorHubModal">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="17" viewBox="0 0 24 17">
                                             <g id="filter_1_" data-name="filter (1)" transform="translate(-3 -6.5)">
                                                 <path id="Path_40799" data-name="Path 40799" d="M17,11H4A1,1,0,0,1,4,9H17a1,1,0,0,1,0,2Zm9,0H22a1,1,0,0,1,0-2h4a1,1,0,0,1,0,2Z" fill="#fff" />
@@ -187,12 +187,12 @@
                                         </svg>
                                     </a>
 
-                                    <div class="addNewVisitRequest svg-btn">
+                                    <a class="editVisitRequest svg-btn @(Model.visitRequestInfo.StatusCode != CrmEarlyBound.vm_VisitRequest_StatusCode.PendingApproval ? "disabled" : "")">
                                         <svg xmlns="http://www.w3.org/2000/svg" id="add" width="24" height="24" viewBox="0 0 24 24">
                                             <rect id="Rectangle_11" data-name="Rectangle 11" width="3" height="24" rx="1.5" transform="translate(11)" fill="#fff" />
                                             <rect id="Rectangle_12" data-name="Rectangle 12" width="24" height="3" rx="1.5" transform="translate(0 11)" fill="#fff" />
                                         </svg>
-                                    </div>
+                                    </a>
                                 </div>
                             </div>
 
@@ -206,20 +206,20 @@
                                     <th>Id Number </th>
                                     <th>Status</th>
                                     <th>Action</th>
-
-
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach (var visitor in Model.visitorVMs)
                                 {
-
-                                    <tr>
-                                        <td class="d-flex align-items-center justify-content-start gap-1 visitorDetails">
-                                            <i class="fa-solid fa-user-gear mx-1" style="color: #A7AEC2; font-size: 15px"></i>
-                                            <div class="text-content-container">
-                                                <p class="p-0 m-0 fw-500">@visitor.VisitorName</p>
-                                                <p class="p-0 m-0">@visitor.Organization</p>
+                                    <tr data-id="@visitor.VisitorId" data-phone-number="@visitor.Phone"
+                                        data-job-title="@visitor.JobTitle">
+                                        <td>
+                                            <div class="d-flex align-items-center justify-content-start gap-1 visitorDetails">
+                                                <i class="fa-solid fa-user-gear mx-1" style="color: #A7AEC2; font-size: 15px"></i>
+                                                <div class="text-content-container">
+                                                    <p class="p-0 m-0 fw-500">@visitor.VisitorName</p>
+                                                    <p class="p-0 m-0">@visitor.Organization</p>
+                                                </div>
                                             </div>
                                         </td>
                                         <td>@visitor.Email</td>
@@ -233,8 +233,6 @@
                                         </td>
                                     </tr>
                                 }
-
-
                             </tbody>
                         </table>
                     }
@@ -253,9 +251,6 @@
     </div>
 </div>
 
-
-
-
 <!-- Edit Visit Modal -->
 <div class="modal fade" id="editVisitRequestModel" data-visit-id="@Model.VisiteRequestID" tabindex="-1" aria-labelledby="modalTitleId" aria-hidden="true">
     <div style="width:600px !important;" class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document" style="zoom: 90%;">
@@ -269,7 +264,7 @@
                 <div class="form-grid">
                     <div class="form-group">
                         <label for="subject">Subject  <span class="text-muted">(Optional)</span></label>
-                        <input type="text" id="subject" name="subject" class="form-input" placeholder="Enter visit subject">
+                        <input type="text" id="subject" name="subject" value="@Model.visitRequestInfo.Subject" class="form-input" placeholder="Enter visit subject">
                     </div>
                     <div class="form-group">
                         <label for="status">Choose Visit Purpose</label>
@@ -277,24 +272,30 @@
                             <option value="" disabled selected>Select purpose</option>
                             @foreach (var purpose in ViewBag.Purposes)
                             {
-                                <option value="@purpose.Id">@purpose.Name</option>
+                                <option value="@purpose.Id" @(purpose.Name == Model.visitRequestInfo.Purpose ? "selected" : "")>@purpose.Name</option>
                             }
                         </select>
-
                     </div>
                     <div class="form-group">
                         <label for="date">Date</label>
-                        <input type="date" id="date" name="visitDate" class="form-input" placeholder="21/12/2024">
+                        @*<input type="date" id="date" name="visitDate" value="@Model.visitRequestInfo.Date.ToString()" class="form-input" placeholder="21/12/2024">*@
+                        <input type="date" id="date" name="visitDate"
+                               value="@(Model.visitRequestInfo.Date.HasValue ? Model.visitRequestInfo.Date.Value.ToString("yyyy-MM-dd") : "")"
+                               class="form-input" placeholder="21/12/2024">
                     </div>
                     <div class="form-group">
                         <label for="time">Time</label>
-                        <input type="time" id="time" name="visitTime" class="form-input" placeholder="21/12/2024">
+                        @*<input type="time" id="time" name="visitTime" value="@Model.visitRequestInfo.Time.ToString()" class="form-input" placeholder="21/12/2024">*@
+                        <input type="time" id="time" name="visitTime"
+                               value="@(Model.visitRequestInfo.Time.HasValue ? Model.visitRequestInfo.Time.Value.ToString("HH:mm") : "")"
+                               class="form-input" placeholder="21/12/2024">
                     </div>
                     <div id="requestedByDropdown" class="form-group">
                         <label for="requestedBySearch">Requested By</label>
                         <input type="text"
                                id="requestedBySearch"
                                class="form-input"
+                               value="@Model.visitRequestInfo.RequestdBy"
                                placeholder="Search and select a person"
                                autocomplete="off" />
                         <div id="requestedByOptions" class="dropdown-options hidden"></div>
@@ -404,7 +405,135 @@
     </div>
 </div>
 
+<!-- Filter Visitors Modal -->
+<div class="modal fade" id="filterVisitorHubModal" data-visit-id="" tabindex="-1" aria-labelledby="modalTitleId" aria-hidden="true">
+    <div style="width:600px !important;" class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document" style="zoom: 90%;">
+        <div class="modal-content d-flex align-items-center border-0 rounded-4" style="padding: 20px;">
+            <div class="d-flex align-items-center justify-content-between w-100">
+                <h6 class="m-0 p-0 w-100 text-center fw-500">Filter Visitors</h6>
+                <div class="p-1" style="background: #FAFBFC 0% 0% no-repeat padding-box;border-radius:50px;">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+            </div>
 
+            <div class="modal-body w-100 mt-2">
+                <div class="d-flex flex-column">
+                    <label class="mt-4" for="requestedByDropdown">Visitor Name</label>
+                    <div id="requestedByDropdown" class="search-bar mt-3 w-100">
+                        <div class="d-flex w-100 gap-2 align-items-center ms-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="19.999" viewBox="0 0 20 19.999">
+                                <g id="search" opacity="0.5">
+                                    <path id="Path_9" data-name="Path 9" d="M9.166,18.332a9.166,9.166,0,1,1,9.166-9.166A9.177,9.177,0,0,1,9.166,18.332Zm0-16.666a7.5,7.5,0,1,0,7.5,7.5A7.508,7.508,0,0,0,9.166,1.667Z" fill="#2f2f2f"></path>
+                                    <path id="Path_10" data-name="Path 10" d="M22.034,22.867a.831.831,0,0,1-.589-.244l-4-4a.833.833,0,0,1,1.179-1.178l3.995,4a.832.832,0,0,1-.589,1.422Z" transform="translate(-2.868 -2.868)" fill="#2f2f2f"></path>
+                                </g>
+                            </svg>
+                            <div class="d-flex w-100 flex-row">
+                                <input type="text"
+                                       id="requestedBySearch"
+                                       placeholder=" Search ..."
+                                       class="form-input"
+                                       autocomplete="off" />
+                            </div>
+                        </div>
+                    </div>
+                    <div id="requestedByOptions" class="dropdown-options hidden"></div>
+
+                    <div class="d-flex w-100 flex-column">
+                        <label class="mt-4" for="idNumber">Id Number</label>
+                        <input type="text"
+                               id="idNumber"
+                               placeholder=" Enter Id Number"
+                               class="form-input"
+                               autocomplete="off" />
+                    </div>
+                </div>
+
+
+                <div class="form-grid visit-status">
+                    <div class="form-group visit-status">
+                        <label for="visit-status-dropdown">Choose Visitor Status</label>
+                        <select id="visit-statusn-dropdown" class="form-input">
+                            <option value="" class="text-muted" selected disabled>Select Status</option> <!-- Default Display -->
+                            @foreach (var status in Enum.GetValues(typeof(CrmEarlyBound.vm_Visitor_StatusCode)))
+                            {
+                                <option class="visit-status-option" value="@status">
+                                    @status
+                                </option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer border-0 d-flex justify-content-between w-100">
+                <button type="button" class="btn"
+                        style="width: 100%; background: #12204B; box-shadow: 0px 4px 12px #00000029; border-radius: 6px; font-size: 15px; color: white; padding: 12px;" id="showFilteredResultsBtn">
+                    Show Results
+                </button>
+                <button type="button" class="btn"
+                        style="width: 100%; box-shadow: 0px 4px 12px #00000029; border-radius: 6px; font-size: 15px; color: black; padding: 12px;" id="resetFiltersBtn">
+                    Reset
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Personal Data Modal -->
+<div class="modal fade" id="editPersonalDataModal" tabindex="-1" aria-labelledby="modalTitleId" aria-hidden="true">
+    <div style="width:600px !important;" class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document" style="zoom: 90%;">
+        <div class="modal-content d-flex align-items-center border-0 rounded-4" style="padding: 20px;">
+            <div class="d-flex align-items-center justify-content-between w-100">
+                <h6 class="m-0 p-0 w-100 text-center fw-500">Edit Personal Data</h6>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body w-100 mt-2">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="firstName">First Name</label>
+                        <input type="text" id="firstName" name="firstName" class="form-input" placeholder="Enter first name">
+                    </div>
+                    <div class="form-group">
+                        <label for="middleName">Middle Name</label>
+                        <input type="text" id="middleName" name="middleName" class="form-input" placeholder="Enter middle name">
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Last Name</label>
+                        <input type="text" id="lastName" name="lastName" class="form-input" placeholder="Enter last name">
+                    </div>
+                    <div class="form-group">
+                        <label for="idNumberr">Id Number</label>
+                        <input type="text" id="idNumberr" name="idNumberr" class="form-input" placeholder="Enter ID number">
+                    </div>
+                    <div class="form-group">
+                        <label for="jobTitle">Job Title</label>
+                        <input type="text" id="jobTitle" name="jobTitle" class="form-input" placeholder="Enter job title">
+                    </div>
+                    <div class="form-group">
+                        <label for="organizationName">Organization Name</label>
+                        <input type="text" id="organizationName" name="organizationName" class="form-input" placeholder="Enter organization name">
+                    </div>
+                    <div class="form-group">
+                        <label for="emailAddress">Email Address</label>
+                        <input type="email" id="emailAddress" name="emailAddress" class="form-input" placeholder="Enter email address">
+                    </div>
+                    <div class="form-group">
+                        <label for="phoneNumber">Phone Number</label>
+                        <input type="tel" id="phoneNumber" name="phoneNumber" class="form-input" placeholder="Enter phone number">
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer border-0 d-flex justify-content-between w-100">
+                <button type="button" class="btn"
+                        style="width: 100%; background: #1E3A8A; box-shadow: 0px 4px 12px #00000029; border-radius: 4px;
+                               font-size: 15px; color: white; padding: 15px;" id="savePersonalDataBtn">
+                    Save
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 
 @*Scripts*@
 

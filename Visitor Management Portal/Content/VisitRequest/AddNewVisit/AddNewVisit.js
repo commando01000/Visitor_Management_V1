@@ -18,6 +18,13 @@ const VisitorEmail = document.getElementById('visitor_email'); // hidden input t
 const VisitorName = document.getElementById('visitor_name'); // hidden input that contains visitor name (Optional)
 const visitPurposeDropdown = document.getElementById('visitPurpose');
 const subjectText = document.getElementById('subject');
+const visitReqId = document.getElementById('vst_req_id');
+const addQuickVisitor = document.getElementsByClassName('add-quick-visitor-link');
+
+// Get all visitor data
+const visitors = document.querySelectorAll('input[class*="vstr_"]');
+const visitorCount = document.querySelectorAll('input.vstr_id').length;
+
 visitLocationOptions.value = 0;
 let currentStep = 1;
 let allUsers = [];
@@ -49,6 +56,15 @@ const showLoadingText = (element, placeholderText) => {
 continueBtn.disabled = true;
 continueBtn.classList.add('custom-class');
 
+checkMandatoryFields();
+
+if (visitors != null && visitors.length > 0) {
+    //change the continue button to submit and remove back btn
+    continueBtn.innerHTML = "Submit";
+    backBtn.classList.add('hidden');
+    //change the inner html to add or remove visitors button
+    document.getElementById('next-step').innerHTML = "Add or Remove Visitors";
+}
 function saveVisitRequest() {
     const visitPurpose = visitPurposeDropdown.value;
     const visitLocation = visitLocationOptions.value;
@@ -106,8 +122,56 @@ function saveVisitRequest() {
 }
 
 
+function updateVisitRequest() {
+
+    const selectedIds = selectedVisitors; // Array of selected visitor IDs
+    const visitRequestId = visitReqId.value;
+    // Constructing the request payload
+    const requestData = {
+        VisiteRequestID: visitRequestId,
+        VisitorsIds: selectedIds
+    };
+    debugger;
+    $.ajax({
+        url: '/VisitRequest/UpdateVisitRequestVisitors',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(requestData),
+        dataType: 'json',
+        success: function (response) {
+            console.log("Response:", response);
+            if (response.Status) { // Match with C# `Status` property
+                Notify(response.Message, "Success");
+
+                // Wait for 2 seconds before redirecting
+                setTimeout(() => {
+                    window.location.href = "/VisitRequest/Index";
+                }, 2000);
+            } else {
+                Notify(response.Message, "Error");
+            }
+        },
+        error: function (xhr, status, error) {
+            console.error("Error adding visit request:", error);
+            Notify("Failed to update visit request: ", "Error");
+        }
+    });
+
+}
+
+
 function checkMandatoryFields() {
+
     let allFilled = true;
+    if (visitors != null && visitors.length > 0) {
+        continueBtn.disabled = !allFilled;
+        if (allFilled) {
+            continueBtn.classList.remove('custom-class');
+        } else {
+            continueBtn.classList.add('custom-class');
+        }
+        return allFilled;
+    }
 
     if (!statusDropdown.value) {
         allFilled = false;
@@ -180,7 +244,6 @@ visitTimeInput.addEventListener('change', checkMandatoryFields);
 visitUntilInput.addEventListener('change', checkMandatoryFields);
 visitPurposeDropdown.addEventListener('change', checkMandatoryFields);
 searchInput.addEventListener('input', checkMandatoryFields);
-
 function updateStep(step) {
     stepTabs.forEach(tab => tab.classList.remove("active"));
     tabContents.forEach(content => {
@@ -313,6 +376,30 @@ $(document).ready(function () {
         addVisitorToList(storedVisitor); // Add stored visitor to the list
     }
 
+    if (visitors != null) {
+        // Iterate over each visitor
+        for (let i = 0; i < visitorCount; i++) {
+            const idInput = document.querySelector(`input.vstr_id[data-visitor='${i}']`);
+            const nameInput = document.querySelector(`input.vstr_name[data-visitor='${i}']`);
+            const emailInput = document.querySelector(`input.vstr_email[data-visitor='${i}']`);
+
+            if (idInput && nameInput && emailInput) {
+                const visitor = {
+                    Id: idInput.value,
+                    Name: nameInput.value,
+                    Email: emailInput.value
+                };
+
+                selectedVisitors.push(visitor.Id);  // store ID only
+                addVisitorToList(visitor);
+            }
+            currentStep = 2;
+            updateStep(2);
+        }
+    };
+
+
+
     searchInput.on("input", function () {
         var query = $(this).val().trim().toLowerCase();
 
@@ -369,8 +456,13 @@ function showNextStep() {
         updateStep(currentStep);
     }
     else {
-        // Save the visit request using the selectedVisitors array and check that the selectedVisitors array is not empty
-        selectedVisitors.length > 0 ? saveVisitRequest() : alert("Please select at least one visitor.");
+        if (visitors != null && visitors.length > 0) {
+            selectedVisitors.length > 0 ? updateVisitRequest() : alert("Please select at least one visitor.");
+        }
+        else {
+            // Save the visit request using the selectedVisitors array and check that the selectedVisitors array is not empty
+            selectedVisitors.length > 0 ? saveVisitRequest() : alert("Please select at least one visitor.");
+        }
     }
 }
 
@@ -386,7 +478,6 @@ cancelBtn.addEventListener("click", function () {
 });
 
 continueBtn.addEventListener("click", function () {
-
     if (!checkMandatoryFields()) {
         return;
     }
@@ -424,6 +515,69 @@ visitLocationOptions.forEach(option => {
             }
         }
         checkMandatoryFields();
+    });
+});
+
+document.getElementById('saveQuickVisitorBtn').addEventListener('click', function (event) {
+
+    // Prevent default behavior (e.g., form submission or modal closing)
+    event.preventDefault();
+    event.stopPropagation();
+
+    const visitorData = {
+        fullName: document.getElementById('fullName').value,
+        idNumber: document.getElementById('idNumber').value,
+        jobTitle: document.getElementById('jobTitle').value,
+        organizationName: document.getElementById('organizationName').value,
+        emailAddress: document.getElementById('emailAddress').value,
+        phoneNumber: document.getElementById('phoneNumber').value
+    };
+
+    debugger;
+    // Disable saveQuickVisitorBtn and show loading spinner
+    const spinner = document.getElementById('loadingSpinner');
+    const button = this;
+
+    spinner.classList.remove('d-none');
+    $.ajax({
+        url: '/VisitorsHub/AddVisitor',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(visitorData),
+        dataType: 'json',
+        success: function (response) {
+            console.log("Response:", response);
+            if (response.Status) { // Match with C# `Status` property
+                Notify(response.Message, "Success");
+
+                // Close the modal
+                const modal = bootstrap.Modal.getInstance(document.getElementById('addQuickVisitorModal'));
+                modal.hide();
+
+                // Optionally, clear the form
+                document.querySelectorAll('#addQuickVisitorModal .form-input').forEach(input => input.value = '');
+
+                selectedVisitors.push(response.Data);  // store ID only
+
+                storedVisitor = {
+                    Id: response.Data,
+                    Name: visitorData.fullName,
+                    Email: visitorData.emailAddress
+                };
+
+                addVisitorToList(storedVisitor);
+            } else {
+                Notify(response.Message, "Error");
+            }
+            button.disabled = false;
+            spinner.classList.add('d-none');
+        },
+        error: function (xhr, status, error) {
+            button.disabled = false;
+            spinner.classList.add('d-none');
+            console.error("Error adding visit request:", error);
+            Notify("Failed to update visit request: ", "Error");
+        }
     });
 });
 

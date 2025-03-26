@@ -2,6 +2,10 @@
     ViewBag.Title = "Visits Request";
 }
 
+@{
+    var index = 0;
+}
+
 @section styles{
     <link rel="stylesheet" href="~/Content/VisitRequest/AddNewVisit/AddNewVisit.css">
 
@@ -9,8 +13,8 @@
 
 <div class="section-container d-flex flex-column gap-4">
     <top>
-        <a class="navigation-btn"  onclick="stepBack('/VisitRequest')">Visits Request ></a>
-        <a class="navigation-btn">Add new visit</a>
+        <a class="navigation-btn" onclick="stepBack('/VisitRequest')">Visits Request ></a>
+        <a id="next-step" class="navigation-btn">Add new visit</a>
     </top>
 
     <div class="box-container">
@@ -40,8 +44,22 @@
                         <div class="data-title">Details</div>
                         <div class="form-grid">
                             <input type="hidden" id="visitor_id" data-id="@ViewBag.VisitorId" value="@ViewBag.VisitorId" />
-                            <input type="hidden" id="visitor_name" data-id="@ViewBag.VisitorName" value="@ViewBag.VisitorName" />
+                            <input type="hidden" id="visitor_name" data-name="@ViewBag.VisitorName" value="@ViewBag.VisitorName" />
                             <input type="hidden" id="visitor_email" data-email="@ViewBag.VisitorEmail" value="@ViewBag.VisitorEmail" />
+
+                            @if (ViewBag.Visitors != null)
+                            {
+                                <input type="hidden" id="vst_req_id" data-id="@ViewBag.VisitRequestId" value="@ViewBag.VisitRequestId" />
+
+                                foreach (var visitor in ViewBag.Visitors)
+                                {
+                                    <input type="hidden" class="vstr_id" data-visitor="@index" value="@visitor.VisitorId" />
+                                    <input type="hidden" class="vstr_name" data-visitor="@index" value="@visitor.VisitorName" />
+                                    <input type="hidden" class="vstr_email" data-visitor="@index" value="@visitor.Email" />
+                                    index++;
+                                }
+                            }
+
                             <div class="form-group">
                                 <label for="subject">Subject  <span class="text-muted">(Optional)</span></label>
                                 <input type="text" id="subject" name="subject" class="form-input" placeholder="Enter visit subject">
@@ -208,7 +226,7 @@
                             <input type="text" placeholder="Name or email address">
                         </div>
 
-                        <p class="p-0 m-0">Don't have visitors? <a class="add-quick-visitor-link">Add Quick visitor</a></p>
+                        <p class="p-0 m-0">Don't have visitors? <a class="add-quick-visitor-link" data-bs-toggle="modal" data-bs-target="#addQuickVisitorModal">Add Quick Visitor</a></p>
                     </div>
 
                     <div class="visitors-list-contianer">
@@ -220,6 +238,56 @@
                     <button class="custome-btn-cancle back d-none">Back</button>
                     <button class="custome-btn-cancle cancel">Cancel</button>
                     <button class="custome-btn-action continue">Continue</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Quick Visitor Modal -->
+    <div class="modal fade" id="addQuickVisitorModal" tabindex="-1" aria-labelledby="modalTitleId" aria-hidden="true">
+        <div style="width: 600px !important;" class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document" style="zoom: 90%;">
+            <div class="modal-content d-flex align-items-center border-0 rounded-4" style="padding: 20px;">
+                <div class="d-flex align-items-center justify-content-between w-100">
+                    <h6 class="m-0 p-0 w-100 text-center fw-500">Edit Visitor</h6>
+                    <div class="p-1" style="background: #FAFBFC 0% 0% no-repeat padding-box;border-radius:50px;">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                </div>
+
+                <div class="modal-body w-100 mt-2">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="fullName">Full Name</label>
+                            <input type="text" id="fullName" name="fullName" class="form-input" placeholder="Enter full name">
+                        </div>
+                        <div class="form-group">
+                            <label for="idNumber">Id Number</label>
+                            <input type="text" id="idNumber" name="idNumber" class="form-input" placeholder="Enter Id number">
+                        </div>
+                        <div class="form-group">
+                            <label for="jobTitle">Job Title</label>
+                            <input type="text" id="jobTitle" name="jobTitle" class="form-input" placeholder="Enter job title">
+                        </div>
+                        <div class="form-group">
+                            <label for="organizationName">Organization Name</label>
+                            <input type="text" id="organizationName" name="organizationName" class="form-input" placeholder="Enter organization email">
+                        </div>
+                        <div class="form-group">
+                            <label for="emailAddress">Email Address</label>
+                            <input type="email" id="emailAddress" name="emailAddress" class="form-input" placeholder="Enter email">
+                        </div>
+                        <div class="form-group">
+                            <label for="phoneNumber">Phone Number</label>
+                            <input type="tel" id="phoneNumber" name="phoneNumber" class="form-input" placeholder="Enter phone number">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer border-0 d-flex justify-content-between w-100">
+                    <button type="button" class="btn d-flex justify-content-center align-items-center" style="width: 100%; background: #1E3A8A; box-shadow: 0px 4px 12px #00000029; border-radius: 4px; font-size: 15px; color: white; padding: 15px;" id="saveQuickVisitorBtn">
+                        Add
+                        <span id="loadingSpinner" class="spinner-border spinner-border-sm ms-2 d-none" role="status" aria-hidden="true"></span>
+                    </button>
                 </div>
             </div>
         </div>

@@ -1,0 +1,156 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+
+body {
+    font-family: Poppins,'Inter';
+    background-color: #FFFFFF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+    overflow: scroll;
+}
+.container {
+    width: 360px;
+    max-width: 100%;
+    background: white;
+    padding: 20px;
+    border: solid 1px #ddd;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    height: auto;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo img {
+    width: 116.45px;
+    height: 21.12px;
+    text-align: left;
+    margin-bottom: 50px;
+    margin-top: 25px;
+    display: block;
+}
+
+.close-btn {
+    border: none;
+    background-color: #FAFBFC;
+    padding:10px;
+    border-radius:50%;
+    font-size: 13px;
+    width:40px;
+    height:40px;
+    cursor: pointer;
+}
+
+.profile-section {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.avatar {
+    width: 57px;
+    height: 57px;
+    margin: 0 auto;
+}
+.profile-section h2 {
+    font-size: 16px;
+    color: #040812;
+    margin:12px;
+}
+
+.sub-text {
+    color: #040812;
+    opacity:60%;
+    font-size: 16px;
+}
+
+.details-section {
+    background-color: #F9FBFD;
+    display: flex;
+    flex-direction:column;
+    justify-content: space-between;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.info-row {
+    display:flex;
+    justify-content: space-between;
+    padding: 3px 0;
+    font-size: 14px;
+}
+
+.column {
+    color: #040812;
+}
+.column img {
+    margin-right: 6px;
+}
+.label, .column img {
+    font-weight: 550;
+    color: #555;
+    opacity: 60%;
+}
+
+.value {
+    color: #040812;
+    font-size: 14px;
+    font-weight: 600;
+}
+.value1 {
+    color: #AD8534;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+
+.icon {
+    margin-right: 8px;
+}
+.details-title {
+    font-size: 16px;
+    color: #040812;
+    text-align:left;
+}
+
+
+.location-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.location-item {
+    display: flex;
+    align-items: center;
+    border-radius: 15px;
+    padding: 3px 12px;
+    font-size: 16px;
+    font-weight: 500;
+    white-space: nowrap;
+    color: #040812;
+    background-color: #FFFFFF;
+    margin:0 5px
+}
+.location-item .icon{
+    font-weight:600
+}
+.title {
+    display: flex;
+    font-size: 14px;
+    color: #040812;
+    opacity:60%;
+    font-weight:500;
+    margin-bottom:8px;
+}
+footer {
+    margin-top: 57px;
+    font-size: 14px;
+    color: #040812;
+}

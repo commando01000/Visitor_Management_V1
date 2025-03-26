@@ -412,3 +412,35 @@ input[type="time"] {
                 gap: 15px !important;
             }
     }
+
+/* Spinner */
+
+.spinner-border {
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    vertical-align: text-bottom;
+    border: 0.25em solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: spinner-border 0.75s linear infinite;
+}
+
+.spinner-border-sm {
+    width: 0.75rem;
+    height: 0.75rem;
+}
+
+@keyframes spinner-border {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.d-none {
+    display: none !important;
+}
+
+.ms-2 {
+    margin-left: 0.5rem !important;
+}

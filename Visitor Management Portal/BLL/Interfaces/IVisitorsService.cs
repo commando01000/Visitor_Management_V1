@@ -28,5 +28,7 @@ namespace Visitor_Management_Portal.BLL.Interfaces
         OperationResult DeleteVisitorHub(Guid visitorId);
         List<VisitRequestVM> GetVisitRequestsFiltered(VisitRequestVM visitRequestVM);
         List<VisitorsHubVM> GetVisitorsHubFiltered(VisitorsHubVM visitorsHubVM);
+        OperationResult UpdateVisitRequestVisitors(AddVisitRequestVM model);
+
     }
 }

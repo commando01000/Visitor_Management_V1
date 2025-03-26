@@ -1,4 +1,6 @@
-﻿@model Visitor_Management_Portal.ViewModels.OrganizationSetup.BuildingWithZonesAndMeetingAreasDetailsVM
+﻿@using Visitor_Management_Portal.ViewModels.OrganizationUsers
+
+@model Visitor_Management_Portal.ViewModels.OrganizationSetup.BuildingWithZonesAndMeetingAreasDetailsVM
 @{
     ViewBag.Title = "Building Details";
 
@@ -383,9 +385,9 @@
                                 <option value="">Select Contact Person</option>
                                 @if (ViewBag.OrganizationUsers != null)
                                 {
-                                    foreach (var user in ViewBag.OrganizationUsers)
+                                    foreach (var user in ViewBag.OrganizationUsers as List<OrganizationUserVM> ?? new List<OrganizationUserVM>())
                                     {
-                                        <option value="@user.Id" data-name="@user.Name">@($"{user.Name} ({user.Role})")</option>
+                                        <option value="@user.Id" data-name="@user.FullName">@($"{user.FullName} ({user.RoleName})")</option>
                                     }
                                 }
                             </select>

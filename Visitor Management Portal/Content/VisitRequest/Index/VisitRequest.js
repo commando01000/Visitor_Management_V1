@@ -27,6 +27,16 @@
         info: true,
         "columnDefs": [
             { "orderable": false, "targets": [9] },
+            { "targets": 0, "width": "80px" },  // Visit column
+            { "targets": 1, "width": "200px" }, // Requested by column
+            { "targets": 2, "width": "120px" }, // Visitors column
+            { "targets": 3, "width": "180px" }, // Purpose column
+            { "targets": 4, "width": "120px" }, // Date column
+            { "targets": 5, "width": "100px" }, // Time column
+            { "targets": 6, "width": "120px" }, // Duration column
+            { "targets": 7, "width": "150px" }, // Location column
+            { "targets": 8, "width": "100px" }, // Status column
+            { "targets": 9, "width": "150px" }  // Approved/Rejected by column
         ],
         "buttons": ['print'],
         "language": {
@@ -43,7 +53,7 @@
         // Loop through each row of the DataTable
         table.rows().every(function () {
             let row = $(this.node()); // Get the row as a jQuery object
-            let visiteRequestID = row.find("td:eq(1).visitorDetails").data("id"); // Extract VisiteRequestID
+            let visiteRequestID = row.find("td:eq(0).visitorDetails").data("id"); // Extract VisiteRequestID
 
             let rowData = [
                 row.find("td:eq(0)").text().trim(),  // Visit Serial
@@ -173,12 +183,17 @@
     showFilteredResults.addEventListener('click', () => {
         // Capture values from the form
         const visitDate = document.getElementById('date').value || null;
-        const visitTime = document.getElementById('time').value || null;
+        let visitTime = document.getElementById('time').value || null;
         const requestedByName = document.getElementById('requestedBySearch').value.trim().toLowerCase() || null;
         const visitStatus = document.getElementById('visit-statusn-dropdown').value || null;
 
-        debugger;
+        //debugger;
         //  Perform Client-Side Filtering
+        // Format the visitTime value to match the format in the table data
+        if (visitTime) {
+            visitTime = formatTime(visitTime); // Format time to "hh:mm AM/PM"
+        }
+
         const filteredData = originalTableData.filter(visitRequest => {
             return (
                 (!visitDate || visitRequest[5] === visitDate) && // Date Match
@@ -212,15 +227,16 @@
 
         data.forEach(visitRequest => {
             table.row.add([
-                visitRequest[0] || "-", // Visit Serial
-                `<div class="d-flex align-items-center justify-content-start gap-1 visitorDetails" data-id="${visitRequest[0]}">
-                <i class="fa-solid fa-user-gear mx-1" style="color: #A7AEC2; font-size: 15px"></i>
+                `<div class="visitorDetails">${visitRequest[0] || "--"}</div>`, // Visit Serial
+                `<div class="d-flex align-items-center justify-content-start gap-1 ps-0">
+                <i class="fa-solid fa-user-gear mx-1 ms-0" style="color: #A7AEC2; font-size: 15px"></i>
                 <div class="text-content-container">
                     <p class="p-0 m-0 fw-500">${visitRequest[1] || "--"}</p>
                     <p class="p-0 m-0">${visitRequest[2] || "--"}</p>
                 </div>
             </div>`,
-                `<i class="fa-solid fa-user mx-1"></i> ${visitRequest[3] || "--"}`, // Visitors Count
+
+                `<div class="ps-3" style="width: 120px;"><i class="fa-solid fa-user mx-1"></i> ${visitRequest[3] || "--"}</div>`, // Visitors Count
                 visitRequest[4] || "--", // Purpose
                 visitRequest[5] || "-", // Date
                 visitRequest[6] || "-", // Time
@@ -242,8 +258,9 @@
 
         // Rebind click event for visitor details
         $(".visitorDetails").off("click").on("click", function () {
+            debugger;
             const rowIndex = $(this).closest("tr").index(); // Get row index
-            const visitRequestId = originalTableData[rowIndex][11]; // ✅ Get VisiteRequestID from stored data (last column)
+            const visitRequestId = originalTableData[rowIndex][11]; // Get VisiteRequestID from stored data (last column)
 
             console.log("📌 Visit Request Clicked (Correct ID):", visitRequestId);
 

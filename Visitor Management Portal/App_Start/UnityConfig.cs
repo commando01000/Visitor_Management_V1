@@ -12,8 +12,10 @@ using Visitor_Management_Portal.DAL.Repository.OrganizationDate;
 using Visitor_Management_Portal.DAL.Repository.OrganizationSetupRepository;
 using Visitor_Management_Portal.DAL.Repository.OrganizationUsersRepository;
 using Visitor_Management_Portal.DAL.Repository.ProfileRepository;
+using Visitor_Management_Portal.DAL.Repository.VisitingMemberRepository;
 using Visitor_Management_Portal.DAL.Repository.VisitorsHubRepository;
 using Visitor_Management_Portal.DAL.Repository.VisitRequestRepository;
+using Visitor_Management_Portal.DAL.Repository.VisitorMemberHubRepository;
 
 namespace Visitor_Management_Portal
 {
@@ -56,9 +58,11 @@ namespace Visitor_Management_Portal
             // TODO: Register your type's mappings here.
             // container.RegisterType<IProductRepository, ProductRepository>();
 
+
             container.RegisterType<IProfileRepository, ProfileRepository>();
             container.RegisterType<IAccountRepository, AccountRepository>();
             container.RegisterType<IAccountService, AccountService>();
+            container.RegisterType<IVisitingMemberService, VisitingMemberService>();
 
             container.RegisterType<ILocationRepository, LocationRepository>();
             container.RegisterType<IVisitRequestRepository, VisitRequestRepository>();
@@ -67,7 +71,9 @@ namespace Visitor_Management_Portal
             container.RegisterType<IOrganizationUserService, OrganizationUserService>();
             container.RegisterType<IBuildingRepository, BuildingRepository>();
             container.RegisterType<IVisitorsHubRepository, VisitorsHubRepository>();
+            container.RegisterType<IVisitingMemberRepository , VisitingMemberRepository>();
             container.RegisterType<IOrganizationService, OrganizationService>();
+            container.RegisterType<IVisitorMemberHubRepository, VisitorMemberHubRepository>();
 
             container.RegisterType<IZoneRepository, ZoneRepository>();
             container.RegisterType<IZoneService, ZoneService>();

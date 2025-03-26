@@ -6,7 +6,7 @@
 //     Changes to this file may cause incorrect behavior and will be lost if
 //     the code is regenerated.
 // </auto-generated>
-// Created via this command line: "C:\Users\MahmoudYasser\AppData\Roaming\MscrmTools\XrmToolBox\Plugins\DLaB.EarlyBoundGenerator\crmsvcutil.exe" /url:"https://initiumsolutionsdefault.api.crm4.dynamics.com" /namespace:"CrmEarlyBound" /SuppressGeneratedCodeAttribute /out:"C:\Users\MahmoudYasser\OneDrive - Initium Solutions\Projects Files\WayPass\OneDrive - Initium Solutions\WayPass XRM\XRM\Entities.cs" /servicecontextname:"CrmServiceContext" /codecustomization:"DLaB.CrmSvcUtilExtensions.Entity.CustomizeCodeDomService,DLaB.CrmSvcUtilExtensions" /codegenerationservice:"DLaB.CrmSvcUtilExtensions.Entity.CustomCodeGenerationService,DLaB.CrmSvcUtilExtensions" /codewriterfilter:"DLaB.CrmSvcUtilExtensions.Entity.CodeWriterFilterService,DLaB.CrmSvcUtilExtensions" /namingservice:"DLaB.CrmSvcUtilExtensions.NamingService,DLaB.CrmSvcUtilExtensions" /metadataproviderservice:"DLaB.CrmSvcUtilExtensions.Entity.MetadataProviderService,DLaB.CrmSvcUtilExtensions" 
+// Created via this command line: "C:\Users\MahmoudYasser\AppData\Roaming\MscrmTools\XrmToolBox\Plugins\DLaB.EarlyBoundGenerator\crmsvcutil.exe" /url:"https://initiumsolutionsdefault.api.crm4.dynamics.com" /namespace:"CrmEarlyBound" /SuppressGeneratedCodeAttribute /out:"C:\Users\MahmoudYasser\OneDrive - Initium Solutions\Projects Files\WayPass\XRM\Entities.cs" /servicecontextname:"CrmServiceContext" /codecustomization:"DLaB.CrmSvcUtilExtensions.Entity.CustomizeCodeDomService,DLaB.CrmSvcUtilExtensions" /codegenerationservice:"DLaB.CrmSvcUtilExtensions.Entity.CustomCodeGenerationService,DLaB.CrmSvcUtilExtensions" /codewriterfilter:"DLaB.CrmSvcUtilExtensions.Entity.CodeWriterFilterService,DLaB.CrmSvcUtilExtensions" /namingservice:"DLaB.CrmSvcUtilExtensions.NamingService,DLaB.CrmSvcUtilExtensions" /metadataproviderservice:"DLaB.CrmSvcUtilExtensions.Entity.MetadataProviderService,DLaB.CrmSvcUtilExtensions" 
 //------------------------------------------------------------------------------
 
 [assembly: Microsoft.Xrm.Sdk.Client.ProxyTypesAssemblyAttribute()]
@@ -3418,6 +3418,86 @@ namespace CrmEarlyBound
 				this.OnPropertyChanging("lk_vm_visitor_modifiedonbehalfby");
 				this.SetRelatedEntities<CrmEarlyBound.vm_Visitor>("lk_vm_visitor_modifiedonbehalfby", null, value);
 				this.OnPropertyChanged("lk_vm_visitor_modifiedonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N lk_vm_visitortoken_createdby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_vm_visitortoken_createdby")]
+		public System.Collections.Generic.IEnumerable<CrmEarlyBound.vm_visitortoken> lk_vm_visitortoken_createdby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<CrmEarlyBound.vm_visitortoken>("lk_vm_visitortoken_createdby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_vm_visitortoken_createdby");
+				this.SetRelatedEntities<CrmEarlyBound.vm_visitortoken>("lk_vm_visitortoken_createdby", null, value);
+				this.OnPropertyChanged("lk_vm_visitortoken_createdby");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N lk_vm_visitortoken_createdonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_vm_visitortoken_createdonbehalfby")]
+		public System.Collections.Generic.IEnumerable<CrmEarlyBound.vm_visitortoken> lk_vm_visitortoken_createdonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<CrmEarlyBound.vm_visitortoken>("lk_vm_visitortoken_createdonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_vm_visitortoken_createdonbehalfby");
+				this.SetRelatedEntities<CrmEarlyBound.vm_visitortoken>("lk_vm_visitortoken_createdonbehalfby", null, value);
+				this.OnPropertyChanged("lk_vm_visitortoken_createdonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N lk_vm_visitortoken_modifiedby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_vm_visitortoken_modifiedby")]
+		public System.Collections.Generic.IEnumerable<CrmEarlyBound.vm_visitortoken> lk_vm_visitortoken_modifiedby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<CrmEarlyBound.vm_visitortoken>("lk_vm_visitortoken_modifiedby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_vm_visitortoken_modifiedby");
+				this.SetRelatedEntities<CrmEarlyBound.vm_visitortoken>("lk_vm_visitortoken_modifiedby", null, value);
+				this.OnPropertyChanged("lk_vm_visitortoken_modifiedby");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N lk_vm_visitortoken_modifiedonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_vm_visitortoken_modifiedonbehalfby")]
+		public System.Collections.Generic.IEnumerable<CrmEarlyBound.vm_visitortoken> lk_vm_visitortoken_modifiedonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<CrmEarlyBound.vm_visitortoken>("lk_vm_visitortoken_modifiedonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_vm_visitortoken_modifiedonbehalfby");
+				this.SetRelatedEntities<CrmEarlyBound.vm_visitortoken>("lk_vm_visitortoken_modifiedonbehalfby", null, value);
+				this.OnPropertyChanged("lk_vm_visitortoken_modifiedonbehalfby");
 			}
 		}
 		
@@ -9234,6 +9314,26 @@ namespace CrmEarlyBound
 		}
 		
 		/// <summary>
+		/// 1:N vm_vm_visitingmember_vm_visitortoken_VisitingMemeber
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("vm_vm_visitingmember_vm_visitortoken_VisitingMemeber")]
+		public System.Collections.Generic.IEnumerable<CrmEarlyBound.vm_visitortoken> vm_vm_visitingmember_vm_visitortoken_VisitingMemeber
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<CrmEarlyBound.vm_visitortoken>("vm_vm_visitingmember_vm_visitortoken_VisitingMemeber", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("vm_vm_visitingmember_vm_visitortoken_VisitingMemeber");
+				this.SetRelatedEntities<CrmEarlyBound.vm_visitortoken>("vm_vm_visitingmember_vm_visitortoken_VisitingMemeber", null, value);
+				this.OnPropertyChanged("vm_vm_visitingmember_vm_visitortoken_VisitingMemeber");
+			}
+		}
+		
+		/// <summary>
 		/// N:1 lk_vm_visitingmember_createdby
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdby")]
@@ -10020,6 +10120,45 @@ namespace CrmEarlyBound
 		}
 		
 		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("vm_visitscount")]
+		public System.Nullable<int> vm_VisitsCount
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("vm_visitscount");
+			}
+		}
+		
+		/// <summary>
+		/// Last Updated time of rollup field Visits Count.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("vm_visitscount_date")]
+		public System.Nullable<System.DateTime> vm_VisitsCount_Date
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("vm_visitscount_date");
+			}
+		}
+		
+		/// <summary>
+		/// State of rollup field Visits Count.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("vm_visitscount_state")]
+		public System.Nullable<int> vm_VisitsCount_State
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("vm_visitscount_state");
+			}
+		}
+		
+		/// <summary>
 		/// 1:N vm_vm_visitor_vm_visitingmember_Visitor
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("vm_vm_visitor_vm_visitingmember_Visitor")]
@@ -10170,6 +10309,598 @@ namespace CrmEarlyBound
                         Attributes["vm_visitorid"] = base.Id;
                         break;
                     case "vm_visitorid":
+                        var id = (System.Nullable<System.Guid>) value;
+                        if(id == null){ continue; }
+                        base.Id = id.Value;
+                        Attributes[name] = base.Id;
+                        break;
+                    case "formattedvalues":
+                        // Add Support for FormattedValues
+                        FormattedValues.AddRange((Microsoft.Xrm.Sdk.FormattedValueCollection)value);
+                        break;
+                    default:
+                        Attributes[name] = value;
+                        break;
+                }
+            }
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	public enum vm_visitortokenState
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Active = 0,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Inactive = 1,
+	}
+	
+	/// <summary>
+	/// 
+	/// </summary>
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[Microsoft.Xrm.Sdk.Client.EntityLogicalNameAttribute("vm_visitortoken")]
+	public partial class vm_visitortoken : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
+	{
+		
+		/// <summary>
+		/// Default Constructor.
+		/// </summary>
+		[System.Diagnostics.DebuggerNonUserCode()]
+		public vm_visitortoken() : 
+				base(EntityLogicalName)
+		{
+		}
+		
+		public const string EntityLogicalName = "vm_visitortoken";
+		
+		public const string EntitySchemaName = "vm_visitortoken";
+		
+		public const string PrimaryIdAttribute = "vm_visitortokenid";
+		
+		public const string PrimaryNameAttribute = "vm_title";
+		
+		public const string EntityLogicalCollectionName = "vm_visitortokens";
+		
+		public const string EntitySetName = "vm_visitortokens";
+		
+		public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+		
+		public event System.ComponentModel.PropertyChangingEventHandler PropertyChanging;
+		
+		[System.Diagnostics.DebuggerNonUserCode()]
+		private void OnPropertyChanged(string propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		[System.Diagnostics.DebuggerNonUserCode()]
+		private void OnPropertyChanging(string propertyName)
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, new System.ComponentModel.PropertyChangingEventArgs(propertyName));
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the user who created the record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdby")]
+		public Microsoft.Xrm.Sdk.EntityReference CreatedBy
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("createdby");
+			}
+		}
+		
+		/// <summary>
+		/// Date and time when the record was created.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdon")]
+		public System.Nullable<System.DateTime> CreatedOn
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("createdon");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the delegate user who created the record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdonbehalfby")]
+		public Microsoft.Xrm.Sdk.EntityReference CreatedOnBehalfBy
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("createdonbehalfby");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("CreatedOnBehalfBy");
+				this.SetAttributeValue("createdonbehalfby", value);
+				this.OnPropertyChanged("CreatedOnBehalfBy");
+			}
+		}
+		
+		/// <summary>
+		/// Sequence number of the import that created this record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("importsequencenumber")]
+		public System.Nullable<int> ImportSequenceNumber
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("importsequencenumber");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("ImportSequenceNumber");
+				this.SetAttributeValue("importsequencenumber", value);
+				this.OnPropertyChanged("ImportSequenceNumber");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the user who modified the record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedby")]
+		public Microsoft.Xrm.Sdk.EntityReference ModifiedBy
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("modifiedby");
+			}
+		}
+		
+		/// <summary>
+		/// Date and time when the record was modified.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedon")]
+		public System.Nullable<System.DateTime> ModifiedOn
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("modifiedon");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the delegate user who modified the record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedonbehalfby")]
+		public Microsoft.Xrm.Sdk.EntityReference ModifiedOnBehalfBy
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("modifiedonbehalfby");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("ModifiedOnBehalfBy");
+				this.SetAttributeValue("modifiedonbehalfby", value);
+				this.OnPropertyChanged("ModifiedOnBehalfBy");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier for the organization
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("organizationid")]
+		public Microsoft.Xrm.Sdk.EntityReference OrganizationId
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("organizationid");
+			}
+		}
+		
+		/// <summary>
+		/// Date and time that the record was migrated.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("overriddencreatedon")]
+		public System.Nullable<System.DateTime> OverriddenCreatedOn
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("overriddencreatedon");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("OverriddenCreatedOn");
+				this.SetAttributeValue("overriddencreatedon", value);
+				this.OnPropertyChanged("OverriddenCreatedOn");
+			}
+		}
+		
+		/// <summary>
+		/// Status of the Visitor Token
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("statecode")]
+		public System.Nullable<CrmEarlyBound.vm_visitortokenState> StateCode
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("statecode");
+				if ((optionSet != null))
+				{
+					return ((CrmEarlyBound.vm_visitortokenState)(System.Enum.ToObject(typeof(CrmEarlyBound.vm_visitortokenState), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("StateCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("statecode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("statecode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("StateCode");
+			}
+		}
+		
+		/// <summary>
+		/// Reason for the status of the Visitor Token
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("statuscode")]
+		public virtual vm_visitortoken_StatusCode? StatusCode
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return ((vm_visitortoken_StatusCode?)(EntityOptionSetEnum.GetEnum(this, "statuscode")));
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("StatusCode");
+				this.SetAttributeValue("statuscode", value.HasValue ? new Microsoft.Xrm.Sdk.OptionSetValue((int)value) : null);
+				this.OnPropertyChanged("StatusCode");
+			}
+		}
+		
+		/// <summary>
+		/// For internal use only.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("timezoneruleversionnumber")]
+		public System.Nullable<int> TimeZoneRuleVersionNumber
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("timezoneruleversionnumber");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("TimeZoneRuleVersionNumber");
+				this.SetAttributeValue("timezoneruleversionnumber", value);
+				this.OnPropertyChanged("TimeZoneRuleVersionNumber");
+			}
+		}
+		
+		/// <summary>
+		/// Time zone code that was in use when the record was created.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("utcconversiontimezonecode")]
+		public System.Nullable<int> UTCConversionTimeZoneCode
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("utcconversiontimezonecode");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("UTCConversionTimeZoneCode");
+				this.SetAttributeValue("utcconversiontimezonecode", value);
+				this.OnPropertyChanged("UTCConversionTimeZoneCode");
+			}
+		}
+		
+		/// <summary>
+		/// Version Number
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("versionnumber")]
+		public System.Nullable<long> VersionNumber
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<long>>("versionnumber");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("vm_lastlinkedon")]
+		public System.Nullable<System.DateTime> vm_LastLinkedOn
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("vm_lastlinkedon");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("vm_LastLinkedOn");
+				this.SetAttributeValue("vm_lastlinkedon", value);
+				this.OnPropertyChanged("vm_LastLinkedOn");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("vm_shortcode")]
+		public string vm_ShortCode
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("vm_shortcode");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("vm_ShortCode");
+				this.SetAttributeValue("vm_shortcode", value);
+				this.OnPropertyChanged("vm_ShortCode");
+			}
+		}
+		
+		/// <summary>
+		/// The name of the custom entity.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("vm_title")]
+		public string vm_title
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("vm_title");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("vm_title");
+				this.SetAttributeValue("vm_title", value);
+				this.OnPropertyChanged("vm_title");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("vm_tokentype")]
+		public virtual vm_visitortoken_vm_TokenType? vm_TokenType
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return ((vm_visitortoken_vm_TokenType?)(EntityOptionSetEnum.GetEnum(this, "vm_tokentype")));
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("vm_TokenType");
+				this.SetAttributeValue("vm_tokentype", value.HasValue ? new Microsoft.Xrm.Sdk.OptionSetValue((int)value) : null);
+				this.OnPropertyChanged("vm_TokenType");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("vm_visitingmemeber")]
+		public Microsoft.Xrm.Sdk.EntityReference vm_VisitingMemeber
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("vm_visitingmemeber");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("vm_VisitingMemeber");
+				this.SetAttributeValue("vm_visitingmemeber", value);
+				this.OnPropertyChanged("vm_VisitingMemeber");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier for entity instances
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("vm_visitortokenid")]
+		public System.Nullable<System.Guid> vm_visitortokenId
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.Guid>>("vm_visitortokenid");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("vm_visitortokenId");
+				this.SetAttributeValue("vm_visitortokenid", value);
+				if (value.HasValue)
+				{
+					base.Id = value.Value;
+				}
+				else
+				{
+					base.Id = System.Guid.Empty;
+				}
+				this.OnPropertyChanged("vm_visitortokenId");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("vm_visitortokenid")]
+		public override System.Guid Id
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return base.Id;
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.vm_visitortokenId = value;
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_vm_visitortoken_createdby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_vm_visitortoken_createdby")]
+		public CrmEarlyBound.SystemUser lk_vm_visitortoken_createdby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<CrmEarlyBound.SystemUser>("lk_vm_visitortoken_createdby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_vm_visitortoken_createdonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_vm_visitortoken_createdonbehalfby")]
+		public CrmEarlyBound.SystemUser lk_vm_visitortoken_createdonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<CrmEarlyBound.SystemUser>("lk_vm_visitortoken_createdonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_vm_visitortoken_createdonbehalfby");
+				this.SetRelatedEntity<CrmEarlyBound.SystemUser>("lk_vm_visitortoken_createdonbehalfby", null, value);
+				this.OnPropertyChanged("lk_vm_visitortoken_createdonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_vm_visitortoken_modifiedby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_vm_visitortoken_modifiedby")]
+		public CrmEarlyBound.SystemUser lk_vm_visitortoken_modifiedby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<CrmEarlyBound.SystemUser>("lk_vm_visitortoken_modifiedby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_vm_visitortoken_modifiedonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_vm_visitortoken_modifiedonbehalfby")]
+		public CrmEarlyBound.SystemUser lk_vm_visitortoken_modifiedonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<CrmEarlyBound.SystemUser>("lk_vm_visitortoken_modifiedonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_vm_visitortoken_modifiedonbehalfby");
+				this.SetRelatedEntity<CrmEarlyBound.SystemUser>("lk_vm_visitortoken_modifiedonbehalfby", null, value);
+				this.OnPropertyChanged("lk_vm_visitortoken_modifiedonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 vm_vm_visitingmember_vm_visitortoken_VisitingMemeber
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("vm_visitingmemeber")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("vm_vm_visitingmember_vm_visitortoken_VisitingMemeber")]
+		public CrmEarlyBound.vm_visitingmember vm_vm_visitingmember_vm_visitortoken_VisitingMemeber
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<CrmEarlyBound.vm_visitingmember>("vm_vm_visitingmember_vm_visitortoken_VisitingMemeber", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("vm_vm_visitingmember_vm_visitortoken_VisitingMemeber");
+				this.SetRelatedEntity<CrmEarlyBound.vm_visitingmember>("vm_vm_visitingmember_vm_visitortoken_VisitingMemeber", null, value);
+				this.OnPropertyChanged("vm_vm_visitingmember_vm_visitortoken_VisitingMemeber");
+			}
+		}
+		
+		/// <summary>
+		/// Constructor for populating via LINQ queries given a LINQ anonymous type
+		/// <param name="anonymousType">LINQ anonymous type.</param>
+		/// </summary>
+		[System.Diagnostics.DebuggerNonUserCode()]
+		public vm_visitortoken(object anonymousType) : 
+				this()
+		{
+            foreach (var p in anonymousType.GetType().GetProperties())
+            {
+                var value = p.GetValue(anonymousType, null);
+                var name = p.Name.ToLower();
+            
+                if (name.EndsWith("enum") && value.GetType().BaseType == typeof(System.Enum))
+                {
+                    value = new Microsoft.Xrm.Sdk.OptionSetValue((int) value);
+                    name = name.Remove(name.Length - "enum".Length);
+                }
+            
+                switch (name)
+                {
+                    case "id":
+                        base.Id = (System.Guid)value;
+                        Attributes["vm_visitortokenid"] = base.Id;
+                        break;
+                    case "vm_visitortokenid":
                         var id = (System.Nullable<System.Guid>) value;
                         if(id == null){ continue; }
                         base.Id = id.Value;
@@ -10645,6 +11376,19 @@ namespace CrmEarlyBound
 				this.OnPropertyChanging("vm_CancelledPostponedOn");
 				this.SetAttributeValue("vm_cancelledpostponedon", value);
 				this.OnPropertyChanged("vm_CancelledPostponedOn");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("vm_duration")]
+		public System.Nullable<int> vm_Duration
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("vm_duration");
 			}
 		}
 		
@@ -11913,6 +12657,18 @@ namespace CrmEarlyBound
 			get
 			{
 				return this.CreateQuery<CrmEarlyBound.vm_Visitor>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="CrmEarlyBound.vm_visitortoken"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<CrmEarlyBound.vm_visitortoken> vm_visitortokenSet
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.CreateQuery<CrmEarlyBound.vm_visitortoken>();
 			}
 		}
 		

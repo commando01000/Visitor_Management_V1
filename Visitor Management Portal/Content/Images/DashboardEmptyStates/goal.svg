@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="72" height="72" viewBox="0 0 72 72">
+  <g id="goal" transform="translate(-1 -1)" opacity="0.6">
+    <circle id="Ellipse_1678" data-name="Ellipse 1678" cx="36" cy="36" r="36" transform="translate(1 1)" fill="#5e6f92"/>
+    <path id="Path_41576" data-name="Path 41576" d="M52,37A36,36,0,0,1,16,73V1A36,36,0,0,1,52,37Z" transform="translate(21)" fill="#5e6f92"/>
+    <circle id="Ellipse_1679" data-name="Ellipse 1679" cx="28.8" cy="28.8" r="28.8" transform="translate(8.2 8.2)" fill="#a3b1c6"/>
+    <path id="Path_41577" data-name="Path 41577" d="M44.8,32.8A28.8,28.8,0,0,1,16,61.6V4A28.8,28.8,0,0,1,44.8,32.8Z" transform="translate(21 4.2)" fill="#a3b1c6"/>
+    <circle id="Ellipse_1680" data-name="Ellipse 1680" cx="12.48" cy="12.48" r="12.48" transform="translate(24.52 24.52)" fill="#5e6f92"/>
+    <path id="Path_41578" data-name="Path 41578" d="M28.48,23.28A12.48,12.48,0,0,1,16,35.76V10.8A12.48,12.48,0,0,1,28.48,23.28Z" transform="translate(21 13.72)" fill="#5e6f92"/>
+    <path id="Path_41579" data-name="Path 41579" d="M35.184,20.206l3.12-3.1A2.41,2.41,0,0,0,34.9,13.7l-4.08,4.1H17.4a2.4,2.4,0,1,0,0,4.8H30.816l4.08,4.1A2.41,2.41,0,1,0,38.3,23.3Z" transform="translate(19.6 16.794)" fill="#424e66"/>
+    <path id="Path_41580" data-name="Path 41580" d="M38.3,17.11l-3.12,3.1H15a2.4,2.4,0,0,1,2.4-2.4H30.816l4.08-4.1A2.41,2.41,0,0,1,38.3,17.11Z" transform="translate(19.6 16.794)" fill="#424e66"/>
+  </g>
+</svg>

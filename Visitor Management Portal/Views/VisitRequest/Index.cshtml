@@ -47,7 +47,6 @@
     @*Conditional Rendering*@
     @if (Model != null && Model.Any())
     {
-        @*Data table*@
         <table id="visitorsTable" class="table table-striped table-bordered">
             <thead>
                 <tr>
@@ -60,32 +59,29 @@
                     <th>Duration</th>
                     <th>Location</th>
                     <th>Status</th>
-                    <th>Approved by</th>
+                    <th>Approved/Rejected by</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var visitRequest in Model)
                 {
                     <tr>
-                        <td>@visitRequest.Serial</td>
-                        <td class="d-flex align-items-center justify-content-start gap-1 visitorDetails" data-id="@visitRequest.VisiteRequestID">
-                            <i class="fa-solid fa-user-gear mx-1" style="color: #A7AEC2; font-size: 15px"></i>
+                        <td class="ps-0 visitorDetails" style="width: 80px;" data-id="@visitRequest.VisiteRequestID">@visitRequest.Serial</td>
+                        <td class="d-flex ps-0 pe-3 align-items-center justify-content-start gap-1">
+                            <i class="fa-solid fa-user-gear mx-1 ms-0" style="color: #A7AEC2; font-size: 15px"></i>
                             <div class="text-content-container">
                                 <p class="p-0 m-0 fw-500">@visitRequest.RequestdBy</p>
                                 <p class="p-0 m-0">@visitRequest.Organization</p>
                             </div>
                         </td>
-                        <td><i class="fa-solid fa-user mx-1"></i> @visitRequest.VisitorsCount</td>
-                        <td>@visitRequest.Purpose</td>
-
-                        <td>@(visitRequest.Date?.ToString("yyyy-MM-dd") ?? "-")</td>
-
-                        <td>@(visitRequest.Time?.ToString("hh:mm tt") ?? "-")</td>
-
-                        <td>@visitRequest.Duration</td>
-                        <td>@visitRequest.Location</td>
-                        <td>@visitRequest.Status</td>
-                        <td>@visitRequest.ApprovedBy</td>
+                        <td class="ps-3" style="width: 120px;"><i class="fa-solid fa-user mx-1"></i> @visitRequest.VisitorsCount</td>
+                        <td class="ps-0" style="width: 180px;">@visitRequest.Purpose</td>
+                        <td class="ps-0" style="width: 120px;">@(visitRequest.Date?.ToString("yyyy-MM-dd") ?? "-")</td>
+                        <td class="ps-0" style="width: 100px;">@(visitRequest.Time?.ToString("hh:mm tt") ?? "-")</td>
+                        <td class="ps-0" style="width: 120px;">@visitRequest.Duration</td>
+                        <td class="ps-0" style="width: 150px;">@visitRequest.Location</td>
+                        <td class="ps-0" style="width: 100px;">@visitRequest.Status</td>
+                        <td class="ps-0" style="width: 150px;">@visitRequest.ApprovedBy</td>
                     </tr>
                 }
             </tbody>

@@ -8,6 +8,7 @@ namespace Visitor_Management_Portal.ViewModels.VisitRequest
     public class VisitRequestVM
     {
         public string Serial { get; set; }
+        public string Subject { get; set; }
         public string RequestdBy { get; set; }
         public Guid? RequestedBy { get; set; }
 

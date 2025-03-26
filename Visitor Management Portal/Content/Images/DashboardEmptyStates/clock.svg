@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="72" height="72" viewBox="0 0 72 72">
+  <g id="clock" opacity="0.6">
+    <rect id="Rectangle_20747" data-name="Rectangle 20747" width="72" height="72" fill="#fff" opacity="0"/>
+    <path id="Path_41565" data-name="Path 41565" d="M65,33.449a31.5,31.5,0,1,1-.248-3.847A30.983,30.983,0,0,1,65,33.449Z" transform="translate(2.5 2.551)" fill="#a3b1c6"/>
+    <path id="Path_41566" data-name="Path 41566" d="M28.5,39.75a2.25,2.25,0,0,1-1.4-.495l-11.25-9A2.25,2.25,0,0,1,15,28.5V8.25a2.25,2.25,0,0,1,4.5,0V27.42L29.9,35.745A2.241,2.241,0,0,1,28.5,39.75Z" transform="translate(18.75 7.5)" fill="#5e6f92"/>
+    <path id="Path_41567" data-name="Path 41567" d="M61.988,18.138A31.5,31.5,0,0,1,4.41,35.8C37.238,51.145,55.53,25.743,61.74,14.29a30.983,30.983,0,0,1,.248,3.847Z" transform="translate(5.512 17.863)" fill="#a3b1c6"/>
+  </g>
+</svg>

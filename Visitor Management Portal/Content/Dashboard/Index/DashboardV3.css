@@ -1,0 +1,191 @@
+.custom-card {
+    border: none;
+    border-radius: 10px;
+    /*box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);*/
+    padding: 15px 15px 2px 15px !important;
+    background: #FAFBFC 0% 0% no-repeat padding-box;
+}
+   
+
+.custom-card-peak-time {
+    border: none;
+    border-radius: 10px;
+    /*box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);*/
+    padding: 15px 15px 2px 15px !important; /* top, right, bottom, left */
+    background: #FAFBFC 0% 0% no-repeat padding-box;
+}
+
+.stat-number {
+    font-size: 20px;
+    font-weight: bold;
+    color: #9C7A36;
+}
+
+.stat-number-not-bold {
+    font-size: 20px;
+    color: #9C7A36;
+}
+
+.stat-change {
+    background-color: #DFF6E2;
+    color: #2E7D32;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 3px 8px;
+    border-radius: 15px;
+}
+
+.arrow-icon-dashboard {
+    color: #9C7A36;
+    text-decoration: none;
+    font-size: 24px;
+}
+
+.arrow-icon-dashboard-pending {
+    color: #2F2F2F;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.select-input-dashboard {
+    border: none;
+    background: transparent;
+    font-size: 14px;
+    color: #6c757d;
+    outline: none;
+    cursor: pointer;
+}
+
+.visitor-icon {
+    font-size: 32px;
+    color: #cfcfcf;
+}
+
+.Busiest-custom-card {
+    border-radius: 10px;
+    padding: 15px;
+    background-color: #fff;
+    /*box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);*/
+}
+
+.zone-title {
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.visit-count {
+    color: #D4A045;
+}
+
+.meeting-area {
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+.Visits-purpose-largest-number {
+    text-decoration-color: #12204B;
+    font-size: 16px;
+}
+
+.labels-department-chart-card {
+    background-color: #f8f9fa;
+    padding: 0px;
+    border-radius: 10px;
+    min-height: 50px;
+    max-height: 150px;
+    overflow: auto;
+    overflow-x: hidden;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 8px;
+}
+
+.text-truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 120px; /* Adjust this as needed */
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.location-icon {
+    color: #b0b8c3;
+    width: 73px;
+    height: 117px;
+}
+
+.top-visitor-icon {
+    width: 73px;
+    height: 73px;
+}
+
+.pending-approval-icon {
+    width: 72px;
+    height: 50px;
+}
+
+.total-visits-icon {
+    width: 72px;
+    height: 72px;
+}
+
+.department-visits-icon {
+    width: 59px;
+    height: 75px;
+}
+
+.purpose-visits-icon {
+    width: 72px;
+    height: 72px;
+}
+
+.Peak-time-icon {
+    width: 72px;
+    height: 72px;
+}
+
+.text-muted-custom {
+    color: #6c757d;
+    font-size: 14px;
+}
+
+.card-custom-empty-state {
+    border: none;
+    text-align: center;
+    background: #FAFBFC 0% 0% no-repeat padding-box;
+    padding: 20px;
+    border-radius: 12px;
+    margin: auto;
+}
+
+.location-empty-state {
+    max-height: 300px;
+}
+    .location-empty-state .card-custom-empty-state {
+        max-width: 400px;
+    }
+
+
+.top-visitors-empty-state {
+    max-height: 300px;
+}
+
+    .top-visitors-empty-state .card-custom-empty-state {
+        max-width: 300px;
+    }
+
+.pending-approval-empty-state {
+    max-height: 300px;
+}
+
+    .pending-approval-empty-state .card-custom-empty-state {
+        max-width: 300px;
+    }
+
+   

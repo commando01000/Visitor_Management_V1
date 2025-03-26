@@ -10,7 +10,7 @@ namespace Visitor_Management_Portal.Helpers
             string action = filterContext.RouteData.Values["action"].ToString();
 
             // Define public actions that don't require authentication
-            if (controller == "Account")
+            if (controller.ToLower() == "account" || controller.ToLower() == "visitor")
             {
                 return; // Skip authentication check
             }
